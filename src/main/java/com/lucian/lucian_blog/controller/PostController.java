@@ -10,4 +10,9 @@ public class PostController {
     public String index(){
         return "hello post!!";
     }
+
+    @GetMapping("/admin/posts")
+    public String hello(){
+        return "hello admin!!";
+    }
 }
