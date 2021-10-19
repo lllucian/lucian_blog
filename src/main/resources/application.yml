@@ -1,0 +1,12 @@
+spring:
+  flyway:
+    table: schema_version_history
+  profiles:
+    active: dev
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: deleted_time
+      logic-delete-value: now()
+      logic-not-delete-value: null
+

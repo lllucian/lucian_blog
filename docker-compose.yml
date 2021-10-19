@@ -1,0 +1,17 @@
+version: "3.0"
+
+services:
+  db_admin:
+    image: adminer:4.8.1-standalone
+    restart: always
+    ports:
+      - 9000:8080
+  db:
+    image: mysql:8.0.24
+    restart: always
+    ports:
+      - 3310:3306
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: lucian_blog
