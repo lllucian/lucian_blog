@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lucian.lucian_blog.dao.PostDao">
+    <select id="list" resultType="com.lucian.lucian_blog.dto.post.PostDTO">
+        select posts.*, c.id as cate_id, c.name, t.id as tag_id, t.name as tag_name
+        from posts
+                 left join post_categories pc on posts.id = pc.post_id and pc.deleted_at is null
+                 left join categories c on pc.category_id = c.id and c.deleted_at is null
+                 left join post_tags pt on posts.id = pt.post_id and pt.deleted_at is null
+                 left join tags t on pt.tag_id = t.id and t.deleted_at is null
+        where posts.deleted_at is null
+    </select>
+</mapper>

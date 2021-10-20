@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
@@ -21,6 +22,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserDao userDao;
 
+    // 查找用户名
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         SecurityDTO user = userDao.loadUserByUsername(s);

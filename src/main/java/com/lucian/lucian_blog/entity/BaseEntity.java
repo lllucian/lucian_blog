@@ -9,9 +9,9 @@ public class BaseEntity {
     // 主键
     private Integer id;
     // 创建时间
-    private Date createdTime;
+    private Date createdAt;
     // 修改时间
-    private Date updatedTime;
+    private Date updatedAt;
     // 删除时间
-    private Date deletedTime;
+    private Date deletedAt;
 }
