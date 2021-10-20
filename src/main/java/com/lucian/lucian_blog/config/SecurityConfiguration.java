@@ -30,8 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                    }
 //                })).formLogin(AbstractAuthenticationFilterConfigurer::permitAll);
         // 简化配置
-        http.authorizeRequests(authorize -> authorize
-                        .antMatchers("/admin/**").hasAnyRole("ROLE_admin"))
+        http.authorizeRequests(authorize -> authorize.antMatchers("/admin/**").hasRole("admin"))
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll);
     }
 }
