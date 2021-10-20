@@ -8,18 +8,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     UserService userService;
-
-    @Autowired
-    RoleFilter roleFilter;
-
-    @Autowired
-    MyAccessDecisionManager accessDecisionManager;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -28,14 +21,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests(authorize -> authorize
+//                .anyRequest().authenticated().withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+//                    public <O extends FilterSecurityInterceptor> O postProcess(O o) {
+//                        o.setAccessDecisionManager(accessDecisionManager);
+//                        o.setSecurityMetadataSource(roleFilter);
+//                        return o;
+//                    }
+//                })).formLogin(AbstractAuthenticationFilterConfigurer::permitAll);
+        // 简化配置
         http.authorizeRequests(authorize -> authorize
-                .anyRequest().authenticated().withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
-                    public <O extends FilterSecurityInterceptor> O postProcess(O o) {
-                        o.setAccessDecisionManager(accessDecisionManager);
-                        o.setSecurityMetadataSource(roleFilter);
-                        return o;
-                    }
-                })).formLogin(AbstractAuthenticationFilterConfigurer::permitAll);
-//        http.authorizeRequests().anyRequest().permitAll();
+                        .antMatchers("/admin/**").hasAnyRole("ROLE_admin"))
+                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll);
     }
 }
