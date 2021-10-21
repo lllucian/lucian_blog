@@ -8,8 +8,8 @@ CREATE TABLE users
     `sign_current_ip` varchar(255),
     `locked`          tinyint(1) default 0,
     `enabled`         tinyint(1) default 1,
-    `created_time`    datetime,
-    `updated_time`    datetime,
-    `deleted_time`    datetime,
+    `created_at`    datetime,
+    `updated_at`    datetime,
+    `deleted_at`    datetime,
     primary key (`id`)
 ) COLLATE = 'utf8mb4_general_ci';

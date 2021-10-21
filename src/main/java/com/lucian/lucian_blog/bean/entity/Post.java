@@ -1,4 +1,4 @@
-package com.lucian.lucian_blog.entity;
+package com.lucian.lucian_blog.bean.entity;
 
 import lombok.Data;
 
@@ -16,6 +16,4 @@ public class Post extends BaseEntity{
     private Integer likes;
     // 排序
     private Integer sort;
-    // 作者
-    private User user;
 }

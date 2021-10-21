@@ -1,4 +1,4 @@
-package com.lucian.lucian_blog.entity;
+package com.lucian.lucian_blog.bean.entity;
 
 import lombok.Data;
 

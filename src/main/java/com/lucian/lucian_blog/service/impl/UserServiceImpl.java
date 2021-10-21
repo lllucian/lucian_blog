@@ -2,8 +2,8 @@ package com.lucian.lucian_blog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.lucian.lucian_blog.bean.bo.UserBO;
 import com.lucian.lucian_blog.dao.UserDao;
-import com.lucian.lucian_blog.dto.SecurityDTO;
 import com.lucian.lucian_blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
@@ -25,7 +24,7 @@ public class UserServiceImpl implements UserService {
     // 查找用户名
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        SecurityDTO user = userDao.loadUserByUsername(s);
+        UserBO user = userDao.loadUserByUsername(s);
         if (Objects.isNull(user)) throw new UsernameNotFoundException("用户未找到");
         return user;
     }
