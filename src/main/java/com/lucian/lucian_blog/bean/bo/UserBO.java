@@ -1,5 +1,7 @@
 package com.lucian.lucian_blog.bean.bo;
 
+import com.lucian.lucian_blog.bean.entity.Role;
+import com.lucian.lucian_blog.bean.entity.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,29 +14,18 @@ import java.util.List;
 
 @Data
 public class UserBO implements UserDetails {
-    private Integer id;
-    // 昵称
-    private String nickName;
-    // 密码
-    private String password;
-    // 邮箱
-    private String email;
-    // 上次登陆ip
-    private String signLastIp;
-    // 本次登陆ip
-    private String signCurrentIp;
-    // 是否启用
-    private Boolean enabled;
-    // 是否锁定
-    private Boolean locked;
+    User user;
 
-    private List<RoleBO> roles;
+    private List<Role> roles;
 
-    private Date createdAt;
+    public UserBO() {
+    }
 
-    private Date updatedAt;
+    public UserBO(User user, List<Role> roles) {
+        this.user = user;
+        this.roles = roles;
+    }
 
-    private Date deletedAt;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         ArrayList<SimpleGrantedAuthority> list = new ArrayList<>();
@@ -42,9 +33,19 @@ public class UserBO implements UserDetails {
         return list;
     }
 
+    /**
+     * Returns the password used to authenticate the user.
+     *
+     * @return the password
+     */
+    @Override
+    public String getPassword() {
+        return user.getPassword();
+    }
+
     @Override
     public String getUsername() {
-        return nickName;
+        return user.getNickName();
     }
 
     @Override
@@ -54,7 +55,7 @@ public class UserBO implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !locked;
+        return !user.getLocked();
     }
 
     @Override
@@ -64,6 +65,6 @@ public class UserBO implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return user.getEnabled();
     }
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lucian.lucian_blog.dao.UserRoleDao">
+    <select id="getRoleListByUserId" resultType="com.lucian.lucian_blog.bean.entity.Role">
+        select *
+        from roles
+                 left join user_roles ur on roles.id = ur.role_id and ur.deleted_at is null
+        where roles.deleted_at is null and ur.user_id = #{userId}
+    </select>
+</mapper>

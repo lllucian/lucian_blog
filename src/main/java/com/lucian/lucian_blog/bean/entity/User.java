@@ -5,8 +5,8 @@ import lombok.Data;
 
 import java.util.List;
 
-@Data
 @TableName("users")
+@Data
 public class User extends BaseEntity{
     // id 主键 已在BaseEntity中设置
     // private Integer id;

@@ -10,4 +10,6 @@ public class Tag {
     private String slug;
     // 排序
     private Integer sort;
+    // 描述
+    private String description;
 }

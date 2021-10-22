@@ -1,10 +1,13 @@
 package com.lucian.lucian_blog.bean.entity;
 
+import lombok.Data;
+
 import java.util.Date;
 
 /**
  * 通用实体类
  */
+@Data
 public class BaseEntity {
     // 主键
     private Integer id;
