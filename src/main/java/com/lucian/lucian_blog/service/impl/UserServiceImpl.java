@@ -41,8 +41,7 @@ public class UserServiceImpl implements UserService {
         User user = getUserByNickName(nickName);
         if (user == null) throw new UsernameNotFoundException("用户未找到");
         List<Role> roles = userRoleDao.getRoleListByUserId(user.getId());
-        UserBO userBO = new UserBO(user, roles);
-        return userBO;
+        return new UserBO(user, roles);
     }
 
 
