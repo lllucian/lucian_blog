@@ -1,9 +1,12 @@
-package com.lucian.lucian_blog.bean;
+package com.lucian.lucian_blog.bean.enums;
+
+import com.baomidou.mybatisplus.annotation.EnumValue;
 
 public enum EnabledStatusEnum {
     ENABLED(true, "启用"),
     DISABLED(false, "未启用");
 
+    @EnumValue
     private Boolean status;
 
     private String label;

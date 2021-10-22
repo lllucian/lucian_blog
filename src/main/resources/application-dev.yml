@@ -13,6 +13,7 @@ spring:
     driver-class-name: ${spring.datasource.driver-class-name}
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
+  typeEnumsPackage: com.lucian.lucian_blog.bean.enums
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 

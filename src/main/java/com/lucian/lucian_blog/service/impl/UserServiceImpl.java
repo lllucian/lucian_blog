@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByNickName(String nickName) {
-        QueryWrapper<com.lucian.lucian_blog.bean.entity.User> wrapper = new QueryWrapper<>();
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("nick_name", nickName);
         return userDao.selectOne(wrapper);
     }

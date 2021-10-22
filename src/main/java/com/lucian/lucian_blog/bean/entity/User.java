@@ -1,9 +1,9 @@
 package com.lucian.lucian_blog.bean.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.lucian.lucian_blog.bean.enums.EnabledStatusEnum;
+import com.lucian.lucian_blog.bean.enums.LockedStatusEnum;
 import lombok.Data;
-
-import java.util.List;
 
 @TableName("users")
 @Data
@@ -21,7 +21,7 @@ public class User extends BaseEntity{
     // 本次登陆ip
     private String signCurrentIp;
     // 是否启用
-    private Boolean enabled;
+    private EnabledStatusEnum enabled;
     // 是否锁定
-    private Boolean locked;
+    private LockedStatusEnum locked;
 }
