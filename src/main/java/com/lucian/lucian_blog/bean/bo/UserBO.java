@@ -13,6 +13,8 @@ import java.util.List;
 
 @Data
 public class UserBO implements UserDetails {
+    private Integer id;
+
     User user;
 
     private List<Role> roles;

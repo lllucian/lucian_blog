@@ -9,7 +9,6 @@ import com.lucian.lucian_blog.bean.entity.User;
 import com.lucian.lucian_blog.dao.UserDao;
 import com.lucian.lucian_blog.dao.UserRoleDao;
 import com.lucian.lucian_blog.service.UserService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

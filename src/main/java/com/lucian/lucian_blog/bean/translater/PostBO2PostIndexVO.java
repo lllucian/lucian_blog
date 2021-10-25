@@ -18,7 +18,7 @@ public abstract class PostBO2PostIndexVO {
             @Mapping(source = "post.id", target = "id"),
             @Mapping(source = "post.title", target = "title"),
             @Mapping(source = "post.description", target = "description"),
-            @Mapping(source = "post.createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
+            @Mapping(source = "post.createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd HH:mm:ss"),
             @Mapping(target = "categories", ignore = true),
             @Mapping(target = "tags", ignore = true)
     })
