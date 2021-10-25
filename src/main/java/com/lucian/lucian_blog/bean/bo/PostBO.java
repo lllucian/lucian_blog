@@ -9,6 +9,8 @@ import java.util.List;
 
 @Data
 public class PostBO {
+    private Integer id;
+
     private Post post;
 
     private List<Category> categories;

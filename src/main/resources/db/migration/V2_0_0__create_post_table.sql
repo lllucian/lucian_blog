@@ -17,6 +17,7 @@ create table posts
 create table categories
 (
     `id`          int not null auto_increment,
+    `sort`        int,
     `name`        varchar(100),
     `slug`        varchar(20),
     `description` text,
@@ -30,6 +31,7 @@ create table categories
 create table tags
 (
     `id`          int not null auto_increment,
+    `sort`        int,
     `name`        varchar(20),
     `slug`        varchar(20),
     `description` text,

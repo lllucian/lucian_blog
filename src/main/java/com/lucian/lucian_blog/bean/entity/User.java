@@ -8,6 +8,7 @@ import lombok.Data;
 @TableName("users")
 @Data
 public class User extends BaseEntity{
+    private static final long serialVersionUID = 8025629956611743702L;
     // id 主键 已在BaseEntity中设置
     // private Integer id;
     // 昵称

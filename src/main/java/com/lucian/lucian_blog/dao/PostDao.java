@@ -5,8 +5,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lucian.lucian_blog.bean.bo.PostBO;
+import com.lucian.lucian_blog.bean.entity.Post;
 
 
-public interface PostDao extends BaseMapper {
+public interface PostDao extends BaseMapper<Post> {
     IPage<PostBO> queryConditionsByPage(Page page, Wrapper wrapper);
 }
