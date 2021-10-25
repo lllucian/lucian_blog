@@ -20,16 +20,13 @@ public class PostServiceImpl implements PostService {
     @Autowired
     PostDao postDao;
 
+    @Autowired
+    PostBO2PostIndexVO postBO2PostIndexVO;
+
     public IPage<PostIndexVO> queryListByPage(PostQuery postQuery){
         Page<PostBO> page = new Page<>(postQuery.getCurrentPage(), postQuery.getLimit());
         IPage<PostBO> pageBOPage = postDao.queryConditionsByPage(page, postQuery.getQueryWrapper());
-        IPage<PostIndexVO> postIndexVOIPage = new Page<>();
-        BeanUtils.copyProperties(pageBOPage, postIndexVOIPage);
-        List<PostBO> records = pageBOPage.getRecords();
-        List<PostIndexVO> indexVOS = new ArrayList<>();
-        records.forEach(record -> {
-            PostBO2PostIndexVO.translater(record);
-        });
+        IPage<PostIndexVO> postIndexVOIPage = pageBOPage.convert(postBO -> postBO2PostIndexVO.convertToPostIndexVo(postBO));
         return postIndexVOIPage;
     }
 }
