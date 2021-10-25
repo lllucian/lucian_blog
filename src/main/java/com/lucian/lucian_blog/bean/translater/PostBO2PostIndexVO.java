@@ -4,10 +4,8 @@ import com.lucian.lucian_blog.bean.bo.PostBO;
 import com.lucian.lucian_blog.bean.entity.Category;
 import com.lucian.lucian_blog.bean.entity.Tag;
 import com.lucian.lucian_blog.bean.vo.PostIndexVO;
-import javafx.geometry.Pos;
 import org.mapstruct.*;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
