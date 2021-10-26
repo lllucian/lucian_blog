@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public abstract class PostBO2PostIndexVO {
     @Mappings({
-            @Mapping(source = "post.id", target = "id"),
+            @Mapping(source = "id", target = "id"),
             @Mapping(source = "post.title", target = "title"),
             @Mapping(source = "post.description", target = "description"),
             @Mapping(source = "post.createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd HH:mm:ss"),
