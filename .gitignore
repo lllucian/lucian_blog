@@ -33,3 +33,5 @@ build/
 .vscode/
 /mvnw
 /mvnw.cmd
+spy.log
+src/main/resources/db/.DS_Store

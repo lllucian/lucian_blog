@@ -1,9 +1,7 @@
 package com.lucian.lucian_blog.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.lucian.lucian_blog.bean.vo.PostIndexVO;
-import com.lucian.lucian_blog.query_wrapper.PostQuery;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.lucian.lucian_blog.bean.entity.Post;
 
-public interface PostService {
-    IPage<PostIndexVO> queryListByPage(PostQuery postQuery);
+public interface PostService extends IService<Post>{
 }

@@ -9,5 +9,5 @@ import com.lucian.lucian_blog.bean.entity.Post;
 
 
 public interface PostDao extends BaseMapper<Post> {
-    IPage<PostBO> queryConditionsByPage(Page page, Wrapper wrapper);
+    IPage<PostBO> queryConditionsByPage(Page<PostBO> page, Wrapper wrapper);
 }
