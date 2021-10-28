@@ -39,4 +39,9 @@ public class PostController {
     public CommonResult<String> create(@Valid @RequestBody PostParam postParam){
         return postManager.insert(postParam) ? CommonResult.success(null, "添加成功"): CommonResult.failed("添加失败");
     }
+
+    @PostMapping("post/{id}")
+    public CommonResult<String> create(@PathVariable(name = "id") Integer id, @Valid @RequestBody PostParam postParam){
+        return postManager.update(id, postParam) ? CommonResult.success(null, "添加成功"): CommonResult.failed("添加失败");
+    }
 }
