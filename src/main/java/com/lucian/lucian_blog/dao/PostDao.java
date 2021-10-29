@@ -6,8 +6,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lucian.lucian_blog.bean.bo.PostBO;
 import com.lucian.lucian_blog.bean.entity.Post;
+import org.apache.ibatis.annotations.Param;
 
 
 public interface PostDao extends BaseMapper<Post> {
     IPage<PostBO> queryConditionsByPage(Page<PostBO> page, Wrapper wrapper);
+
+    PostBO queryPostDetail(@Param("id") Integer id);
 }

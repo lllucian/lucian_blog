@@ -3,6 +3,7 @@ package com.lucian.lucian_blog.form_parm;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -21,6 +22,9 @@ public class PostParam {
 
     @NotBlank
     private String content;
+
+    @Range(min = 1, max = 99999)
+    private Integer sort;
 
     private List<Integer> categories;
 

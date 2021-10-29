@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lucian.lucian_blog.bean.bo.PostBO;
 import com.lucian.lucian_blog.bean.entity.*;
+import com.lucian.lucian_blog.bean.translater.PostBO2PostFormVO;
 import com.lucian.lucian_blog.bean.translater.PostBO2PostIndexVO;
+import com.lucian.lucian_blog.bean.vo.PostFormVO;
 import com.lucian.lucian_blog.bean.vo.PostIndexVO;
 import com.lucian.lucian_blog.dao.*;
 import com.lucian.lucian_blog.form_parm.PostParam;
@@ -27,6 +29,9 @@ public class PostManager {
     PostBO2PostIndexVO postBO2PostIndexVO;
 
     @Autowired
+    PostBO2PostFormVO postBO2PostFormVO;
+
+    @Autowired
     CategoryDao categoryDao;
 
     @Autowired
@@ -43,6 +48,16 @@ public class PostManager {
         IPage<PostBO> pageBOPage = postDao.queryConditionsByPage(page, postQuery.getQueryWrapper());
         IPage<PostIndexVO> postIndexVOIPage = pageBOPage.convert(postBO -> postBO2PostIndexVO.convertToPostIndexVo(postBO));
         return postIndexVOIPage;
+    }
+
+    /**
+     * blog 详情
+     * @param id 博客id
+     * @return 博客详情
+     */
+    public PostFormVO postDetail(Integer id) {
+        PostBO postBO = postDao.queryPostDetail(id);
+        return postBO == null ? null : postBO2PostFormVO.postBO2PostFormVO(postBO);
     }
 
     /**
@@ -129,5 +144,27 @@ public class PostManager {
         } else {
             postTagDao.delete(postTagQueryWrapper);
         }
+    }
+
+    /**
+     * 删除文章 及其关联表中的数据
+     * @param id blog id
+     * @return 是否删除成功
+     */
+    @Transactional
+    public boolean deletePost(Integer id){
+        Post post = postDao.selectById(id);
+        if (post == null) return false;
+        // 删除文章
+        postDao.deleteById(post);
+        // 删除 category关联表
+        QueryWrapper<PostCategory> postCategoryQueryWrapper = new QueryWrapper<>();
+        postCategoryQueryWrapper.eq("post_id", id);
+        postCategoryDao.delete(postCategoryQueryWrapper);
+        // 删除 tag 关联表
+        QueryWrapper<PostTag> postTagQueryWrapper = new QueryWrapper<>();
+        postCategoryQueryWrapper.eq("post_id", id);
+        postTagDao.delete(postTagQueryWrapper);
+        return true;
     }
 }
