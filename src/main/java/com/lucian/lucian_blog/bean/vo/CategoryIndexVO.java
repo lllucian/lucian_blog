@@ -1,8 +1,6 @@
 package com.lucian.lucian_blog.bean.vo;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 public class CategoryIndexVO {
@@ -29,5 +27,5 @@ public class CategoryIndexVO {
     /**
      * 父分类
      */
-    private CategoryIndexVO parentCategory;
+    private String parentName;
 }

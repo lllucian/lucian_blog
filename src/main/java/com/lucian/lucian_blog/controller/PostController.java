@@ -30,7 +30,6 @@ public class PostController {
     @PostMapping("posts")
     public CommonResult<IPage<PostIndexVO>> search(@RequestBody PostQuery postQuery){
         IPage<PostIndexVO> iPage = postManager.queryListByPage(postQuery);
-        System.out.println(iPage);
         return CommonResult.successNoMessage(iPage);
     }
 
