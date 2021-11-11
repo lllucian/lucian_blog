@@ -6,7 +6,8 @@ public enum ResultCode implements ErrorCode{
     VALIDATE_FAILED(404, "参数检验失败"),
     UNAUTHORIZED(401, "暂未登录或token已经过期"),
     FORBIDDEN(403, "没有相关权限"),
-    FIND_FAILED(404, "没有相关页面");
+    FIND_FAILED(404, "没有相关页面"),
+    TOKEN_EXPIRED(9999, "token过期");
     private long code;
     private String message;
 
