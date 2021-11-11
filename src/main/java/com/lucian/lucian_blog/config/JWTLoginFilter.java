@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     protected JWTLoginFilter(String defaultFilterProcessesUrl, AuthenticationManager authenticationManager){
@@ -46,15 +48,22 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
                 .signWith(SignatureAlgorithm.HS512,"lucian")
                 .compact();
         resp.setContentType("application/json;charset=utf-8");
+        Map<String, Object> map = new HashMap<>();
+        map.put("status", 200);
+        map.put("jwt-token", jwt);
+        map.put("msg", "登陆成功！");
         PrintWriter out = resp.getWriter();
-        out.write(new ObjectMapper().writeValueAsString(jwt));
+        out.write(new ObjectMapper().writeValueAsString(map));
         out.flush();
         out.close();
     }
     protected void unsuccessfulAuthentication(HttpServletRequest req, HttpServletResponse resp, AuthenticationException failed) throws IOException, ServletException {
         resp.setContentType("application/json;charset=utf-8");
+        Map<String, Object> stringObjectHashMap = new HashMap<>();
+        stringObjectHashMap.put("status", 401);
+        stringObjectHashMap.put("msg", "登陆失败！");
         PrintWriter out = resp.getWriter();
-        out.write("登录失败!");
+        out.write(new ObjectMapper().writeValueAsString(stringObjectHashMap));
         out.flush();
         out.close();
     }
