@@ -2,14 +2,8 @@ package com.lucian.lucian_blog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lucian.lucian_blog.bean.bo.PostBO;
 import com.lucian.lucian_blog.bean.entity.Post;
-import com.lucian.lucian_blog.bean.translater.PostBO2PostIndexVO;
-import com.lucian.lucian_blog.bean.vo.PostIndexVO;
 import com.lucian.lucian_blog.dao.PostDao;
-import com.lucian.lucian_blog.query_wrapper.PostQuery;
 import com.lucian.lucian_blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,12 +62,12 @@ public class PostServiceImpl implements PostService {
     @Override
     public BaseMapper<Post> getBaseMapper() {
         // TODO Auto-generated method stub
-        return null;
+        return postDao;
     }
 
     @Override
     public Class<Post> getEntityClass() {
         // TODO Auto-generated method stub
-        return null;
+        return Post.class;
     }
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.lucian.lucian_blog.bean.vo.PostFormVO;
 import com.lucian.lucian_blog.bean.vo.PostIndexVO;
 import com.lucian.lucian_blog.common.CommonResult;
+import com.lucian.lucian_blog.common.ResultCode;
 import com.lucian.lucian_blog.form_parm.PostParam;
 import com.lucian.lucian_blog.manager.PostManager;
 import com.lucian.lucian_blog.query_wrapper.PostQuery;
@@ -61,7 +62,9 @@ public class PostController {
      */
     @GetMapping("post/{id}")
     public CommonResult<PostFormVO> edit(@PathVariable Integer id){
-        return CommonResult.successNoMessage(postManager.postDetail(id));
+        PostFormVO postFormVO = postManager.postDetail(id);
+        if (postFormVO == null) return CommonResult.failed(ResultCode.FIND_FAILED);
+        return CommonResult.successNoMessage(postFormVO);
     }
 
     /**
