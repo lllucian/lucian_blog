@@ -17,7 +17,6 @@ public class JWTFilter extends GenericFilter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String jwtToken = request.getHeader("authorization");
-        System.out.println(jwtToken);
         Claims claims = Jwts.parser().setSigningKey("lucian").parseClaimsJws(jwtToken.replace("Bearer",""))
                 .getBody();
         String username = claims.getSubject();//获取当前登录用户名

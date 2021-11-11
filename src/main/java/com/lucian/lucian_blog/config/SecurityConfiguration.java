@@ -34,6 +34,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JWTFilter(),UsernamePasswordAuthenticationFilter.class)
-                .cors();
+                .cors().and().csrf().disable();
     }
 }

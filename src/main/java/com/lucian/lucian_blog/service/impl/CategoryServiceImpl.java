@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lucian.lucian_blog.bean.entity.Category;
+import com.lucian.lucian_blog.dao.CategoryDao;
 import com.lucian.lucian_blog.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -13,6 +15,10 @@ import java.util.function.Function;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
+
+    @Autowired
+    CategoryDao categoryDao;
+
     /**
      * 插入（批量）
      *
@@ -95,7 +101,7 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public BaseMapper<Category> getBaseMapper() {
-        return null;
+        return categoryDao;
     }
 
     /**
@@ -105,6 +111,6 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public Class<Category> getEntityClass() {
-        return null;
+        return Category.class;
     }
 }
