@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lucian.lucian_blog.bean.entity.Tag;
+import com.lucian.lucian_blog.dao.TagDao;
 import com.lucian.lucian_blog.service.TagService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -13,6 +15,8 @@ import java.util.function.Function;
 
 @Service
 public class TagServiceImpl implements TagService {
+    @Autowired
+    TagDao tagDao;
 
     /**
      * 插入（批量）
@@ -96,16 +100,16 @@ public class TagServiceImpl implements TagService {
      */
     @Override
     public BaseMapper<Tag> getBaseMapper() {
-        return null;
+        return tagDao;
     }
 
     /**
      * 获取 entity 的 class
      *
-     * @return {@link Class<T>}
+     * @return {@link Class<Tag>}
      */
     @Override
     public Class<Tag> getEntityClass() {
-        return null;
+        return Tag.class;
     }
 }
