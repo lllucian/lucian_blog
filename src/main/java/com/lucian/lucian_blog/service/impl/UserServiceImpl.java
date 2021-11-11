@@ -28,9 +28,9 @@ public class UserServiceImpl implements UserService {
     UserRoleDao userRoleDao;
 
     @Override
-    public User getUserByNickName(String nickName) {
+    public User getUserByNickName(String username) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("nick_name", nickName);
+        wrapper.eq("username", username);
         return userDao.selectOne(wrapper);
     }
 

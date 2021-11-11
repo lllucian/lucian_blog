@@ -46,7 +46,7 @@ public class UserBO implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getNickName();
+        return user.getUsername();
     }
 
     @Override

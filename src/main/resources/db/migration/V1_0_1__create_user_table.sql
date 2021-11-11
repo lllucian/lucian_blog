@@ -1,7 +1,7 @@
 CREATE TABLE users
 (
     `id`              int auto_increment NOT NULL,
-    `nick_name`       varchar(100),
+    `username`       varchar(100),
     `password`        varchar(255),
     `email`           varchar(255),
     `sign_last_ip`    varchar(255),

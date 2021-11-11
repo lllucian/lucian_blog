@@ -12,7 +12,7 @@ public class User extends BaseEntity{
     // id 主键 已在BaseEntity中设置
     // private Integer id;
     // 昵称
-    private String nickName;
+    private String username;
     // 密码
     private String password;
     // 邮箱
