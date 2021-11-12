@@ -21,7 +21,7 @@ public class JWTFilter extends GenericFilter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String jwtToken = request.getHeader("authorization");
+        String jwtToken = request.getHeader("Authorization");
         try{
             Claims claims = Jwts.parser().setSigningKey("lucian").parseClaimsJws(jwtToken.replace("Bearer",""))
                     .getBody();

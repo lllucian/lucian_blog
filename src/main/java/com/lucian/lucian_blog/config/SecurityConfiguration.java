@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -17,6 +18,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService);
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        // 放行swagger资源
+        web.ignoring().antMatchers("/swagger-**/**", "/v3/api-docs");
     }
 
     @Override
@@ -35,5 +42,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JWTFilter(), UsernamePasswordAuthenticationFilter.class)
                 .cors().and().csrf().disable();
+//                .httpBasic();
     }
 }
