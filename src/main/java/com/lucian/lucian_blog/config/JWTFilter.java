@@ -6,6 +6,7 @@ import com.lucian.lucian_blog.common.ResultCode;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -22,6 +23,7 @@ public class JWTFilter extends GenericFilter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String jwtToken = request.getHeader("Authorization");
+        if (jwtToken == null) jwtToken = "error_jwt";
         try{
             Claims claims = Jwts.parser().setSigningKey("lucian").parseClaimsJws(jwtToken.replace("Bearer",""))
                     .getBody();
@@ -34,6 +36,12 @@ public class JWTFilter extends GenericFilter {
             servletResponse.setContentType("application/json;charset=utf-8");
             PrintWriter out = servletResponse.getWriter();
             out.write(new ObjectMapper().writeValueAsString(CommonResult.failed(ResultCode.TOKEN_EXPIRED)));
+            out.flush();
+            out.close();
+        } catch (MalformedJwtException exception){
+            servletResponse.setContentType("application/json;charset=utf-8");
+            PrintWriter out = servletResponse.getWriter();
+            out.write(new ObjectMapper().writeValueAsString(CommonResult.failed(ResultCode.TOKEN_EXPIRED, "token解析错误")));
             out.flush();
             out.close();
         }
