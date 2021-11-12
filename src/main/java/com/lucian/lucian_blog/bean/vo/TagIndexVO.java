@@ -9,4 +9,8 @@ public class TagIndexVO {
     private Integer sort;
 
     private Integer postCount;
+
+    private String createdAt;
+
+    private String description;
 }

@@ -33,7 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests(authorize -> authorize.antMatchers("/admin/**").hasRole("admin"))
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JWTFilter(),UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JWTFilter(), UsernamePasswordAuthenticationFilter.class)
                 .cors().and().csrf().disable();
     }
 }
