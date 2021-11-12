@@ -19,12 +19,22 @@ public class TagController {
     TagManager tagManager;
 
     /**
+     * 无条件查询
+     * @return 标签集合
+     */
+    @GetMapping("tags")
+    public CommonResult<IPage<TagIndexVO>> index(){
+        TagQuery tagQuery = new TagQuery();
+        return CommonResult.successNoMessage(tagManager.queryListByPage(tagQuery));
+    }
+
+    /**
      * 一览
      * @param tagQuery 查询条件
      * @return 符合条件的对象
      */
-    @GetMapping("tags")
-    public CommonResult<IPage<TagIndexVO>> index(@RequestBody TagQuery tagQuery){
+    @PostMapping("tags")
+    public CommonResult<IPage<TagIndexVO>> search(@RequestBody TagQuery tagQuery){
          return CommonResult.successNoMessage(tagManager.queryListByPage(tagQuery));
     }
 
