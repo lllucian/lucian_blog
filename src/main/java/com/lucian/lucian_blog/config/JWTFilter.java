@@ -36,12 +36,6 @@ public class JWTFilter extends GenericFilter {
             out.write(new ObjectMapper().writeValueAsString(CommonResult.failed(ResultCode.TOKEN_EXPIRED)));
             out.flush();
             out.close();
-        } catch (Exception exception){
-            servletResponse.setContentType("application/json;charset=utf-8");
-            PrintWriter out = servletResponse.getWriter();
-            out.write(new ObjectMapper().writeValueAsString(CommonResult.failed(ResultCode.TOKEN_EXPIRED, "token解析错误")));
-            out.flush();
-            out.close();
         }
     }
 }

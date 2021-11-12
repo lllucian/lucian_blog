@@ -11,6 +11,8 @@ import com.lucian.lucian_blog.query_wrapper.TagQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("admin")
 public class TagController {
@@ -55,7 +57,7 @@ public class TagController {
      * @return 是否创建成功
      */
     @PostMapping("tag")
-    public CommonResult<String> create(@RequestBody TagParam tagParam){
+    public CommonResult<String> create(@RequestBody @Valid TagParam tagParam){
         return tagManager.createRecord(tagParam) ? CommonResult.success(null, "创建成功！") : CommonResult.failed("创建失败");
     }
 
@@ -66,7 +68,7 @@ public class TagController {
      * @return 是否更新成功
      */
     @PutMapping("tag/{id}")
-    public CommonResult<String> update(@PathVariable Integer id, @RequestBody TagParam tagParam){
+    public CommonResult<String> update(@PathVariable Integer id, @RequestBody @Valid TagParam tagParam){
         return tagManager.updateOne(id, tagParam) ? CommonResult.success(null, "更新成功！") : CommonResult.failed("更新失败");
     }
 
