@@ -1,54 +1,59 @@
 <template>
-  <el-form
-    label-position="top"
-    label-width="100px"
-    :model="loginFormData"
-    :rules="rules"
-    ref="loginForm"
-  >
-    <el-form-item label="用户名" prop="username">
-      <el-input v-model="loginFormData.username"></el-input>
-    </el-form-item>
+  <div class="form">
+    <h2>Lucian Blog后台管理系统</h2>
+    <el-form
+      label-position="top"
+      label-width="100px"
+      :model="loginFormData"
+      :rules="rules"
+      ref="loginForm"
+    >
+      <el-form-item label="用户名" prop="username">
+        <el-input v-model="loginFormData.username"></el-input>
+      </el-form-item>
 
-    <el-form-item label="密码" prop="password">
-      <el-input v-model="loginFormData.password" show-password></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submitForm">Create</el-button>
-    </el-form-item>
-  </el-form>
+      <el-form-item label="密码" prop="password">
+        <el-input v-model="loginFormData.password" show-password></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="submitForm">登陆</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
-  setup(){
-
-    const loginForm = ref()
+  setup() {
+    const loginForm = ref();
 
     const loginFormData = ref({
-      username: '',
-      password: ''
-    })
+      username: "",
+      password: "",
+    });
 
     const rules = ref({
-      username: [{required: true, message: '请填写用户名', trigger: 'blur'},{min: 3, max: 20, message: '要在3到20个长度之间', trigger: 'blur'}],
-      password: {required: true, message: '请填写密码', trigger: 'blur'}
-    })
+      username: [
+        { required: true, message: "请填写用户名", trigger: "blur" },
+        { min: 3, max: 20, message: "要在3到20个长度之间", trigger: "blur" },
+      ],
+      password: { required: true, message: "请填写密码", trigger: "blur" },
+    });
 
     const submitForm = async () => {
       loginForm.value.validate((valid: any) => {
-        if (valid){
-          alert('submit!')
+        if (valid) {
+          alert("submit!");
         } else {
-          alert('invalid!')
+          alert("invalid!");
         }
-      })
-    }
+      });
+    };
 
-    return {loginForm, loginFormData, rules, submitForm}
-  }
+    return { loginForm, loginFormData, rules, submitForm };
+  },
 });
 </script>
 <style>
@@ -64,7 +69,7 @@ body {
 }
 </style>
 <style scoped>
-form {
+.form {
   width: auto;
   max-width: 320px;
   margin: auto;
@@ -73,6 +78,9 @@ form {
   background: #fff;
   border: 1px solid #c3c4c7;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  vertical-align: middle;
+}
+
+.form h2 {
+  text-align: center;
 }
 </style>
