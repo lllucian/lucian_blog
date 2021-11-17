@@ -45,7 +45,7 @@ export default defineComponent({
     const submitForm = async () => {
       loginForm.value.validate((valid: any) => {
         if (valid) {
-          alert("submit!");
+          
         } else {
           alert("invalid!");
         }
