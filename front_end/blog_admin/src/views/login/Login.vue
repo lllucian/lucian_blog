@@ -24,6 +24,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import { postRequest } from "/@/requests";
 
 export default defineComponent({
   setup() {
@@ -45,9 +46,13 @@ export default defineComponent({
     const submitForm = async () => {
       loginForm.value.validate((valid: any) => {
         if (valid) {
-          
+          postRequest("/api/login", loginFormData.value).then(resp => {
+            if (resp) {
+              
+            }
+          });
         } else {
-          alert("invalid!");
+          return false;
         }
       });
     };

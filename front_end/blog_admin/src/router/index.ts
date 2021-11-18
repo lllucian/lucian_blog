@@ -1,14 +1,13 @@
 import { nextTick } from 'process';
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
+import { basicRoutes } from './routes';
 
-const routes = [
-    {path: "/", component: () => import("/@/views/login/Login.vue"), name: 'login', meta: {title: '管理系统登陆页面'}}
-]
 
 export const router = createRouter({
     history: createWebHashHistory(),
-    routes: routes
+    routes: basicRoutes as unknown as RouteRecordRaw[]
 })
+
 
 const defaultTitle = 'Lucian Blog'
 router.beforeEach((to, from, next) => {
