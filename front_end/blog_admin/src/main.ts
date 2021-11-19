@@ -6,10 +6,13 @@ import 'element-plus/dist/index.css'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { stroage } from '/@/stroage'
 
 const app = createApp(App)
 
 app.use(router)
+
+app.use(stroage)
 
 app.use(VueAxios, axios)
 

@@ -23,11 +23,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onBeforeMount } from "vue";
 import { postRequest } from "/@/requests";
+import { router } from "/@/router";
+import { routeNames } from "/@/router/routes";
+import { stroage } from "/@/stroage";
 
 export default defineComponent({
   setup() {
+    onBeforeMount(() => {
+      stroage.commit({ type: "clearToken" });
+    });
+
     const loginForm = ref();
 
     const loginFormData = ref({
@@ -43,12 +50,30 @@ export default defineComponent({
       password: { required: true, message: "请填写密码", trigger: "blur" },
     });
 
+    const restForm = () => {
+      loginForm.value.resetFields();
+    };
+
     const submitForm = async () => {
       loginForm.value.validate((valid: any) => {
         if (valid) {
-          postRequest("/api/login", loginFormData.value).then(resp => {
+          postRequest("/api/login", loginFormData.value).then((resp) => {
             if (resp) {
-              
+              const jwtToken = (<any>resp).jwtToken;
+              if (jwtToken) {
+                stroage.commit({
+                  type: "setToken",
+                  token: jwtToken!,
+                });
+                const redictPage = routeNames.includes(
+                  router.currentRoute.value.query["redict_to"] as string
+                )
+                  ? (router.currentRoute.value.query["redict_to"] as string)
+                  : "AdminPost";
+                router.push({ name: redictPage });
+              }
+            } else {
+              restForm();
             }
           });
         } else {
@@ -57,7 +82,7 @@ export default defineComponent({
       });
     };
 
-    return { loginForm, loginFormData, rules, submitForm };
+    return { loginForm, loginFormData, rules, submitForm, restForm };
   },
 });
 </script>

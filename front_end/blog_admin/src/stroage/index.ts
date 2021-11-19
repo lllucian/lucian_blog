@@ -1,21 +1,26 @@
 import { createStore } from "vuex";
 
-const store = createStore({
+export const stroage = createStore({
   state: () => ({
-    // user info
-    userInfo: null,
     // token
     token: undefined,
-    // roleList
-    roleList: [],
-    // Whether the login expired
-    sessionTimeout: false,
-    // Last fetch time
-    lastUpdateTime: 0,
   }),
   getters: {
-    doneTodos: (state) => {
-      return state.token;
+    getToken: (state) => {
+      return state.token || localStorage.token;
     },
   },
+  mutations: {
+    setToken: (state, payload) => {
+      state.token = payload.token!;
+      localStorage.token = payload.token!;
+    }, 
+    clearToken: (state) => {
+      state.token = undefined;
+      localStorage.removeItem('token')
+    },
+    checkToken: (state) => {
+      if (state.token) localStorage.token = state.token;
+    }
+  }
 });

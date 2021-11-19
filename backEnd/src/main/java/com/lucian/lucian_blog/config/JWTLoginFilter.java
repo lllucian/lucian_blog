@@ -44,13 +44,13 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         String jwt = Jwts.builder()
                 .claim("authorities", as)//配置用户角色
                 .setSubject(authResult.getName())
-                .setExpiration(new Date(System.currentTimeMillis() + 3 * 10 * 60 * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() +  60 * 1000))
                 .signWith(SignatureAlgorithm.HS512,"lucian")
                 .compact();
         resp.setContentType("application/json;charset=utf-8");
         Map<String, Object> map = new HashMap<>();
         map.put("status", 200);
-        map.put("jwt-token", jwt);
+        map.put("jwtToken", jwt);
         map.put("msg", "登陆成功！");
         PrintWriter out = resp.getWriter();
         out.write(new ObjectMapper().writeValueAsString(map));
