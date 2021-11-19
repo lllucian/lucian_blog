@@ -11,8 +11,6 @@ export const router = createRouter({
 
 const defaultTitle = "Lucian Blog";
 router.beforeEach((to, from, next) => {
-    console.log(from)
-    console.log(to)
   document.title = <string>to.meta.title || defaultTitle;
   stroage.commit({ type: "checkToken" });
   const token = stroage.getters.getToken;
@@ -44,7 +42,7 @@ router.beforeEach((to, from, next) => {
         });
         ElMessage.error("登陆信息过期，请重新登陆！");
       } else {
-         next();
+        next();
       }
     }
   } else {
