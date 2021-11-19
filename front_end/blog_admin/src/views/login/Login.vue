@@ -9,11 +9,11 @@
       ref="loginForm"
     >
       <el-form-item label="用户名" prop="username">
-        <el-input v-model="loginFormData.username"></el-input>
+        <el-input v-model="loginFormData.username" v-on:keyup.enter="submitForm"></el-input>
       </el-form-item>
 
       <el-form-item label="密码" prop="password">
-        <el-input v-model="loginFormData.password" show-password></el-input>
+        <el-input v-model="loginFormData.password" show-password v-on:keyup.enter="submitForm"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm">登陆</el-button>
