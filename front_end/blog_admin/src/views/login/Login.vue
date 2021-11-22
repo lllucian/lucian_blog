@@ -87,36 +87,6 @@ export default defineComponent({
       } else {
         return;
       }
-      loginForm.value.validate((valid: any) => {
-        if (valid) {
-          try {
-            loading.value = true;
-            // await postRequest("/api/login", loginFormData.value).then((resp) => {
-            //   if (resp) {
-            //     const jwtToken = (<any>resp).jwtToken;
-            //     if (jwtToken) {
-            //       stroage.commit({
-            //         type: "setToken",
-            //         token: jwtToken!,
-            //       });
-            //       const redictPage = routeNames.includes(
-            //         router.currentRoute.value.query["redict_to"] as string
-            //       )
-            //         ? (router.currentRoute.value.query["redict_to"] as string)
-            //         : "AdminPost";
-            //       router.push({ name: redictPage });
-            //     }
-            //   } else {
-            //     restForm();
-            //   }
-            // });
-          } finally {
-            loading.value = false;
-          }
-        } else {
-          return false;
-        }
-      });
     };
 
     return { loginForm, loginFormData, rules, submitForm, restForm, loading };
