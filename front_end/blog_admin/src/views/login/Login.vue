@@ -59,7 +59,7 @@ export default defineComponent({
     };
 
     const submitForm = async () => {
-      const valid: any = await loginForm.value.validate;
+      const valid: any = await loginForm.value.validate();
       if (valid) {
         try {
           loading.value = true;
