@@ -7,13 +7,15 @@
       :model="loginFormData"
       :rules="rules"
       ref="loginForm"
+      v-on:keyup.enter="submitForm"
+      v-loading="loading"
     >
       <el-form-item label="用户名" prop="username">
-        <el-input v-model="loginFormData.username" v-on:keyup.enter="submitForm"></el-input>
+        <el-input v-model="loginFormData.username"></el-input>
       </el-form-item>
 
       <el-form-item label="密码" prop="password">
-        <el-input v-model="loginFormData.password" show-password v-on:keyup.enter="submitForm"></el-input>
+        <el-input v-model="loginFormData.password" show-password></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm">登陆</el-button>
@@ -35,6 +37,8 @@ export default defineComponent({
       stroage.commit({ type: "clearToken" });
     });
 
+    const loading = ref(false);
+
     const loginForm = ref();
 
     const loginFormData = ref({
@@ -55,34 +59,67 @@ export default defineComponent({
     };
 
     const submitForm = async () => {
+      const valid: any = await loginForm.value.validate;
+      if (valid) {
+        try {
+          loading.value = true;
+          const resp: any = await postRequest(
+            "/api/login",
+            loginFormData.value
+          );
+          if (resp) {
+            const jwtToken = resp.jwtToken;
+            if (jwtToken) {
+              stroage.commit({ type: "setToken", token: jwtToken! });
+              const redictPage = routeNames.includes(
+                router.currentRoute.value.query["redict_to"] as string
+              )
+                ? (router.currentRoute.value.query["redict_to"] as string)
+                : "AdminPost";
+              router.push({ name: redictPage });
+            }
+          } else {
+            restForm();
+          }
+        } finally {
+          loading.value = false;
+        }
+      } else {
+        return;
+      }
       loginForm.value.validate((valid: any) => {
         if (valid) {
-          postRequest("/api/login", loginFormData.value).then((resp) => {
-            if (resp) {
-              const jwtToken = (<any>resp).jwtToken;
-              if (jwtToken) {
-                stroage.commit({
-                  type: "setToken",
-                  token: jwtToken!,
-                });
-                const redictPage = routeNames.includes(
-                  router.currentRoute.value.query["redict_to"] as string
-                )
-                  ? (router.currentRoute.value.query["redict_to"] as string)
-                  : "AdminPost";
-                router.push({ name: redictPage });
-              }
-            } else {
-              restForm();
-            }
-          });
+          try {
+            loading.value = true;
+            // await postRequest("/api/login", loginFormData.value).then((resp) => {
+            //   if (resp) {
+            //     const jwtToken = (<any>resp).jwtToken;
+            //     if (jwtToken) {
+            //       stroage.commit({
+            //         type: "setToken",
+            //         token: jwtToken!,
+            //       });
+            //       const redictPage = routeNames.includes(
+            //         router.currentRoute.value.query["redict_to"] as string
+            //       )
+            //         ? (router.currentRoute.value.query["redict_to"] as string)
+            //         : "AdminPost";
+            //       router.push({ name: redictPage });
+            //     }
+            //   } else {
+            //     restForm();
+            //   }
+            // });
+          } finally {
+            loading.value = false;
+          }
         } else {
           return false;
         }
       });
     };
 
-    return { loginForm, loginFormData, rules, submitForm, restForm };
+    return { loginForm, loginFormData, rules, submitForm, restForm, loading };
   },
 });
 </script>
