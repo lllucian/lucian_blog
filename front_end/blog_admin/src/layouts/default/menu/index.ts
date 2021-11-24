@@ -1,3 +1,5 @@
+import MenuTree from './src/MenuTree.vue'
 import CustomMenu from './src/CustomMenu.vue'
 
-export { CustomMenu }
+
+export { MenuTree, CustomMenu }

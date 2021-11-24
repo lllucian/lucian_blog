@@ -6,7 +6,7 @@ export const LoginRoute: AppRouteRecordRaw = {
   name: "Login",
   path: "/login",
   component: () => import("/@/views/login/Login.vue"),
-  meta: { title: "Lucian Blog后台管理系统登陆界面" },
+  meta: { title: "Lucian Blog后台管理系统登陆界面", hiddenMenu: true },
 };
 
 export const AdminRoutes: AppRouteModule[] = [
@@ -17,6 +17,9 @@ export const AdminRoutes: AppRouteModule[] = [
     redirect: '/posts',
     meta: {
       title: "文章",
+      hiddenMenu: false,
+      collection: 'mdi',
+      icon: 'account-box'
     },
     children: [
       {
@@ -25,6 +28,7 @@ export const AdminRoutes: AppRouteModule[] = [
         component: () => import("/@/views/admin/post/Post.vue"),
         meta: {
           title: "文章一览",
+          hiddenMenu: false,
         },
       },
     ],

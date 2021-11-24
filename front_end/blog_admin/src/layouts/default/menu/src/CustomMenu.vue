@@ -4,7 +4,8 @@
     @open="handleOpen"
     @close="handleClose"
   >
-    <el-sub-menu index="1">
+    <MenuTree :menuData="basicRoutes"></MenuTree>
+    <!-- <el-sub-menu index="1">
       <template #title>
         <el-icon><location /></el-icon>
         <span>Navigator One</span>
@@ -33,11 +34,15 @@
       <el-icon><setting /></el-icon>
       <span>Navigator Four</span>
     </el-menu-item>
+  </el-menu> -->
   </el-menu>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, toRef } from "vue";
+import {MenuTree} from '../../menu'
+import {basicRoutes} from '/@/router/routes'
+
 import {
   Location,
   Document,
@@ -51,6 +56,7 @@ export default defineComponent({
     Document,
     Setting,
     IconMenu,
+    MenuTree
   },
   props: {
     pageHeight: {type: String, required: false}
@@ -67,6 +73,7 @@ export default defineComponent({
       handleOpen,
       handleClose,
       pageHeight,
+      basicRoutes,
     };
   },
 });

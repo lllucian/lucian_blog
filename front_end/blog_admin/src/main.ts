@@ -7,6 +7,7 @@ import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import { stroage } from '/@/stroage'
+import '@purge-icons/generated'
 
 const app = createApp(App)
 
