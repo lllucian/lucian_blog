@@ -1,7 +1,7 @@
 import { ElMessage } from "element-plus";
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import { stroage } from "../stroage";
-import { basicRoutes, routeNames } from "./routes";
+import { basicRoutes } from "./routes";
 import { Base64 } from "js-base64";
 
 export const router = createRouter({

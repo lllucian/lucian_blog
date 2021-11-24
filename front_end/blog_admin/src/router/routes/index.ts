@@ -31,18 +31,3 @@ export const AdminRoutes: AppRouteModule[] = [
   },
 ];
 export const basicRoutes = [LoginRoute, ...AdminRoutes];
-
-const routeNames:Array<string> = [];
-
-const getRouteNames = (routes:Array<AppRouteModule>) => {
-    return routes.forEach((route) => {
-        routeNames.push(route.name);
-        if (route.children !== undefined && route.children.length !== 0){
-            getRouteNames(route.children)
-        }
-    })
-}
-
-getRouteNames(AdminRoutes);
-
-export {routeNames};

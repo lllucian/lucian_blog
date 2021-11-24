@@ -28,7 +28,6 @@
 import { defineComponent, ref, onBeforeMount } from "vue";
 import { postRequest } from "/@/requests";
 import { router } from "/@/router";
-import { routeNames } from "/@/router/routes";
 import { stroage } from "/@/stroage";
 
 export default defineComponent({
@@ -71,11 +70,8 @@ export default defineComponent({
             const jwtToken = resp.jwtToken;
             if (jwtToken) {
               stroage.commit({ type: "setToken", token: jwtToken! });
-              const redictPage = routeNames.includes(
-                router.currentRoute.value.query["redict_to"] as string
-              )
-                ? (router.currentRoute.value.query["redict_to"] as string)
-                : "AdminPost";
+              const redictTo = router.currentRoute.value.query["redict_to"] as string || "AdminPost";
+              const redictPage = router.hasRoute(redictTo) ? redictTo : 'AdminPost';
               router.push({ name: redictPage });
             }
           } else {
