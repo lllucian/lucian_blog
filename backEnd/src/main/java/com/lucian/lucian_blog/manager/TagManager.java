@@ -3,16 +3,22 @@ package com.lucian.lucian_blog.manager;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lucian.lucian_blog.bean.entity.Tag;
+import com.lucian.lucian_blog.bean.translater.Tag2SelectVO;
 import com.lucian.lucian_blog.bean.translater.Tag2TagIndexVO;
 import com.lucian.lucian_blog.bean.vo.TagFormVO;
 import com.lucian.lucian_blog.bean.vo.TagIndexVO;
+import com.lucian.lucian_blog.bean.vo.TagSelectDataVO;
 import com.lucian.lucian_blog.form_parm.TagParam;
 import com.lucian.lucian_blog.query_wrapper.TagQuery;
+import com.lucian.lucian_blog.query_wrapper.TagSelectQuery;
 import com.lucian.lucian_blog.service.TagService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class TagManager {
@@ -22,6 +28,9 @@ public class TagManager {
     // entity转vo
     @Autowired
     Tag2TagIndexVO tag2TagIndexVO;
+
+    @Autowired
+    Tag2SelectVO tag2SelectVO;
 
     /**
      * 获取一览
@@ -87,4 +96,18 @@ public class TagManager {
         if (tag == null) return false;
         return tagService.removeById(id);
     }
+
+    /**
+     * select 检索框
+     * @param tagSelectQuery 检索条件
+     * @return 符合检索的内容
+     */
+    public List<TagSelectDataVO> selectSearch(TagSelectQuery tagSelectQuery){
+        if (tagSelectQuery == null) tagSelectQuery = new TagSelectQuery();
+        List<Tag> list = tagService.list(tagSelectQuery.getQueryWrapper());
+        List<TagSelectDataVO> searchData = new ArrayList<>();
+        if (list.size() == 0) return searchData;
+        return tag2SelectVO.tranTag2SelectVOList(list);
+    }
+
 }

@@ -5,17 +5,21 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lucian.lucian_blog.bean.bo.CategoryBO;
 import com.lucian.lucian_blog.bean.entity.Category;
 import com.lucian.lucian_blog.bean.translater.Category2BO;
+import com.lucian.lucian_blog.bean.translater.Category2SelectVO;
 import com.lucian.lucian_blog.bean.translater.CategoryBO2IndexVO;
 import com.lucian.lucian_blog.bean.vo.CategoryFormVO;
 import com.lucian.lucian_blog.bean.vo.CategoryIndexVO;
+import com.lucian.lucian_blog.bean.vo.CategorySelectDataVO;
 import com.lucian.lucian_blog.dao.CategoryDao;
 import com.lucian.lucian_blog.form_parm.CategoryParam;
 import com.lucian.lucian_blog.query_wrapper.CategoryQuery;
+import com.lucian.lucian_blog.query_wrapper.CategorySelectQuery;
 import com.lucian.lucian_blog.service.CategoryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -35,6 +39,9 @@ public class CategoryManager {
 
     @Autowired
     CategoryBO2IndexVO categoryBO2IndexVO;
+
+    @Autowired
+    Category2SelectVO category2SelectVO;
 
     public IPage<CategoryIndexVO> queryList(CategoryQuery categoryQuery) {
         Page<Category> page = new Page<>(categoryQuery.getCurrentPage(), categoryQuery.getLimit());
@@ -103,5 +110,18 @@ public class CategoryManager {
         Category category = categoryService.getById(id);
         if (category == null) return  false;
         return categoryService.removeById(id);
+    }
+
+    /**
+     * select 检索框
+     * @param categorySelectQuery 检索条件
+     * @return 符合检索的内容
+     */
+    public List<CategorySelectDataVO> selectSearch(CategorySelectQuery categorySelectQuery){
+        if (categorySelectQuery == null) categorySelectQuery = new CategorySelectQuery();
+        List<Category> list = categoryService.list(categorySelectQuery.getQueryWrapper());
+        List<CategorySelectDataVO> searchData = new ArrayList<>();
+        if (list.size() == 0) return searchData;
+        return category2SelectVO.tranCategory2SelectVOList(list);
     }
 }

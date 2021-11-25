@@ -1,11 +1,13 @@
 import axios, { AxiosInstance } from "axios";
 import { ElMessage } from "element-plus";
-
+import {stroage} from "/@/stroage"
 const instance: AxiosInstance = axios.create();
+
+instance.defaults.headers.common['Authorization'] = stroage.getters.getToken;
 
 // 响应拦截器
 instance.interceptors.response.use(response => {
-    if (response.data.status! !== 200) {
+    if (response.data.code! !== 200) {
         ElMessage.error({message: response.data.msg});
         return;
     }
