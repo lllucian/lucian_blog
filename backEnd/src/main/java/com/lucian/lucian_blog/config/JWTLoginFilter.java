@@ -44,7 +44,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         String jwt = Jwts.builder()
                 .claim("authorities", as)//配置用户角色
                 .setSubject(authResult.getName())
-                .setExpiration(new Date(System.currentTimeMillis() +  60 * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() * 6 * 10 +  60 * 1000))
                 .signWith(SignatureAlgorithm.HS512,"lucian")
                 .compact();
         resp.setContentType("application/json;charset=utf-8");

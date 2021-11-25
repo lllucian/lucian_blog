@@ -1,8 +1,7 @@
 <template>
   <el-menu
     :style="{minHeight: pageHeight}"
-    @open="handleOpen"
-    @close="handleClose"
+    :default-active="defaultActive"
     :router="true"
   >
     <MenuTree :menuData="basicRoutes"></MenuTree>
@@ -10,23 +9,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, toRef } from "vue";
-import {MenuTree} from '../../menu'
+import { defineComponent, toRef } from "vue";
+import {MenuTree} from '/@/layouts/default/menu'
 import {basicRoutes} from '/@/router/routes'
+import {router} from '/@/router'
 
-import {
-  Location,
-  Document,
-  Menu as IconMenu,
-  Setting,
-} from "@element-plus/icons";
 
 export default defineComponent({
   components: {
-    Location,
-    Document,
-    Setting,
-    IconMenu,
     MenuTree
   },
   props: {
@@ -34,17 +24,13 @@ export default defineComponent({
   },
   setup(props) {
     const pageHeight = toRef(props, 'pageHeight')
-    const handleOpen = (key: any, keyPath: any) => {
-      console.log(key, keyPath);
-    };
-    const handleClose = (key: any, keyPath: any) => {
-      console.log(key, keyPath);
-    };
+    
+    const defaultActive = router.currentRoute.value.path;
+
     return {
-      handleOpen,
-      handleClose,
       pageHeight,
       basicRoutes,
+      defaultActive
     };
   },
 });

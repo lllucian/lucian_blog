@@ -1,5 +1,6 @@
 import { router } from "..";
-import { DEFAULT_LAYOUT } from "../constant";
+// import { DEFAULT_LAYOUT } from "../constant";
+import DEFAULT_LAYOUT from '/@/layouts/default/index.vue'
 import { AppRouteModule, AppRouteRecordRaw } from "/@/router/types";
 
 export const LoginRoute: AppRouteRecordRaw = {
@@ -18,17 +19,17 @@ export const AdminRoutes: AppRouteModule[] = [
     meta: {
       title: "文章",
       hiddenMenu: false,
-      collection: 'mdi',
-      icon: 'account-box'
+      icon: 'pixelarticons:article-multiple'
     },
     children: [
       {
         name: "AdminPostIndex",
-        path: "posts",
+        path: "/posts",
         component: () => import("/@/views/admin/post/Post.vue"),
         meta: {
           title: "文章一览",
           hiddenMenu: false,
+          icon: 'pixelarticons:article'
         },
       },
     ],
