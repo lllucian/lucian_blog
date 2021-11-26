@@ -45,8 +45,18 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="标题" prop="title">
-              <el-input v-model="SearchFormData.title" placeholder="请输入" clearable />
+              <el-input
+                v-model="SearchFormData.title"
+                placeholder="请输入"
+                clearable
+              />
             </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <DateTimePickerCommponet labelName='创建时间' propName="created" v-model="SearchFormData.created"></DateTimePickerCommponet>
+          </el-col>
+          <el-col :span="12">
+            <DateTimePickerCommponet labelName='修改时间' propName="updated" v-model="SearchFormData.updated"></DateTimePickerCommponet>
           </el-col>
         </el-row>
         <el-row style="justify-content: center">
@@ -64,18 +74,20 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { postRequest } from "/@/requests";
+import DateTimePickerCommponet from "/@/components/form/DateTimePickerCommponet.vue"
 
 export default defineComponent({
+  components: {
+    DateTimePickerCommponet
+  },
   setup() {
     const SearchForm = ref();
-    const SearchFormData = ref({
+    let SearchFormData = ref({
       category: "",
       title: "",
       tags: new Array(),
-      createdAt: "",
-      createdEnd: "",
-      updatedAt: "",
-      updatedEnd: "",
+      created: "",
+      updated: "",
       deleted: false,
     });
 
@@ -93,6 +105,40 @@ export default defineComponent({
       SearchForm.value.resetFields();
     };
 
+    const shortcuts = [
+      {
+        text: "上周",
+        value: () => {
+          const end = new Date();
+          const start = new Date();
+          start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+          return [start, end];
+        },
+      },
+      {
+        text: "上个月",
+        value: () => {
+          const end = new Date();
+          const start = new Date();
+          start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+          return [start, end];
+        },
+      },
+      {
+        text: "3个月前",
+        value: () => {
+          const end = new Date();
+          const start = new Date();
+          start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+          return [start, end];
+        },
+      },
+    ];
+
+    const defaultTime = [
+      new Date(2000, 1, 1, 12, 0, 0),
+      new Date(2000, 2, 1, 23, 59, 59),
+    ]
     const categoryRemoteMethod = async (query: string) => {
       if (query.trim() !== "") {
         categoryLoading.value = true;
@@ -111,7 +157,7 @@ export default defineComponent({
         if ((await data).data) tagOptions.value = (await data).data;
         tagLoading.value = false;
       } else {
-          tagOptions.value = [];
+        tagOptions.value = [];
       }
     };
     return {
@@ -147,7 +193,10 @@ export default defineComponent({
 <style lang="scss">
 .el-col {
   padding-right: 8px;
-  &:last-child {
+  &:nth-child(3) {
+    padding-right: 0;
+  }
+  &:nth-child(5) {
     padding-right: 0;
   }
 }
