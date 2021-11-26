@@ -2,6 +2,8 @@ package com.lucian.lucian_blog.bean.vo;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class PostIndexVO {
     private Integer id;
@@ -10,9 +12,11 @@ public class PostIndexVO {
 
     private String description;
 
-    private String categories;
+    private List<String> categories;
 
-    private String tags;
+    private List<String> tags;
 
     private String createdAt;
+
+    private String updatedAt;
 }

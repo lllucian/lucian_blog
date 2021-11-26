@@ -32,7 +32,7 @@
         from posts p
                  left join post_categories pc on p.id = pc.post_id and pc.deleted_at is null
                  left join categories ca on pc.category_id = ca.id and ca.deleted_at is null
-                 left join post_tags pt on pc.post_id = pt.post_id and pt.deleted_at is null
+                 left join post_tags pt on p.id = pt.post_id and pt.deleted_at is null
                  left join tags t on pt.tag_id = t.id and t.deleted_at is null
         where p.deleted_at is null ${wrapper.customSqlSegment}
     </select>

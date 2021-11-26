@@ -18,7 +18,8 @@ public abstract class PostBO2PostIndexVO {
             @Mapping(source = "post.description", target = "description"),
             @Mapping(source = "post.createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd HH:mm:ss"),
             @Mapping(target = "categories", ignore = true),
-            @Mapping(target = "tags", ignore = true)
+            @Mapping(target = "tags", ignore = true),
+            @Mapping(target = "updatedAt", source = "post.updatedAt", dateFormat = "yyyy/MM/dd HH:mm:ss")
     })
     public abstract PostIndexVO convertToPostIndexVo(PostBO postBOs);
 
@@ -26,12 +27,10 @@ public abstract class PostBO2PostIndexVO {
     protected void setCategories(PostBO postBO, @MappingTarget PostIndexVO postIndexVO){
         List<Category> categories = postBO.getCategories();
         List<String> ca_collect = categories.stream().map(Category::getName).collect(Collectors.toList());
-        String categories_str = String.join(", ", ca_collect);
-        postIndexVO.setCategories(categories_str);
+        postIndexVO.setCategories(ca_collect);
 
         List<Tag> tags = postBO.getTags();
         List<String> tag_collect = tags.stream().map(Tag::getName).collect(Collectors.toList());
-        String tag_str = String.join(", ", tag_collect);
-        postIndexVO.setTags(tag_str);
+        postIndexVO.setTags(tag_collect);
     }
 }
