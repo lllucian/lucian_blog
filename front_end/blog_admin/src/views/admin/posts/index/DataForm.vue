@@ -43,7 +43,7 @@
   </el-collapse>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, ref, toRef, toRefs } from "vue";
+import { defineComponent, onMounted, ref, toRef, toRefs, watch } from "vue";
 import Pagination from "/@/components/data/Pagination.vue";
 import { setPageConditions, apiFormData } from "./query";
 
@@ -79,15 +79,30 @@ export default defineComponent({
       total: 0,
     });
 
-    const {dataTable} = toRefs(props);
+    const {dataTable, total, current, size} = toRefs(props);
 
     onMounted(async () => {
       getList();
     });
 
+    watch(total, (newValue, oldValue) => {
+      pageInfo.value.total = newValue;
+    });
+
+    watch(current, (newValue, oldValue) => {
+      pageInfo.value.current = newValue;
+    })
+    
+    watch(size, (newValue, oldValue) => {
+      pageInfo.value.size = newValue;
+    });
+
     const getList = async () => {
       setPageConditions(pageInfo.value)
       const {records, current, size, total} = pageInfo.value = await apiFormData();
+      pageInfo.value.current = current;
+      pageInfo.value.size = size;
+      pageInfo.value.total = total;
       emit('update:dataTable', records);
       emit('update:current', current);
       emit('update:size', size);
