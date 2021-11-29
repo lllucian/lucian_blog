@@ -12,8 +12,8 @@ export const stroage = createStore({
   },
   mutations: {
     setToken: (state, payload) => {
-      state.token = payload.token!;
-      localStorage.token = payload.token!;
+      state.token = payload.token;
+      localStorage.token = payload.token;
     }, 
     clearToken: (state) => {
       state.token = undefined;
@@ -21,6 +21,7 @@ export const stroage = createStore({
     },
     checkToken: (state) => {
       if (state.token) localStorage.token = state.token;
+      if (localStorage.token && !state.token) state.token = localStorage.token;
     }
   }
 });

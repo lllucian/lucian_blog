@@ -51,7 +51,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         Map<String, Object> map = new HashMap<>();
         map.put("code", 200);
         map.put("jwtToken", jwt);
-        map.put("msg", "登陆成功！");
+        map.put("message", "登陆成功！");
         PrintWriter out = resp.getWriter();
         out.write(new ObjectMapper().writeValueAsString(map));
         out.flush();
@@ -61,7 +61,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         resp.setContentType("application/json;charset=utf-8");
         Map<String, Object> stringObjectHashMap = new HashMap<>();
         stringObjectHashMap.put("code", 401);
-        stringObjectHashMap.put("msg", "登陆失败！");
+        stringObjectHashMap.put("message", "登陆失败！");
         PrintWriter out = resp.getWriter();
         out.write(new ObjectMapper().writeValueAsString(stringObjectHashMap));
         out.flush();

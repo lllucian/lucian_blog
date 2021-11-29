@@ -13,13 +13,13 @@ instance.interceptors.request.use(config => {
 })
 // 响应拦截器
 instance.interceptors.response.use(response => {
-    if (response.data.code! !== 200) {
-        ElMessage.error({message: response.data.msg});
+    if (response.data.code !== 200) {
+        ElMessage.error({message: response.data.message});
         return;
     }
 
-    if (response.data.msg){
-        ElMessage.success({message: response.data.msg});
+    if (response.data.message){
+        ElMessage.success({message: response.data.message});
     }
     return response.data;
 }, error => {

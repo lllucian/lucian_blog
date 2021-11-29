@@ -69,7 +69,7 @@ export default defineComponent({
           if (resp) {
             const jwtToken = resp.jwtToken;
             if (jwtToken) {
-              stroage.commit({ type: "setToken", token: jwtToken! });
+              stroage.commit({ type: "setToken", token: jwtToken });
               const redictTo = router.currentRoute.value.query["redict_to"] as string || "AdminPost";
               const redictPage = router.hasRoute(redictTo) ? redictTo : 'AdminPost';
               router.push({ name: redictPage });
