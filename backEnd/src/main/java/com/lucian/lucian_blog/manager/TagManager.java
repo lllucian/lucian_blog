@@ -38,7 +38,7 @@ public class TagManager {
      * @return 分页标签对象
      */
     public IPage<TagIndexVO> queryListByPage(TagQuery tagQuery){
-        Page<Tag> page = new Page<>(tagQuery.getCurrentPage(), tagQuery.getLimit());
+        Page<Tag> page = new Page<>(tagQuery.getCurrent(), tagQuery.getSize());
         Page<Tag> tags = tagService.page(page, tagQuery.getQueryWrapper());
         return tags.convert(tag -> tag2TagIndexVO.translate(tag));
     }

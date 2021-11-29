@@ -53,10 +53,18 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <DateTimePickerCommponet labelName='创建时间' propName="created" v-model="SearchFormData.created"></DateTimePickerCommponet>
+            <DateTimePickerCommponet
+              labelName="创建时间"
+              propName="created"
+              v-model="SearchFormData.created"
+            ></DateTimePickerCommponet>
           </el-col>
           <el-col :span="12">
-            <DateTimePickerCommponet labelName='修改时间' propName="updated" v-model="SearchFormData.updated"></DateTimePickerCommponet>
+            <DateTimePickerCommponet
+              labelName="修改时间"
+              propName="updated"
+              v-model="SearchFormData.updated"
+            ></DateTimePickerCommponet>
           </el-col>
         </el-row>
         <el-row style="justify-content: center">
@@ -72,23 +80,55 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, Ref, ref } from "vue";
 import { postRequest } from "/@/requests";
-import DateTimePickerCommponet from "/@/components/form/DateTimePickerCommponet.vue"
+import DateTimePickerCommponet from "/@/components/form/DateTimePickerCommponet.vue";
+import {
+  apiFormData,
+  getPagesize,
+  queryConditionsByPageInterface,
+  setQueryConditions,
+} from "./query";
 
 export default defineComponent({
   components: {
-    DateTimePickerCommponet
+    DateTimePickerCommponet,
   },
-  setup() {
+  props: {
+    dataTable: {
+      type: Array,
+      default: [],
+      required: false,
+    },
+    total: {
+      type: Number,
+      default: 0,
+      required: false
+    },
+    size: {
+      type: Number,
+      default: 10,
+      required: false
+    },
+    current: {
+      type: Number,
+      default: 1,
+      required: false
+    }
+  },
+  emits: ["update:dataTable", "update:total", "update:size", "update:current"],
+  setup(props, { emit }) {
     const SearchForm = ref();
-    let SearchFormData = ref({
-      category: "",
+    let SearchFormData: Ref<queryConditionsByPageInterface> = ref({
+      category: null,
       title: "",
-      tags: new Array(),
-      created: "",
-      updated: "",
-      deleted: false,
+      tags: new Array<number>(),
+      created: new Array<string>(),
+      updated: new Array<string>(),
+      size: 10,
+      current: 1,
+      total: 0,
+      records: []
     });
 
     const categoryOptions = ref([]);
@@ -99,9 +139,17 @@ export default defineComponent({
 
     const tagLoading = ref(false);
 
-    const commitSearchForm = async () => {};
+    const commitSearchForm = async () => {
+      SearchFormData.value.size = getPagesize();
+      setQueryConditions(SearchFormData.value);
+      const {records, current, size, total} = await apiFormData();
+      emit('update:dataTable', records);
+      emit('update:size', size);
+      emit('update:current', current);
+      emit('update:total', total);
+    };
 
-    const clearSearchForm = async () => {
+    const clearSearchForm = () => {
       SearchForm.value.resetFields();
     };
 

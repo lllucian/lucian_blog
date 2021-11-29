@@ -14,9 +14,9 @@ public class CategoryQuery {
 
     private String slug;
 
-    private Integer currentPage = 1;
+    private Integer current = 1;
 
-    private Integer limit = 10;
+    private Integer size = 10;
 
     public Wrapper<Category> getQueryWrapper(){
         QueryWrapper<Category> categoryQueryQueryWrapper = new QueryWrapper<>();

@@ -24,9 +24,9 @@ public class PostQuery {
 
     private String tag;
 
-    private Integer currentPage = 1;
+    private Integer current = 1;
 
-    private Integer limit = 10;
+    private Integer size = 10;
 
     public QueryWrapper<Post> getQueryWrapper(){
         QueryWrapper<Post> wrapper = new QueryWrapper<>();

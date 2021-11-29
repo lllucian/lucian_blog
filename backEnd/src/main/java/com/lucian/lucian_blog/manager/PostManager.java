@@ -45,7 +45,7 @@ public class PostManager {
 
     public IPage<PostIndexVO> queryListByPage(PostQuery postQuery){
         if (postQuery == null) postQuery = new PostQuery();
-        Page<PostBO> page = new Page<>(postQuery.getCurrentPage(), postQuery.getLimit());
+        Page<PostBO> page = new Page<>(postQuery.getCurrent(), postQuery.getSize());
         IPage<PostBO> pageBOPage = postDao.queryConditionsByPage(page, postQuery.getQueryWrapper());
         IPage<PostIndexVO> postIndexVOIPage = pageBOPage.convert(postBO -> postBO2PostIndexVO.convertToPostIndexVo(postBO));
         return postIndexVOIPage;

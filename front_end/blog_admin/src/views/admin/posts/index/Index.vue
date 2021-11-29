@@ -1,18 +1,18 @@
 <template>
   <el-row>
     <el-col :span="24">
-      <Search></Search>
+      <Search v-model:dataTable="tableInfo.dataTable" v-model:size="tableInfo.size" v-model:current="tableInfo.current" v-model:total="tableInfo.total"></Search>
     </el-col>
   </el-row>
   <el-row>
     <el-col :span="24">
-      <DataForm></DataForm>
+      <DataForm v-model:dataTable="tableInfo.dataTable" v-model:size="tableInfo.size" v-model:current="tableInfo.current" v-model:total="tableInfo.total"></DataForm>
     </el-col>
   </el-row>
   <el-backtop target=".el-main" />
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import Search from "./Search.vue";
 import DataForm from "./DataForm.vue";
 
@@ -21,7 +21,15 @@ export default defineComponent({
     Search,
     DataForm,
   },
-  setup() {},
+  setup() {
+    const tableInfo = ref({
+      dataTable: [],
+      size: 10,
+      current: 1,
+      total: 0
+    });
+    return {tableInfo}
+  },
 });
 </script>
 <style lang="scss" scoped>

@@ -44,7 +44,7 @@ public class CategoryManager {
     Category2SelectVO category2SelectVO;
 
     public IPage<CategoryIndexVO> queryList(CategoryQuery categoryQuery) {
-        Page<Category> page = new Page<>(categoryQuery.getCurrentPage(), categoryQuery.getLimit());
+        Page<Category> page = new Page<>(categoryQuery.getCurrent(), categoryQuery.getSize());
         Page<Category> categories = categoryDao.selectPage(page, categoryQuery.getQueryWrapper());
         IPage<CategoryBO> categoryBOs = categories.convert(category -> category2BO.translate(category));
         List<CategoryBO> records = categoryBOs.getRecords();

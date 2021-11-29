@@ -24,6 +24,6 @@ export const postRequest = (url: string, params: object) => {
     return instance.post(url, params);
 }
 
-export const getRequest = (url: string) => {
-    return instance.get(url);
+export const getRequest = (url: string, params?:object) => {
+    return instance.get(url, {params: params});
 }

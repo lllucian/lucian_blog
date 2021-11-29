@@ -8,7 +8,7 @@
         ></span>
         检索数据
       </template>
-      <el-table :data="tableData" :border="true" stripe>
+      <el-table :data="dataTable" :border="true" stripe>
         <el-table-column
           type="selection"
           width="55"
@@ -38,28 +38,63 @@
           </template>
         </el-table-column>
       </el-table>
+      <Pagination v-model:currentPage="pageInfo.current" v-model:pageSize="pageInfo.size" v-model:total="pageInfo.total" @pagination="getList"></Pagination>
     </el-collapse-item>
   </el-collapse>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
-import { getRequest } from "/@/requests";
+import { defineComponent, onMounted, ref, toRef, toRefs } from "vue";
+import Pagination from "/@/components/data/Pagination.vue";
+import { setPageConditions, apiFormData } from "./query";
 
 export default defineComponent({
-  setup() {
-
-    const tableData = ref([]);
-
-    onMounted(async() => {
-      const data = await getRequest("api/admin/posts");
-      if (data.data && data.data.recourds){ 
-        console.log(data.data.recourds)
-      }else {
-        tableData.value = [];
-      }
+  components: { Pagination },
+  props: {
+    dataTable: {
+      type: Array,
+      default: [],
+      required: false,
+    },
+    total: {
+      type: Number,
+      default: 0,
+      required: false
+    },
+    size: {
+      type: Number,
+      default: 10,
+      required: false
+    },
+    current: {
+      type: Number,
+      default: 1,
+      required: false
+    }
+  },
+  emits: ['update:dataTable', 'update:size', 'update:total', 'update:current'],
+  setup(props, {emit}) {
+    const pageInfo = ref({
+      current: 1,
+      size: 10,
+      total: 0,
     });
 
-    return { tableData };
+    const {dataTable} = toRefs(props);
+
+    onMounted(async () => {
+      getList();
+    });
+
+    const getList = async () => {
+      setPageConditions(pageInfo.value)
+      const {records, current, size, total} = pageInfo.value = await apiFormData();
+      emit('update:dataTable', records);
+      emit('update:current', current);
+      emit('update:size', size);
+      emit('update:total', total);
+    };
+
+    return { dataTable, pageInfo, getList};
   },
 });
 </script>
