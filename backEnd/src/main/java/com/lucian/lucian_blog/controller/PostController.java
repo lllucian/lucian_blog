@@ -40,8 +40,7 @@ public class PostController {
      */
     @GetMapping("posts")
     public CommonResult<IPage<PostIndexVO>> index(){
-        PostQuery postQuery = new PostQuery();
-        IPage<PostIndexVO> iPage = postManager.queryListByPage(postQuery);
+        IPage<PostIndexVO> iPage = postManager.queryListByPage(null);
         return CommonResult.successNoMessage(iPage);
     }
 

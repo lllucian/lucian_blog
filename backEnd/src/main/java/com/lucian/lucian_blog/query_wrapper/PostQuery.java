@@ -1,6 +1,7 @@
 package com.lucian.lucian_blog.query_wrapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.lucian.lucian_blog.bean.entity.Post;
 import lombok.Data;
 import org.apache.logging.log4j.util.Strings;
 
@@ -27,8 +28,8 @@ public class PostQuery {
 
     private Integer limit = 10;
 
-    public QueryWrapper<PostQuery> getQueryWrapper(){
-        QueryWrapper<PostQuery> wrapper = new QueryWrapper<>();
+    public QueryWrapper<Post> getQueryWrapper(){
+        QueryWrapper<Post> wrapper = new QueryWrapper<>();
         if (Strings.isNotBlank(title)) wrapper.like("p.title", title);
         if (createdStart != null) wrapper.le("p.created_at", createdStart);
         if (createdEnd != null) wrapper.ge("p.created_at", createdEnd);
