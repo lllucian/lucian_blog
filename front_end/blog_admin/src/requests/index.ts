@@ -3,8 +3,14 @@ import { ElMessage } from "element-plus";
 import {stroage} from "/@/stroage"
 const instance: AxiosInstance = axios.create();
 
-instance.defaults.headers.common['Authorization'] = stroage.getters.getToken;
+// instance.defaults.headers.common['Authorization'] = stroage.getters.getToken;
 
+// 请求拦截器
+instance.interceptors.request.use(config => {
+    if (stroage.getters.getToken && config.headers && config.headers.common)
+    config.headers.common['Authorization'] = stroage.getters.getToken;
+    return config;
+})
 // 响应拦截器
 instance.interceptors.response.use(response => {
     if (response.data.code! !== 200) {
