@@ -28,10 +28,6 @@ public class PostQuery {
     public QueryWrapper<Post> getQueryWrapper(){
         QueryWrapper<Post> wrapper = new QueryWrapper<>();
         if (Strings.isNotBlank(title)) wrapper.like("p.title", title);
-//        if (createdStart != null) wrapper.le("p.created_at", createdStart);
-//        if (createdEnd != null) wrapper.ge("p.created_at", createdEnd);
-//        if (updatedStart != null) wrapper.le("p.updated_at", updatedStart);
-//        if (updatedEnd != null) wrapper.ge("p.updated_at", updatedEnd);
         if (!Collections.isEmpty(created)) wrapper.ge("p.created_at", created.get(0));
         if (!Collections.isEmpty(created) && created.size() > 1) wrapper.le("p.created_at", created.get(1));
         if (!Collections.isEmpty(updated)) wrapper.ge("p.updated_at", updated.get(0));
