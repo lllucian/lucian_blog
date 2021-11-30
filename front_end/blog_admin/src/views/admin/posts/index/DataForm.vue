@@ -1,5 +1,5 @@
 <template>
-  <el-collapse model-value="DataForm" accordion>
+  <el-collapse model-value="DataForm" accordion v-loading="loadingTable">
     <el-collapse-item name="DataForm">
       <template #title>
         <span
@@ -38,7 +38,12 @@
           </template>
         </el-table-column>
       </el-table>
-      <Pagination v-model:currentPage="pageInfo.current" v-model:pageSize="pageInfo.size" v-model:total="pageInfo.total" @pagination="getList"></Pagination>
+      <Pagination
+        v-model:currentPage="pageInfo.current"
+        v-model:pageSize="pageInfo.size"
+        v-model:total="pageInfo.total"
+        @pagination="getList"
+      ></Pagination>
     </el-collapse-item>
   </el-collapse>
 </template>
@@ -58,28 +63,39 @@ export default defineComponent({
     total: {
       type: Number,
       default: 0,
-      required: false
+      required: false,
     },
     size: {
       type: Number,
       default: 10,
-      required: false
+      required: false,
     },
     current: {
       type: Number,
       default: 1,
-      required: false
-    }
+      required: false,
+    },
+    loadingTable: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
-  emits: ['update:dataTable', 'update:size', 'update:total', 'update:current'],
-  setup(props, {emit}) {
+  emits: [
+    "update:dataTable",
+    "update:size",
+    "update:total",
+    "update:current",
+    "update:loadingTable",
+  ],
+  setup(props, { emit }) {
     const pageInfo = ref({
       current: 1,
       size: 10,
       total: 0,
     });
 
-    const {dataTable, total, current, size} = toRefs(props);
+    const { dataTable, total, current, size, loadingTable } = toRefs(props);
 
     onMounted(async () => {
       getList();
@@ -91,25 +107,31 @@ export default defineComponent({
 
     watch(current, (newValue, oldValue) => {
       pageInfo.value.current = newValue;
-    })
-    
+    });
+
     watch(size, (newValue, oldValue) => {
       pageInfo.value.size = newValue;
     });
 
     const getList = async () => {
-      setPageConditions(pageInfo.value)
-      const {records, current, size, total} = pageInfo.value = await apiFormData();
-      pageInfo.value.current = current;
-      pageInfo.value.size = size;
-      pageInfo.value.total = total;
-      emit('update:dataTable', records);
-      emit('update:current', current);
-      emit('update:size', size);
-      emit('update:total', total);
+      setPageConditions(pageInfo.value);
+      emit("update:loadingTable", true);
+      try {
+        const { records, current, size, total } = (pageInfo.value =
+          await apiFormData());
+        pageInfo.value.current = current;
+        pageInfo.value.size = size;
+        pageInfo.value.total = total;
+        emit("update:dataTable", records);
+        emit("update:current", current);
+        emit("update:size", size);
+        emit("update:total", total);
+      } finally {
+        emit("update:loadingTable", false);
+      }
     };
 
-    return { dataTable, pageInfo, getList};
+    return { dataTable, pageInfo, getList, loadingTable };
   },
 });
 </script>

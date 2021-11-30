@@ -7,6 +7,7 @@
     v-model:total="total"
     @size-change="handleSizeChange"
     @current-change="handleCurrentChange"
+    background
     v-bind="$attrs"
   >
   </el-pagination>

@@ -103,20 +103,31 @@ export default defineComponent({
     total: {
       type: Number,
       default: 0,
-      required: false
+      required: false,
     },
     size: {
       type: Number,
       default: 10,
-      required: false
+      required: false,
     },
     current: {
       type: Number,
       default: 1,
-      required: false
-    }
+      required: false,
+    },
+    loadingTable: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
-  emits: ["update:dataTable", "update:total", "update:size", "update:current"],
+  emits: [
+    "update:dataTable",
+    "update:total",
+    "update:size",
+    "update:current",
+    "update:loadingTable",
+  ],
   setup(props, { emit }) {
     const SearchForm = ref();
     let SearchFormData: Ref<queryConditionsByPageInterface> = ref({
@@ -128,7 +139,7 @@ export default defineComponent({
       size: 10,
       current: 1,
       total: 0,
-      records: []
+      records: [],
     });
 
     const categoryOptions = ref([]);
@@ -142,11 +153,16 @@ export default defineComponent({
     const commitSearchForm = async () => {
       SearchFormData.value.size = getPagesize();
       setQueryConditions(SearchFormData.value);
-      const {records, current, size, total} = await apiFormData();
-      emit('update:dataTable', records);
-      emit('update:size', size);
-      emit('update:current', current);
-      emit('update:total', total);
+      emit("update:loadingTable", true);
+      try {
+        const { records, current, size, total } = await apiFormData();
+        emit("update:dataTable", records);
+        emit("update:size", size);
+        emit("update:current", current);
+        emit("update:total", total);
+      } finally {
+        emit("update:loadingTable", false);
+      }
     };
 
     const clearSearchForm = () => {

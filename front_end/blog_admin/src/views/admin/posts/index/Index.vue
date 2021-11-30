@@ -1,12 +1,12 @@
 <template>
   <el-row>
     <el-col :span="24">
-      <Search v-model:dataTable="tableInfo.dataTable" v-model:size="tableInfo.size" v-model:current="tableInfo.current" v-model:total="tableInfo.total"></Search>
+      <Search v-model:dataTable="tableInfo.dataTable" v-model:size="tableInfo.size" v-model:current="tableInfo.current" v-model:total="tableInfo.total" v-model:loadingTable="loadingTable"></Search>
     </el-col>
   </el-row>
   <el-row>
     <el-col :span="24">
-      <DataForm v-model:dataTable="tableInfo.dataTable" v-model:size="tableInfo.size" v-model:current="tableInfo.current" v-model:total="tableInfo.total"></DataForm>
+      <DataForm v-model:dataTable="tableInfo.dataTable" v-model:size="tableInfo.size" v-model:current="tableInfo.current" v-model:total="tableInfo.total" v-model:loadingTable="loadingTable"></DataForm>
     </el-col>
   </el-row>
   <el-backtop target=".el-main" />
@@ -28,7 +28,8 @@ export default defineComponent({
       current: 1,
       total: 0
     });
-    return {tableInfo}
+    const loadingTable = ref(false);
+    return {tableInfo, loadingTable}
   },
 });
 </script>
