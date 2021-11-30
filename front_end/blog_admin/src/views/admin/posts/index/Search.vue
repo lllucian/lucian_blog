@@ -53,18 +53,18 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <DateTimePickerCommponet
+            <DateTimePickerComponent
               labelName="创建时间"
               propName="created"
               v-model="SearchFormData.created"
-            ></DateTimePickerCommponet>
+            ></DateTimePickerComponent>
           </el-col>
           <el-col :span="12">
-            <DateTimePickerCommponet
+            <DateTimePickerComponent
               labelName="修改时间"
               propName="updated"
               v-model="SearchFormData.updated"
-            ></DateTimePickerCommponet>
+            ></DateTimePickerComponent>
           </el-col>
         </el-row>
         <el-row style="justify-content: center">
@@ -82,7 +82,7 @@
 <script lang="ts">
 import { defineComponent, Ref, ref } from "vue";
 import { postRequest } from "/@/requests";
-import DateTimePickerCommponet from "/@/components/form/DateTimePickerCommponet.vue";
+import DateTimePickerComponent from "/@/components/form/datepicker/DateTimePickerComponent.vue";
 import {
   apiFormData,
   getPagesize,
@@ -92,7 +92,7 @@ import {
 
 export default defineComponent({
   components: {
-    DateTimePickerCommponet,
+    DateTimePickerComponent,
   },
   props: {
     dataTable: {

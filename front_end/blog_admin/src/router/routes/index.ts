@@ -26,9 +26,19 @@ export const AdminRoutes: AppRouteModule[] = [
         path: "/posts",
         component: () => import("/@/views/admin/posts/index/Index.vue"),
         meta: {
-          title: "文章一览",
+          title: "文章列表",
           hiddenMenu: false,
           icon: 'pixelarticons:article'
+        },
+      },
+      {
+        name: "AdminPostNew",
+        path: "/post/new",
+        component: () => import("/@/views/admin/posts/new/New.vue"),
+        meta: {
+          title: "新建文章",
+          hiddenMenu: false,
+          icon: 'jam:write',
         },
       },
     ],

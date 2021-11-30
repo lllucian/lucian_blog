@@ -7,9 +7,12 @@ import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import { stroage } from '/@/stroage'
+import TEditor from '/@/components/form/tinymce/TEditor.vue'
 import '@purge-icons/generated'
 
 const app = createApp(App)
+
+app.component('TEditor',TEditor)
 
 app.use(router)
 

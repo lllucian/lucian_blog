@@ -6,10 +6,12 @@
 
     <el-container>
       <el-header
-        style="text-align: right; font-size: 12px; border-bottom: 1px solid #eee"
+          style="text-align: right; font-size: 12px; border-bottom: 1px solid #eee"
       >
         <el-dropdown>
-          <el-icon style="margin-right: 15px"><setting /></el-icon>
+          <el-icon style="margin-right: 15px">
+            <setting/>
+          </el-icon>
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item>View</el-dropdown-item>
@@ -22,17 +24,17 @@
       </el-header>
 
       <el-main>
-        <routerView />
+        <routerView/>
       </el-main>
     </el-container>
   </el-container>
-      <el-backtop></el-backtop>
+  <el-backtop></el-backtop>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
-import { Message, Setting } from "@element-plus/icons";
-import { CustomMenu } from "./menu";
+import {defineComponent, onMounted, ref} from "vue";
+import {Message, Setting} from "@element-plus/icons";
+import {CustomMenu} from "./menu";
 
 export default defineComponent({
   components: {
@@ -77,6 +79,7 @@ export default defineComponent({
 .el-aside {
   color: var(--el-text-color-primary);
 }
+
 body {
   margin: 0;
 }

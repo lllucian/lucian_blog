@@ -24,8 +24,8 @@ export default defineComponent({
   },
   setup(props) {
     const pageHeight = toRef(props, 'pageHeight')
-    
-    const defaultActive = router.currentRoute.value.path;
+
+    const defaultActive = router.currentRoute.value.meta.aliasPath||router.currentRoute.value.path;
 
     return {
       pageHeight,
