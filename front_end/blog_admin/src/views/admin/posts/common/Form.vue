@@ -16,6 +16,7 @@
       </el-form-item>
       <el-form-item label="内容" prop="content">
         <TEditor ref="editor" v-model="formData.content"/>
+        <el-input v-model="formData.content" v-show="false"></el-input>
         {{formData.content}}
       </el-form-item>
     </el-form>
@@ -50,7 +51,7 @@ export default defineComponent({
         {required: true, message: "标题必填", trigger: "blur" }
       ],
       content: [
-        {required: true, message: "内容必填", trigger: "blur"}
+        {required: true, message: "内容必填", trigger: "change"}
       ]
     });
 
