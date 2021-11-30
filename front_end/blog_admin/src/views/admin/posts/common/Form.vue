@@ -12,12 +12,10 @@
       </el-form-item>
       <el-form-item label="描述">
         <el-input v-model="formData.description" type="textarea"></el-input>
-        {{formData.description}}
       </el-form-item>
       <el-form-item label="内容" prop="content">
         <TEditor ref="editor" v-model="formData.content"/>
         <el-input v-model="formData.content" v-show="false"></el-input>
-        {{formData.content}}
       </el-form-item>
     </el-form>
   </el-card>
