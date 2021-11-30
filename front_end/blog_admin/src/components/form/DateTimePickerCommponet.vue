@@ -68,7 +68,7 @@ export default defineComponent({
     ];
 
     const changeDatetime = (value: any) => {
-        context.emit('update:modelValue',value);
+        context.emit('update:modelValue',value||[]);
     }
     return { shortcuts, defaultTime, labelName, propName, changeDatetime, modelValue};
   },
