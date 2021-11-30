@@ -1,13 +1,19 @@
 <template>
   <el-container :style="{ height: pageHeight, border: '1px solid #eee' }">
-    <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-      <CustomMenu :pageHeight="pageHeight"></CustomMenu>
+    <el-aside style="background-color: rgb(238, 241, 246)" :width="menuWidth">
+      <CustomMenu :pageHeight="pageHeight" v-model="collapseMenu"></CustomMenu>
     </el-aside>
 
     <el-container>
-      <el-header
-          style="text-align: right; font-size: 12px; border-bottom: 1px solid #eee"
+      <el-header class="header-content"
+          style="font-size: 12px; border-bottom: 1px solid #eee"
       >
+      <div class="header-left">
+        <div class="icon-menu" @click="changeCollapse">
+          <span class="iconify" data-icon="ant-design:menu-fold-outlined" style="font-size: 20px;" ></span>
+        </div>
+      </div>
+      <div style="float:right">
         <el-dropdown>
           <el-icon style="margin-right: 15px">
             <setting/>
@@ -21,6 +27,7 @@
           </template>
         </el-dropdown>
         <span>Tom</span>
+        </div>
       </el-header>
 
       <el-main>
@@ -32,9 +39,10 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref} from "vue";
+import {defineComponent, onMounted, ref, watch, getCurrentInstance} from "vue";
 import {Message, Setting} from "@element-plus/icons";
 import {CustomMenu} from "./menu";
+// import { watch } from "fs";
 
 export default defineComponent({
   components: {
@@ -43,27 +51,36 @@ export default defineComponent({
     CustomMenu,
   },
   setup() {
-    const item = {
-      date: "2016-05-02",
-      name: "Tom",
-      address: "No. 189, Grove St, Los Angeles",
-    };
-
-    const tableData = ref(Array(20).fill(item));
-
     const pageHeight = ref(window.innerHeight + "px");
 
     const getPageRizeHeight = async () => {
       pageHeight.value = window.innerHeight + "px";
     };
 
+    const collapseMenu = ref(false);
+
+    const iconData = ref('ant-design:menu-fold-outlined');
+
+    const menuWidth = ref('200px');
+
     onMounted(() => {
       window.addEventListener("resize", getPageRizeHeight);
     });
 
+    watch(collapseMenu, (newValue, oldValue) => {
+        iconData.value = newValue ? 'ant-design:menu-unfold-outlined' : 'ant-design:menu-fold-outlined';
+        document.getElementsByClassName('icon-menu')[0].getElementsByTagName("svg")[0].setAttribute("data-icon", iconData.value);
+        menuWidth.value = newValue ? '46px' : '200px';
+    });
+
+    const changeCollapse = () => collapseMenu.value = !collapseMenu.value;
+
     return {
-      tableData,
       pageHeight,
+      menuWidth,
+      iconData,
+      collapseMenu,
+      changeCollapse,
     };
   },
 });
@@ -82,5 +99,22 @@ export default defineComponent({
 
 body {
   margin: 0;
+}
+</style>
+<style scoped>
+.header-left {
+  display: flex;
+  height: 100%;
+  align-items:center;
+}
+
+.icon-menu{
+  cursor: pointer;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>

@@ -3,6 +3,8 @@
     :style="{minHeight: pageHeight}"
     :default-active="defaultActive"
     :router="true"
+    :collapse="isCollapse"
+    :collapse-transition="false"
   >
     <MenuTree :menuData="basicRoutes"></MenuTree>
   </el-menu>
@@ -20,17 +22,22 @@ export default defineComponent({
     MenuTree
   },
   props: {
-    pageHeight: {type: String, required: false}
+    pageHeight: {type: String, required: false},
+    modelValue: {type: Boolean, required: false, default: false}
   },
+  emits: ['update:modelValue'],
   setup(props) {
-    const pageHeight = toRef(props, 'pageHeight')
+    const pageHeight = toRef(props, 'pageHeight');
 
-    const defaultActive = router.currentRoute.value.meta.aliasPath||router.currentRoute.value.path;
+    const isCollapse = toRef(props, "modelValue");
+
+    const defaultActive = router.currentRoute.value.path;
 
     return {
       pageHeight,
       basicRoutes,
-      defaultActive
+      defaultActive,
+      isCollapse,
     };
   },
 });
