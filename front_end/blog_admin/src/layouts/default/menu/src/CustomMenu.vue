@@ -1,7 +1,7 @@
 <template>
   <el-menu
     :style="{minHeight: pageHeight}"
-    :default-active="defaultActive"
+    :default-active="$route.path"
     :router="true"
     :collapse="isCollapse"
     :collapse-transition="false"
@@ -31,12 +31,9 @@ export default defineComponent({
 
     const isCollapse = toRef(props, "modelValue");
 
-    const defaultActive = router.currentRoute.value.path;
-
     return {
       pageHeight,
       basicRoutes,
-      defaultActive,
       isCollapse,
     };
   },
