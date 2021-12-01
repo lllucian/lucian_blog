@@ -15,7 +15,6 @@
       </el-form-item>
       <el-form-item label="内容" prop="content">
         <TEditor ref="editor" v-model="formData.content"/>
-        <el-input v-model="formData.content" v-show="false"></el-input>
       </el-form-item>
     </el-form>
   </el-card>

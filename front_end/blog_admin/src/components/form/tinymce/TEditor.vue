@@ -1,6 +1,7 @@
 <template>
   <div class="tinymce-box">
     <Editor v-model="contentValue" :init="init" :disabled="disabled" @onClick="onClick" v-bind="$attrs" />
+    <el-input v-model="contentValue" v-show="false" v-bind="$attrs"></el-input>
   </div>
 </template>
 
@@ -168,5 +169,7 @@ export default {
 </script>
 
 <style lang="less">
-
+ .is-error .tox-tinymce {
+   border-color: var(--el-color-danger);
+ }
 </style>
