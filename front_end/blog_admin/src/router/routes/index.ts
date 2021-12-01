@@ -43,5 +43,37 @@ export const AdminRoutes: AppRouteModule[] = [
       },
     ],
   },
+  {
+    name: "AdminCategory",
+    path: "/categories",
+    component: DEFAULT_LAYOUT,
+    meta: {
+      title: "分类",
+      hiddenMenu: false,
+      icon: 'carbon:categories'
+    },
+    children: [
+      {
+        name: "AdminCategoryIndex",
+        path: "/categories",
+        component: () => import("/@/views/admin/categories/index/Index.vue"),
+        meta: {
+          title: "分类列表",
+          hiddenMenu: false,
+          icon: 'carbon:categories'
+        },
+      },
+      {
+        name: "AdminCategoryNew",
+        path: "/category/new",
+        component: () => import("/@/views/admin/categories/new/New.vue"),
+        meta: {
+          title: "新建分类",
+          hiddenMenu: false,
+          icon: 'ic:outline-category',
+        },
+      },
+    ],
+  },
 ];
 export const basicRoutes = [LoginRoute, ...AdminRoutes];

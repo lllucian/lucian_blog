@@ -17,7 +17,7 @@ public class CategoryIndexVO {
     /**
      * 被关联的文章数量
      */
-    private Integer postCount;
+    private int postCount;
 
     /**
      * 创建时间
