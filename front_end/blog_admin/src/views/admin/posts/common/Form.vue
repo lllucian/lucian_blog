@@ -81,7 +81,7 @@ export default defineComponent({
         {required: true, message: "内容必填", trigger: "change"}
       ],
       categories: [
-        {required: true, message: "分类必须"}
+        {required: true, message: "分类必选"}
       ]
     });
 
