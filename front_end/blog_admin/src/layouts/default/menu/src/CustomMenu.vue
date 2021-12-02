@@ -1,7 +1,7 @@
 <template>
   <el-menu
     :style="{minHeight: pageHeight}"
-    :default-active="$route.path"
+    :default-active="$route.meta.alias||$route.path"
     :router="true"
     :collapse="isCollapse"
     :collapse-transition="false"
