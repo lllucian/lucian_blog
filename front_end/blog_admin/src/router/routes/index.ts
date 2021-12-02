@@ -73,6 +73,17 @@ export const AdminRoutes: AppRouteModule[] = [
           icon: 'ic:outline-category',
         },
       },
+      {
+        name: "AdminCategoryEdit",
+        path: "/category/:id",
+        component: () => import("/@/views/admin/categories/edit/Edit.vue"),
+        meta: {
+          title: "编辑文章",
+          hiddenMenu: true,
+          icon: 'jam:write',
+          alias: '/categories'
+        },
+      },
     ],
   },
 ];

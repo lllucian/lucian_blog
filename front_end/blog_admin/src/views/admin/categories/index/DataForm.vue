@@ -21,9 +21,11 @@
         <el-table-column prop="description" label="描述" header-align="center"> </el-table-column>
         <el-table-column prop="parentName" label="父分类" header-align="center"> </el-table-column>
         <el-table-column prop="createdAt" label="创建时间" width="170" align="center"> </el-table-column>
-        <el-table-column fixed="right" label="操作" width="120" header-align="center">
-          <template #default>
-            <el-button type="text" size="small">编辑</el-button>
+        <el-table-column fixed="right" label="操作" width="100" align="center">
+          <template #default="scope">
+            <router-link :to="'/category/'+scope.row.id">
+              <el-button type="text" size="small">编辑</el-button>
+            </router-link>
             <el-button type="text" size="small">删除</el-button>
           </template>
         </el-table-column>
