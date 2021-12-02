@@ -39,9 +39,9 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, toRefs} from "vue";
+import {defineComponent, onMounted, ref, toRefs} from "vue";
 import {router} from "/@/router";
-import {postRequest} from "/@/requests";
+import {getRequest, postRequest} from "/@/requests";
 
 export default defineComponent({
   props: {
@@ -118,6 +118,26 @@ export default defineComponent({
         }
 
       }
+    }
+
+    const getInformation = async () => {
+      formLoading.value = true;
+      try{
+        const data = await getRequest(`api/admin/category/${categoryId.value}`);
+        if (data && data.data){
+          formData.value = data.data;
+        } else {
+          await router.push({name: 'AdminCategoryIndex'});
+        }
+      } finally {
+        formLoading.value = false;
+      }
+    };
+
+    if (categoryId){
+      onMounted(() => {
+        getInformation();
+      })
     }
 
     const goBack = () => {
