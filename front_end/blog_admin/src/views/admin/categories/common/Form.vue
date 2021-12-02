@@ -48,10 +48,14 @@ export default defineComponent({
     title: {
       type: String,
       required: true
+    },
+    categoryId: {
+      type: Number,
+      required: false
     }
   },
   setup(props) {
-    const {title} = toRefs(props);
+    const {title, categoryId} = toRefs(props);
     const formData = ref({
       name: '',
       slut: '',
@@ -82,7 +86,9 @@ export default defineComponent({
     const parentRemoteMethod = async () => {
       parentLoading.value = true;
       try {
-        const data = postRequest("api/admin/fetch/getParentId");
+        let fetchUri = "api/admin/fetch/getParentId";
+        if (categoryId.value) fetchUri = `${fetchUri}/${categoryId.value}`;
+        const data = postRequest(fetchUri);
         if ((await data).data) parentOptions.value = (await data).data;
       } finally {
         parentLoading.value = false;

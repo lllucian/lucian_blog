@@ -8,6 +8,8 @@ import java.util.List;
 @Getter
 @Setter
 public class NodeTree<T> {
+    private Integer id;
+
     private T current;
 
     private List<NodeTree<T>> nextArray;

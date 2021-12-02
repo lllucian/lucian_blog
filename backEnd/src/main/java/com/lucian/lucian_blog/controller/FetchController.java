@@ -8,10 +8,7 @@ import com.lucian.lucian_blog.manager.TagManager;
 import com.lucian.lucian_blog.query_wrapper.CategorySelectQuery;
 import com.lucian.lucian_blog.query_wrapper.TagSelectQuery;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -51,8 +48,8 @@ public class FetchController {
      * @param categoryId 当前分类id
      * @return 获取可以选择的分类
      */
-    @PostMapping("getParentId")
-    public CommonResult<List<CategorySelectDataVO>> getCanSelectCategory(@RequestBody(required = false) Integer categoryId){
+    @PostMapping({"getParentId", "getParentId/{categoryId}"})
+    public CommonResult<List<CategorySelectDataVO>> getCanSelectCategory(@PathVariable(required = false) Integer categoryId){
         return CommonResult.successNoMessage(categoryManager.parentCategory(categoryId));
     }
 }
