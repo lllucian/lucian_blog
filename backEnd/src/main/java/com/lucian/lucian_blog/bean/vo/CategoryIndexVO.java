@@ -28,4 +28,9 @@ public class CategoryIndexVO {
      * 父分类
      */
     private String parentName;
+
+    /**
+     * 描述
+     */
+    private String description;
 }

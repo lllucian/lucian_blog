@@ -6,12 +6,12 @@
         <h4>{{ title }}</h4>
       </div>
     </template>
-    <el-form ref="form" :model="formData" :rules="rules" label-width="120px" label-position="top">
+    <el-form ref="form" :model="formData" :rules="rules" label-width="120px" label-position="top" v-loading="formLoading">
       <el-form-item label="名称" prop="name">
         <el-input v-model="formData.name" clearable></el-input>
       </el-form-item>
-      <el-form-item label="别名" prop="slut">
-        <el-input v-model="formData.slut" clearable></el-input>
+      <el-form-item label="别名" prop="slug">
+        <el-input v-model="formData.slug" clearable></el-input>
       </el-form-item>
       <el-form-item label="描述">
         <el-input v-model="formData.description" type="textarea" autosize clearable></el-input>
@@ -58,7 +58,7 @@ export default defineComponent({
     const {title, categoryId} = toRefs(props);
     const formData = ref({
       name: '',
-      slut: '',
+      slug: '',
       parentId: '',
       sort: 1,
       description: '',
@@ -66,13 +66,20 @@ export default defineComponent({
 
     const form = ref();
 
+    const formLoading = ref(false);
+
+    const validSlutRegex = (rule: any, value: string, callback: Function) => {
+      value ? new RegExp(/^\w+$/).test(value) ? callback() : callback(new Error("别名要为字母数字加连字符(-)的组合")) : callback()
+    }
+
     const rules = ref({
       name: [
         {required: true, message: "名称必填", trigger: "blur"},
         {max: 255, message: '名称最长255个字符'}
       ],
-      slut: [
-        {required: true, message: "内容必填", trigger: "blur"}
+      slug: [
+        {required: true, message: "别名必填", trigger: "blur"},
+        {validator: validSlutRegex, trigger: "blur"},
       ],
       sort: [
         {required: true, message: "分类必选"}
@@ -100,7 +107,17 @@ export default defineComponent({
     }
 
     const submitForm = async () => {
-      // const valid = await form.value.validate();
+      const valid = await form.value.validate();
+      if (valid){
+        formLoading.value = true;
+        try{
+          const data = await postRequest("api/admin/category", formData.value);
+          if (data) await router.push({name: 'AdminCategoryIndex'})
+        } finally {
+          formLoading.value = false;
+        }
+
+      }
     }
 
     const goBack = () => {
@@ -117,6 +134,7 @@ export default defineComponent({
       parentRemoteMethod,
       clearForm,
       submitForm,
+      formLoading,
     }
   }
 })

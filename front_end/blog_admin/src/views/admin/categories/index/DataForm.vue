@@ -18,6 +18,8 @@
         <el-table-column prop="name" label="名称" width="140"></el-table-column>
         <el-table-column prop="slut" label="别名"> </el-table-column>
         <el-table-column prop="postCount" label="文章数"> </el-table-column>
+        <el-table-column prop="description" label="描述"> </el-table-column>
+        <el-table-column prop="parentName" label="父分类"> </el-table-column>
         <el-table-column prop="createdAt" label="创建时间"> </el-table-column>
         <el-table-column fixed="right" label="操作" width="120">
           <template #default>
