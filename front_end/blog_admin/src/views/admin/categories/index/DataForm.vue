@@ -15,13 +15,13 @@
           align="center"
           header-align="center"
         />
-        <el-table-column prop="name" label="名称" width="140"></el-table-column>
-        <el-table-column prop="slut" label="别名"> </el-table-column>
-        <el-table-column prop="postCount" label="文章数"> </el-table-column>
-        <el-table-column prop="description" label="描述"> </el-table-column>
-        <el-table-column prop="parentName" label="父分类"> </el-table-column>
-        <el-table-column prop="createdAt" label="创建时间"> </el-table-column>
-        <el-table-column fixed="right" label="操作" width="120">
+        <el-table-column prop="name" label="名称" width="140" header-align="center"></el-table-column>
+        <el-table-column prop="slut" label="别名" header-align="center"> </el-table-column>
+        <el-table-column prop="postCount" label="文章数" header-align="center"> </el-table-column>
+        <el-table-column prop="description" label="描述" header-align="center"> </el-table-column>
+        <el-table-column prop="parentName" label="父分类" header-align="center"> </el-table-column>
+        <el-table-column prop="createdAt" label="创建时间" width="170" align="center"> </el-table-column>
+        <el-table-column fixed="right" label="操作" width="120" header-align="center">
           <template #default>
             <el-button type="text" size="small">编辑</el-button>
             <el-button type="text" size="small">删除</el-button>
