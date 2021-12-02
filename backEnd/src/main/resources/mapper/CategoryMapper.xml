@@ -2,4 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lucian.lucian_blog.dao.CategoryDao">
+    <resultMap id="BaseMap" type="com.lucian.lucian_blog.bean.entity.Category">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
+    <resultMap id="BaseTreeResultMap" type="com.lucian.lucian_blog.bean.tree.NodeTree">
+        <association property="current" resultMap="BaseMap"/>
+        <collection property="nextArray" column="parent_id" javaType="java.util.ArrayList" ofType="com.lucian.lucian_blog.bean.tree.NodeTree" select="getNextNode"/>
+    </resultMap>
+
+    <resultMap id="NextTreeResultMap" type="com.lucian.lucian_blog.bean.tree.NodeTree">
+        <association property="current" resultMap="BaseMap"/>
+        <collection property="nextArray" column="parent_id" javaType="java.util.ArrayList" ofType="com.lucian.lucian_blog.bean.tree.NodeTree" select="getNextNode"/>
+    </resultMap>
+
+    <select id="getNodeTree" resultMap="BaseTreeResultMap">
+        select * from categories where parent_id is null and deleted_at is null and id != #{categoryId}
+    </select>
+
+    <select id="getNextNode" resultMap="NextTreeResultMap">
+        select * from categories where parent_id = #{parent_id} and deleted_at is null and id != #{categoryId}
+    </select>
 </mapper>

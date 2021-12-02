@@ -18,9 +18,11 @@
       </el-form-item>
       <el-form-item label="父分类" prop="parentId">
         <el-select-v2 v-model="formData.parentId"
-                      remote :options="parentOptions"
+                      :options="parentOptions"
+                      @focus="parentRemoteMethod"
                       style="width: 100%;"
                       v-loading="parentLoading"
+                      filterable
                       clearable>
         </el-select-v2>
       </el-form-item>
@@ -77,17 +79,13 @@ export default defineComponent({
 
     const parentOptions = ref([]);
 
-    const parentRemoteMethod = async (query: string) => {
-      if (query.trim() !== "") {
-        parentLoading.value = true;
-        try {
-          const data = postRequest("api/admin/fetch/categories", {name: query});
-          if ((await data).data) parentOptions.value = (await data).data;
-        } finally {
-          parentLoading.value = false;
-        }
-      } else {
-        parentOptions.value = [];
+    const parentRemoteMethod = async () => {
+      parentLoading.value = true;
+      try {
+        const data = postRequest("api/admin/fetch/getParentId");
+        if ((await data).data) parentOptions.value = (await data).data;
+      } finally {
+        parentLoading.value = false;
       }
     }
 

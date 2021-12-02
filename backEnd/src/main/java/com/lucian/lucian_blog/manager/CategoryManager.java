@@ -7,6 +7,7 @@ import com.lucian.lucian_blog.bean.entity.Category;
 import com.lucian.lucian_blog.bean.translater.Category2BO;
 import com.lucian.lucian_blog.bean.translater.Category2SelectVO;
 import com.lucian.lucian_blog.bean.translater.CategoryBO2IndexVO;
+import com.lucian.lucian_blog.bean.tree.NodeTree;
 import com.lucian.lucian_blog.bean.vo.CategoryFormVO;
 import com.lucian.lucian_blog.bean.vo.CategoryIndexVO;
 import com.lucian.lucian_blog.bean.vo.CategorySelectDataVO;
@@ -19,10 +20,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -123,5 +121,30 @@ public class CategoryManager {
         List<CategorySelectDataVO> searchData = new ArrayList<>();
         if (list.size() == 0) return searchData;
         return category2SelectVO.tranCategory2SelectVOList(list);
+    }
+
+    /**
+     *  获取可以关联的categoryId
+     * @param categoryId 分类id
+     * @return 可以关联的categoryId集合
+     */
+    public List<CategorySelectDataVO> parentCategory(Integer categoryId){
+        if (categoryId == null) {
+            List<Category> list = categoryService.list();
+            return category2SelectVO.tranCategory2SelectVOList(list);
+        }
+        List<NodeTree<Category>> nodeTree = categoryDao.getNodeTree(categoryId);
+        if(nodeTree == null) return null;
+        List<Category> categories = new ArrayList<>();
+        categories = canSelectData(categories, nodeTree);
+        return category2SelectVO.tranCategory2SelectVOList(categories);
+    }
+
+    public List<Category> canSelectData(List<Category> categories, List<NodeTree<Category>> nodeTree){
+        nodeTree.forEach(node -> {
+            categories.add(node.getCurrent());
+            if (node.getNextArray() != null) canSelectData(categories, node.getNextArray());
+        });
+        return categories;
     }
 }

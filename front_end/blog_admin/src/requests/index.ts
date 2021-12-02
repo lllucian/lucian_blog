@@ -26,7 +26,7 @@ instance.interceptors.response.use(response => {
     ElMessage.error({message: '请求错误！'});
 });
 
-export const postRequest = (url: string, params: object) => {
+export const postRequest = (url: string, params?: object) => {
     return instance.post(url, params);
 }
 

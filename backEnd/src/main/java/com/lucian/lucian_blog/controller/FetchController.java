@@ -45,4 +45,14 @@ public class FetchController {
         List<TagSelectDataVO> tagSelectDataVO = tagManager.selectSearch(tagSelectQuery);
         return CommonResult.successNoMessage(tagSelectDataVO);
     }
+
+    /**
+     * 获取可以选择的分类
+     * @param categoryId 当前分类id
+     * @return 获取可以选择的分类
+     */
+    @PostMapping("getParentId")
+    public CommonResult<List<CategorySelectDataVO>> getCanSelectCategory(@RequestBody(required = false) Integer categoryId){
+        return CommonResult.successNoMessage(categoryManager.parentCategory(categoryId));
+    }
 }
