@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class CategoryIndexVO {
+    private Integer id;
     /**
      * 分类名
      */
