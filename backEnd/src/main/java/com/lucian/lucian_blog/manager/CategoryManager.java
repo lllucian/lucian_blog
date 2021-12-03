@@ -7,7 +7,6 @@ import com.lucian.lucian_blog.bean.entity.Category;
 import com.lucian.lucian_blog.bean.translater.Category2BO;
 import com.lucian.lucian_blog.bean.translater.Category2SelectVO;
 import com.lucian.lucian_blog.bean.translater.CategoryBO2IndexVO;
-import com.lucian.lucian_blog.bean.tree.NodeTree;
 import com.lucian.lucian_blog.bean.vo.CategoryFormVO;
 import com.lucian.lucian_blog.bean.vo.CategoryIndexVO;
 import com.lucian.lucian_blog.bean.vo.CategorySelectDataVO;
@@ -20,6 +19,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -128,23 +129,64 @@ public class CategoryManager {
      * @param categoryId 分类id
      * @return 可以关联的categoryId集合
      */
+//    public List<CategorySelectDataVO> parentCategory(Integer categoryId){
+//        if (categoryId == null) {
+//            List<Category> list = categoryService.list();
+//            return category2SelectVO.tranCategory2SelectVOList(list);
+//        }
+//        List<NodeTree<Category>> nodeTree = categoryDao.getNodeTree(categoryId);
+//        if(nodeTree == null) return null;
+//        List<Category> categories = new ArrayList<>();
+//        categories = canSelectData(categories, nodeTree);
+//        return category2SelectVO.tranCategory2SelectVOList(categories);
+//    }
+//
+//    public List<Category> canSelectData(List<Category> categories, List<NodeTree<Category>> nodeTree){
+//        nodeTree.forEach(node -> {
+//            categories.add(node.getCurrent());
+//            if (node.getNextArray() != null) canSelectData(categories, node.getNextArray());
+//        });
+//        return categories;
+//    }
     public List<CategorySelectDataVO> parentCategory(Integer categoryId){
-        if (categoryId == null) {
-            List<Category> list = categoryService.list();
-            return category2SelectVO.tranCategory2SelectVOList(list);
-        }
-        List<NodeTree<Category>> nodeTree = categoryDao.getNodeTree(categoryId);
-        if(nodeTree == null) return null;
-        List<Category> categories = new ArrayList<>();
-        categories = canSelectData(categories, nodeTree);
-        return category2SelectVO.tranCategory2SelectVOList(categories);
+        List<Category> list = categoryService.list();
+        if (list == null || list.size() == 0) return null;
+        list = list.stream().sorted(Comparator.comparing(Category::getSort).thenComparing(Comparator.comparing(Category::getId))).collect(Collectors.toList());
+        // 如果不存在分类id则查处全部的分类id并返回
+        if (categoryId == null) return category2SelectVO.tranCategory2SelectVOList(list);
+        return category2SelectVO.tranCategory2SelectVOList(getNodeData(list, categoryId, "getId"));
     }
 
-    public List<Category> canSelectData(List<Category> categories, List<NodeTree<Category>> nodeTree){
-        nodeTree.forEach(node -> {
-            categories.add(node.getCurrent());
-            if (node.getNextArray() != null) canSelectData(categories, node.getNextArray());
-        });
-        return categories;
+    /**
+     * 移除不能选择的分类
+     * @param list 分类集合
+     * @param categoryId 要移除的分类id
+     * @param methodName 是本身的id或者parentId
+     * @return 移除后的分类
+     */
+    public List<Category> getNodeData(List<Category> list, Integer categoryId, String methodName){
+        // 先找有没有这个分类id
+        List<Category> parentCategory = list.stream().filter(category -> {
+            try {
+                Method method = Class.forName("com.lucian.lucian_blog.bean.entity.Category").getMethod(methodName);
+                return Objects.equals(method.invoke(category), categoryId);
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+                return false;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+                return false;
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+                return false;
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }).collect(Collectors.toList());
+        if (parentCategory.size() == 0) return list;
+        list.removeAll(parentCategory);
+        if (list.size() == 0) return null;
+        return getNodeData(list, parentCategory.get(0).getId(), "getParentId");
     }
 }
