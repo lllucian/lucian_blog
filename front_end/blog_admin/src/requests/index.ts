@@ -33,3 +33,7 @@ export const postRequest = (url: string, params?: object) => {
 export const getRequest = (url: string, params?:object) => {
     return instance.get(url, {params: params});
 }
+
+export const deleteRequest = (url: string) => {
+    return instance.delete(url)
+}

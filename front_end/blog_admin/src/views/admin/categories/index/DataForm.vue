@@ -27,7 +27,7 @@
             <router-link :to="'/category/'+scope.row.id">
               <el-button type="text" size="small">编辑</el-button>
             </router-link>
-            <el-button type="text" size="small">删除</el-button>
+            <el-button type="text" size="small" @click.prevent="deleteRow(scope.$index, dataTable, scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -44,6 +44,7 @@
 import { defineComponent, onMounted, ref, toRefs, watch } from "vue";
 import Pagination from "/@/components/data/Pagination.vue";
 import { setPageConditions, apiFormData } from "./query";
+import {deleteRequest} from "/@/requests";
 
 export default defineComponent({
   components: { Pagination },
@@ -124,7 +125,20 @@ export default defineComponent({
       }
     };
 
-    return { dataTable, pageInfo, getList, loadingTable };
+    const deleteRow = async (index:number, rows:Array<Object>, id:number) => {
+      rows.splice(index, 1);
+      emit("update:loadingTable", true);
+      try{
+        await deleteRequest(`api/admin/category/${id}`);
+      } finally {
+        pageInfo.value.current = 1;
+        await getList();
+        emit("update:loadingTable", false);
+      }
+
+    }
+
+    return { dataTable, pageInfo, getList, loadingTable, deleteRow };
   },
 });
 </script>
