@@ -26,12 +26,16 @@
           <template #default="scope">
             <router-link :to="'/category/'+scope.row.id">
               <el-button type="text">
-                <Icon icon="ant-design:edit-outlined" size="18"></Icon>
+                <Icon icon="ant-design:edit-outlined" :size="18"></Icon>
               </el-button>
             </router-link>
-            <el-button type="text" @click.prevent="deleteRow(scope.$index, dataTable, scope.row.id)">
-              <Icon icon="akar-icons:trash-can" color="red" size="18"></Icon>
-            </el-button>
+            <el-popconfirm title="确认删除吗？" @confirm="deleteRow(scope.$index, dataTable, scope.row.id)">
+              <template #reference>
+                <el-button type="text">
+                  <Icon icon="akar-icons:trash-can" color="red" :size="18"></Icon>
+                </el-button>
+              </template>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
