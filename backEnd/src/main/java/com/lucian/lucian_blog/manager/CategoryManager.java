@@ -151,7 +151,7 @@ public class CategoryManager {
     public List<CategorySelectDataVO> parentCategory(Integer categoryId){
         List<Category> list = categoryService.list();
         if (list == null || list.size() == 0) return null;
-        list = list.stream().sorted(Comparator.comparing(Category::getSort).thenComparing(Comparator.comparing(Category::getId))).collect(Collectors.toList());
+        list = list.stream().sorted(Comparator.comparing(Category::getSort).thenComparing(Comparator.comparing(Category::getId).reversed())).collect(Collectors.toList());
         // 如果不存在分类id则查处全部的分类id并返回
         if (categoryId == null) return category2SelectVO.tranCategory2SelectVOList(list);
         return category2SelectVO.tranCategory2SelectVOList(getNodeData(list, categoryId, "getId"));

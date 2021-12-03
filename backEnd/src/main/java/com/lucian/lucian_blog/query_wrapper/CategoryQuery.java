@@ -22,6 +22,8 @@ public class CategoryQuery {
         QueryWrapper<Category> categoryQueryQueryWrapper = new QueryWrapper<>();
         if(Strings.isNotBlank(name)) categoryQueryQueryWrapper.like("name", name);
         if(Strings.isNotBlank(slug)) categoryQueryQueryWrapper.like("slug", slug);
+        categoryQueryQueryWrapper.orderByAsc("sort");
+        categoryQueryQueryWrapper.orderByDesc("id");
         return categoryQueryQueryWrapper;
     }
 }
