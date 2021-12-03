@@ -26,8 +26,8 @@ instance.interceptors.response.use(response => {
     ElMessage.error({message: '请求错误！'});
 });
 
-export const postRequest = (url: string, params?: object) => {
-    return instance.post(url, params);
+export const postRequest = (url: string, data?: object) => {
+    return instance.post(url, data);
 }
 
 export const getRequest = (url: string, params?:object) => {
@@ -35,5 +35,9 @@ export const getRequest = (url: string, params?:object) => {
 }
 
 export const deleteRequest = (url: string) => {
-    return instance.delete(url)
+    return instance.delete(url);
+}
+
+export const putRequest = (url: string, data?:object) => {
+    return instance.put(url, data);
 }

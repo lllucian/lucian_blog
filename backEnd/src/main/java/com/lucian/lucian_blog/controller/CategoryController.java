@@ -44,7 +44,7 @@ public class CategoryController {
 
     @PutMapping("category/{id}")
     public CommonResult<String> update(@PathVariable Integer id, @RequestBody @Valid CategoryParam categoryParam){
-        return categoryManager.update(id, categoryParam) ? CommonResult.success(null, "添加成功") : CommonResult.failed("添加失败");
+        return categoryManager.update(id, categoryParam) ? CommonResult.success(null, "更新成功") : CommonResult.failed("更新失败");
     }
 
     @DeleteMapping("category/{id}")

@@ -41,7 +41,7 @@
 <script lang="ts">
 import {defineComponent, onMounted, ref, toRefs} from "vue";
 import {router} from "/@/router";
-import {getRequest, postRequest} from "/@/requests";
+import {getRequest, postRequest, putRequest} from "/@/requests";
 
 export default defineComponent({
   props: {
@@ -50,7 +50,7 @@ export default defineComponent({
       required: true
     },
     categoryId: {
-      type: Number,
+      type: String,
       required: false
     }
   },
@@ -111,7 +111,12 @@ export default defineComponent({
       if (valid){
         formLoading.value = true;
         try{
-          const data = await postRequest("api/admin/category", formData.value);
+          let data = undefined;
+          if(categoryId){
+            data = await putRequest(`api/admin/category/${categoryId.value}`, formData.value);
+          } else {
+            data = await postRequest("api/admin/category", formData.value);
+          }
           if (data) await router.push({name: 'AdminCategoryIndex'})
         } finally {
           formLoading.value = false;
