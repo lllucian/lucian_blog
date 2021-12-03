@@ -137,7 +137,8 @@ export default defineComponent({
     if (categoryId){
       onMounted(() => {
         getInformation();
-      })
+        parentRemoteMethod();
+      });
     }
 
     const goBack = () => {
