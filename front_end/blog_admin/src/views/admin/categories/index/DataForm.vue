@@ -25,9 +25,13 @@
         <el-table-column fixed="right" label="操作" width="100" align="center">
           <template #default="scope">
             <router-link :to="'/category/'+scope.row.id">
-              <el-button type="text" size="small">编辑</el-button>
+              <el-button type="text">
+                <Icon icon="ant-design:edit-outlined" size="18"></Icon>
+              </el-button>
             </router-link>
-            <el-button type="text" size="small" @click.prevent="deleteRow(scope.$index, dataTable, scope.row.id)">删除</el-button>
+            <el-button type="text" @click.prevent="deleteRow(scope.$index, dataTable, scope.row.id)">
+              <Icon icon="akar-icons:trash-can" color="red" size="18"></Icon>
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -45,9 +49,10 @@ import { defineComponent, onMounted, ref, toRefs, watch } from "vue";
 import Pagination from "/@/components/data/Pagination.vue";
 import { setPageConditions, apiFormData } from "./query";
 import {deleteRequest} from "/@/requests";
+import Icon from "/@/components/basic/Icon.vue"
 
 export default defineComponent({
-  components: { Pagination },
+  components: { Pagination, Icon },
   props: {
     dataTable: {
       type: Array,
