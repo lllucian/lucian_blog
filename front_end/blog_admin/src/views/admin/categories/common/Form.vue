@@ -139,7 +139,7 @@ export default defineComponent({
       }
     };
 
-    if (categoryId){
+    if (categoryId && categoryId.value){
       onMounted(() => {
         getInformation();
         parentRemoteMethod();
