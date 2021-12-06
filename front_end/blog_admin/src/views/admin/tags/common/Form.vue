@@ -1,5 +1,5 @@
 <template>
-  <el-page-header content="分类列表" @back="goBack"/>
+  <el-page-header content="标签列表" @back="goBack"/>
   <el-card>
     <template #header>
       <div class="card-header">
@@ -15,16 +15,6 @@
       </el-form-item>
       <el-form-item label="描述">
         <el-input v-model="formData.description" type="textarea" autosize clearable></el-input>
-      </el-form-item>
-      <el-form-item label="父分类" prop="parentId">
-        <el-select-v2 v-model="formData.parentId"
-                      :options="parentOptions"
-                      @focus="parentRemoteMethod"
-                      style="width: 100%;"
-                      v-loading="parentLoading"
-                      filterable
-                      clearable>
-        </el-select-v2>
       </el-form-item>
       <el-form-item label="排序" prop="sort">
         <el-input-number v-model="formData.sort" :min="1" :precision="0"></el-input-number>
@@ -49,13 +39,13 @@ export default defineComponent({
       type: String,
       required: true
     },
-    categoryId: {
+    tagId: {
       type: String,
       required: false
     }
   },
   setup(props) {
-    const {title, categoryId} = toRefs(props);
+    const {title, tagId} = toRefs(props);
     const formData = ref({
       name: '',
       slug: '',
@@ -90,18 +80,6 @@ export default defineComponent({
 
     const parentOptions = ref([]);
 
-    const parentRemoteMethod = async () => {
-      parentLoading.value = true;
-      try {
-        let fetchUri = "api/admin/fetch/getParentId";
-        if (categoryId.value) fetchUri = `${fetchUri}/${categoryId.value}`;
-        const data = postRequest(fetchUri);
-        if ((await data).data) parentOptions.value = (await data).data;
-      } finally {
-        parentLoading.value = false;
-      }
-    }
-
     const clearForm = () => {
       form.value.resetFields();
     }
@@ -112,12 +90,12 @@ export default defineComponent({
         formLoading.value = true;
         try{
           let data = undefined;
-          if(categoryId.value){
-            data = await putRequest(`api/admin/category/${categoryId.value}`, formData.value);
+          if(tagId.value){
+            data = await putRequest(`api/admin/tag/${tagId.value}`, formData.value);
           } else {
-            data = await postRequest("api/admin/category", formData.value);
+            data = await postRequest("api/admin/tag", formData.value);
           }
-          if (await data) await router.push({name: 'AdminCategoryIndex'})
+          if (data) await router.push({name: 'AdminTagIndex'})
         } finally {
           formLoading.value = false;
         }
@@ -128,26 +106,25 @@ export default defineComponent({
     const getInformation = async () => {
       formLoading.value = true;
       try{
-        const data = await getRequest(`api/admin/category/${categoryId.value}`);
+        const data = await getRequest(`api/admin/tag/${tagId.value}`);
         if (data && data.data){
           formData.value = data.data;
         } else {
-          await router.push({name: 'AdminCategoryIndex'});
+          await router.push({name: 'AdminTagIndex'});
         }
       } finally {
         formLoading.value = false;
       }
     };
 
-    if (categoryId && categoryId.value){
+    if (tagId && tagId.value){
       onMounted(() => {
         getInformation();
-        parentRemoteMethod();
       });
     }
 
     const goBack = () => {
-      router.push({name: 'AdminCategoryIndex'})
+      router.push({name: 'AdminTagIndex'})
     }
     return {
       form,
@@ -157,7 +134,6 @@ export default defineComponent({
       rules,
       parentLoading,
       parentOptions,
-      parentRemoteMethod,
       clearForm,
       submitForm,
       formLoading,

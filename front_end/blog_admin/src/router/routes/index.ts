@@ -86,5 +86,48 @@ export const AdminRoutes: AppRouteModule[] = [
       },
     ],
   },
+  {
+    name: "AdminTag",
+    path: "/tags",
+    component: DEFAULT_LAYOUT,
+    meta: {
+      title: "标签",
+      hiddenMenu: false,
+      icon: 'gis:tags'
+    },
+    children: [
+      {
+        name: "AdminTagIndex",
+        path: "/tags",
+        component: () => import("/@/views/admin/tags/index/Index.vue"),
+        meta: {
+          title: "标签列表",
+          hiddenMenu: false,
+          icon: 'gis:tags'
+        },
+      },
+      {
+        name: "AdminTagNew",
+        path: "/tag/new",
+        component: () => import("/@/views/admin/tags/new/New.vue"),
+        meta: {
+          title: "新建标签",
+          hiddenMenu: false,
+          icon: 'carbon:tag-edit',
+        },
+      },
+      {
+        name: "AdminTagEdit",
+        path: "/tag/:id",
+        component: () => import("/@/views/admin/tags/edit/Edit.vue"),
+        meta: {
+          title: "编辑标签",
+          hiddenMenu: true,
+          icon: 'carbon:tag-edit',
+          alias: '/tags'
+        },
+      },
+    ],
+  },
 ];
 export const basicRoutes = [LoginRoute, ...AdminRoutes];

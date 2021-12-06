@@ -17,8 +17,12 @@ import javax.validation.Valid;
 @RequestMapping("admin")
 public class TagController {
 
-    @Autowired
     TagManager tagManager;
+
+    @Autowired
+    public void setTagManager(TagManager tagManager){
+        this.tagManager = tagManager;
+    }
 
     /**
      * 无条件查询

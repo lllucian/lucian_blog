@@ -8,7 +8,7 @@ import lombok.Setter;
 public class TagFormVO {
     private String name;
     
-    private String slut;
+    private String slug;
     
     private String description;
     

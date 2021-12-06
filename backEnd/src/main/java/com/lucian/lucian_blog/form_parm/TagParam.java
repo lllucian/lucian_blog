@@ -16,7 +16,7 @@ public class TagParam {
 
     @NotBlank
     @Size(max = 255)
-    private String slut;
+    private String slug;
 
     @Range(min = 1, max = 99999)
     private Integer sort;
