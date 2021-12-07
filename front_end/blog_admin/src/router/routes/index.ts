@@ -29,7 +29,6 @@ export const AdminRoutes: AppRouteModule[] = [
           title: "文章列表",
           hiddenMenu: false,
           icon: 'pixelarticons:article',
-          canRedirect: true
         },
       },
       {
@@ -40,7 +39,6 @@ export const AdminRoutes: AppRouteModule[] = [
           title: "新建文章",
           hiddenMenu: false,
           icon: 'jam:write',
-          canRedirect: true
         },
       },
       {
@@ -50,7 +48,7 @@ export const AdminRoutes: AppRouteModule[] = [
         meta: {
           title: '编辑文章',
           hiddenMenu: true,
-          canRedirect: false
+          alias: '/posts'
         }
       }
     ],
@@ -73,7 +71,6 @@ export const AdminRoutes: AppRouteModule[] = [
           title: "分类列表",
           hiddenMenu: false,
           icon: 'carbon:categories',
-          canRedirect: true,
         },
       },
       {
@@ -84,7 +81,6 @@ export const AdminRoutes: AppRouteModule[] = [
           title: "新建分类",
           hiddenMenu: false,
           icon: 'ic:outline-category',
-          canRedirect: true,
         },
       },
       {
@@ -96,7 +92,6 @@ export const AdminRoutes: AppRouteModule[] = [
           hiddenMenu: true,
           icon: 'jam:write',
           alias: '/categories',
-          canRedirect: false,
         },
       },
     ],
@@ -119,7 +114,6 @@ export const AdminRoutes: AppRouteModule[] = [
           title: "标签列表",
           hiddenMenu: false,
           icon: 'gis:tags',
-          canRedirect: true
         },
       },
       {
@@ -130,7 +124,6 @@ export const AdminRoutes: AppRouteModule[] = [
           title: "新建标签",
           hiddenMenu: false,
           icon: 'carbon:tag-edit',
-          canRedirect: true,
         },
       },
       {
@@ -142,7 +135,6 @@ export const AdminRoutes: AppRouteModule[] = [
           hiddenMenu: true,
           icon: 'carbon:tag-edit',
           alias: '/tags',
-          canRedirect: false
         },
       },
     ],
