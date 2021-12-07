@@ -17,7 +17,7 @@ router.beforeEach((to, from, next) => {
   if (to.name !== "Login" && !token) {
     next({
       name: "Login",
-      query: { redict_to: to.name as string },
+      query: { redict_to: to.fullPath as string },
       replace: true,
     });
     ElMessage.error({ message: "请先登录账号！" });
