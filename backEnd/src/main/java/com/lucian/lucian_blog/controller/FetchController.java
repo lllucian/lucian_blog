@@ -6,10 +6,12 @@ import com.lucian.lucian_blog.common.CommonResult;
 import com.lucian.lucian_blog.manager.CategoryManager;
 import com.lucian.lucian_blog.manager.TagManager;
 import com.lucian.lucian_blog.query_wrapper.CategorySelectQuery;
+import com.lucian.lucian_blog.query_wrapper.PostQuery;
 import com.lucian.lucian_blog.query_wrapper.TagSelectQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -51,5 +53,15 @@ public class FetchController {
     @PostMapping({"getParentId", "getParentId/{categoryId}"})
     public CommonResult<List<CategorySelectDataVO>> getCanSelectCategory(@PathVariable(required = false) Integer categoryId){
         return CommonResult.successNoMessage(categoryManager.parentCategory(categoryId));
+    }
+
+    @PostMapping("categories/selected")
+    public CommonResult<List<CategorySelectDataVO>> getOneSelectCategory(@RequestBody PostQuery postQuery){
+        return CommonResult.successNoMessage(categoryManager.getSelectData(postQuery.getCategories()));
+    }
+
+    @PostMapping("tags/selected")
+    public CommonResult<List<TagSelectDataVO>> getOneSelectTag(@RequestBody PostQuery postQuery){
+        return CommonResult.successNoMessage(tagManager.getSelectData(postQuery.getTags()));
     }
 }

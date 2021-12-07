@@ -6,7 +6,7 @@ export interface pageInfo {
     total: number;
 }
 export interface queryConditionsByPageInterface extends pageInfo{
-    category: number | null;
+    categories: number[];
     tags: number[];
     title: string;
     created: string[];

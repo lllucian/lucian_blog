@@ -1,5 +1,5 @@
 <template>
-  <Form :title="$route.meta.title"></Form>
+  <Form :title="$route.meta.title" :postId="$route.params.id"></Form>
 </template>
 
 <script lang="ts">

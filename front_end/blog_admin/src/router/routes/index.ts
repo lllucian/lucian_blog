@@ -28,7 +28,8 @@ export const AdminRoutes: AppRouteModule[] = [
         meta: {
           title: "文章列表",
           hiddenMenu: false,
-          icon: 'pixelarticons:article'
+          icon: 'pixelarticons:article',
+          canRedirect: true
         },
       },
       {
@@ -39,8 +40,19 @@ export const AdminRoutes: AppRouteModule[] = [
           title: "新建文章",
           hiddenMenu: false,
           icon: 'jam:write',
+          canRedirect: true
         },
       },
+      {
+        name: 'AdminPostEdit',
+        path: '/post/:id',
+        component: () => import("/@/views/admin/posts/edit/Edit.vue"),
+        meta: {
+          title: '编辑文章',
+          hiddenMenu: true,
+          canRedirect: false
+        }
+      }
     ],
   },
   {
@@ -50,7 +62,7 @@ export const AdminRoutes: AppRouteModule[] = [
     meta: {
       title: "分类",
       hiddenMenu: false,
-      icon: 'carbon:categories'
+      icon: 'carbon:categories',
     },
     children: [
       {
@@ -60,7 +72,8 @@ export const AdminRoutes: AppRouteModule[] = [
         meta: {
           title: "分类列表",
           hiddenMenu: false,
-          icon: 'carbon:categories'
+          icon: 'carbon:categories',
+          canRedirect: true,
         },
       },
       {
@@ -71,6 +84,7 @@ export const AdminRoutes: AppRouteModule[] = [
           title: "新建分类",
           hiddenMenu: false,
           icon: 'ic:outline-category',
+          canRedirect: true,
         },
       },
       {
@@ -78,10 +92,11 @@ export const AdminRoutes: AppRouteModule[] = [
         path: "/category/:id",
         component: () => import("/@/views/admin/categories/edit/Edit.vue"),
         meta: {
-          title: "编辑文章",
+          title: "编辑分类",
           hiddenMenu: true,
           icon: 'jam:write',
-          alias: '/categories'
+          alias: '/categories',
+          canRedirect: false,
         },
       },
     ],
@@ -93,7 +108,7 @@ export const AdminRoutes: AppRouteModule[] = [
     meta: {
       title: "标签",
       hiddenMenu: false,
-      icon: 'gis:tags'
+      icon: 'gis:tags',
     },
     children: [
       {
@@ -103,7 +118,8 @@ export const AdminRoutes: AppRouteModule[] = [
         meta: {
           title: "标签列表",
           hiddenMenu: false,
-          icon: 'gis:tags'
+          icon: 'gis:tags',
+          canRedirect: true
         },
       },
       {
@@ -114,6 +130,7 @@ export const AdminRoutes: AppRouteModule[] = [
           title: "新建标签",
           hiddenMenu: false,
           icon: 'carbon:tag-edit',
+          canRedirect: true,
         },
       },
       {
@@ -124,7 +141,8 @@ export const AdminRoutes: AppRouteModule[] = [
           title: "编辑标签",
           hiddenMenu: true,
           icon: 'carbon:tag-edit',
-          alias: '/tags'
+          alias: '/tags',
+          canRedirect: false
         },
       },
     ],

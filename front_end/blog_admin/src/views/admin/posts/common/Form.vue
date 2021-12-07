@@ -44,24 +44,33 @@
             clearable
         />
       </el-form-item>
+      <el-row style="justify-content: center">
+        <el-button type="primary" @click="submitForm">提交</el-button>
+        <el-button type="warning" @click="clearForm">清空表单内容
+        </el-button>
+      </el-row>
     </el-form>
   </el-card>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, toRefs} from "vue";
+import {defineComponent, onMounted, ref, toRefs} from "vue";
 import {router} from "/@/router";
-import {postRequest} from "/@/requests";
+import {getRequest, postRequest, putRequest} from "/@/requests";
 
 export default defineComponent({
   props: {
     title: {
       type: String,
-      required: true
+      required: true,
+    },
+    postId: {
+      type: String,
+      required: false,
     }
   },
   setup(props) {
-    const {title} = toRefs(props);
+    const {title, postId} = toRefs(props);
     const formData = ref({
       title: '',
       description: '',
@@ -71,6 +80,8 @@ export default defineComponent({
     });
 
     const form = ref();
+
+    const formLoading = ref(false);
 
     const rules = ref({
       title: [
@@ -121,8 +132,67 @@ export default defineComponent({
       }
     }
 
+    const clearForm = () => {
+      form.value.resetFields();
+    }
+
+    const submitForm = async () => {
+      const valid = await form.value.validate();
+      if (valid){
+        formLoading.value = true;
+        try{
+          let data;
+          if(postId.value){
+            data = await putRequest(`api/admin/post/${postId.value}`, formData.value);
+          } else {
+            data = await postRequest("api/admin/post", formData.value);
+          }
+          if (await data) await router.push({name: 'AdminPostIndex'})
+        } finally {
+          formLoading.value = false;
+        }
+      }
+    }
+
+    const editFormData = async () => {
+      formLoading.value = true;
+      try{
+        const data = await getRequest(`api/admin/post/${postId.value}`);
+        if (data && data.data) formData.value = data.data;
+        console.log(data)
+      } finally {
+        formLoading.value = false;
+      }
+    }
+
+    const categoryRemoteOpts = async () => {
+      categoryLoading.value = true;
+      try{
+        const data = await postRequest(`api/admin/fetch/categories/selected`, {categories: formData.value.categories})
+        if (data && data.data) categoryOptions.value = data.data;
+      } finally {
+        categoryLoading.value = false;
+      }
+    }
+
+    const tagRemoteOpts = async () => {
+      tagLoading.value = true;
+      try{
+        const data = await postRequest(`api/admin/fetch/tags/selected`, {tags: formData.value.tags})
+        if (data && data.data) tagOptions.value = data.data;
+      } finally {
+        tagLoading.value = false;
+      }
+    }
     const goBack = () => {
       router.push({name: 'AdminPostIndex'})
+    }
+    if (postId.value) {
+      onMounted(async () => {
+        await editFormData();
+        await categoryRemoteOpts();
+        if (formData.value.tags.length != 0) await tagRemoteOpts();
+      })
     }
     return {
       form,
@@ -136,6 +206,8 @@ export default defineComponent({
       tagLoading,
       tagOptions,
       tagRemoteMethod,
+      submitForm,
+      clearForm,
     }
   }
 })

@@ -15,13 +15,14 @@
           <el-col :span="8">
             <el-form-item label="分类" prop="category">
               <el-select-v2
-                v-model="SearchFormData.category"
+                v-model="SearchFormData.categories"
                 filterable
                 :options="categoryOptions"
                 remote
                 :remote-method="categoryRemoteMethod"
                 :loading="categoryLoading"
                 style="width: 100%"
+                multiple
                 placeholder="请选择分类"
                 clearable
               />
@@ -131,7 +132,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const SearchForm = ref();
     let SearchFormData: Ref<queryConditionsByPageInterface> = ref({
-      category: null,
+      categories:  new Array<number>(),
       title: "",
       tags: new Array<number>(),
       created: new Array<string>(),

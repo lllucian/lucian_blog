@@ -72,7 +72,7 @@ public class PostController {
      * @param postParam 表单数据
      * @return 是否更新成功
      */
-    @PostMapping("post/{id}")
+    @PutMapping("post/{id}")
     public CommonResult<String> update(@PathVariable Integer id, @Valid @RequestBody PostParam postParam){
         return postManager.update(id, postParam) ? CommonResult.success(null, "修改成功"): CommonResult.failed("修改失败");
     }

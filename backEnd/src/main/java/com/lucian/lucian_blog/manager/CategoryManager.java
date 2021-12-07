@@ -170,16 +170,7 @@ public class CategoryManager {
             try {
                 Method method = Class.forName("com.lucian.lucian_blog.bean.entity.Category").getMethod(methodName);
                 return Objects.equals(method.invoke(category), categoryId);
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-                return false;
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-                return false;
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-                return false;
-            } catch (IllegalAccessException e) {
+            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | ClassNotFoundException e) {
                 e.printStackTrace();
                 return false;
             }
@@ -188,5 +179,15 @@ public class CategoryManager {
         list.removeAll(parentCategory);
         if (list.size() == 0) return null;
         return getNodeData(list, parentCategory.get(0).getId(), "getParentId");
+    }
+
+    /**
+     * 获取options
+     * @param ids 分类id
+     * @return options
+     */
+    public List<CategorySelectDataVO> getSelectData(List<Integer> ids){
+        if (ids == null || ids.size() == 0) return null;
+        return category2SelectVO.tranCategory2SelectVOList(categoryService.listByIds(ids));
     }
 }

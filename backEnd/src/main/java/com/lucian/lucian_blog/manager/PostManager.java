@@ -127,7 +127,7 @@ public class PostManager {
         QueryWrapper<PostTag> postTagQueryWrapper = new QueryWrapper<>();
         postTagQueryWrapper.eq("post_id", post.getId());
         if (postParam.getTags() != null) {
-            // 有效的分类
+            // 有效的标签
             List<Integer> enableTagIds = tagDao.selectBatchIds(postParam.getTags()).stream().map(BaseEntity::getId).collect(Collectors.toList());
             // 关联表中的分类
             List<Integer> assocPostTagIds = postTagDao.selectList(postTagQueryWrapper).stream().map(PostTag::getTagId).collect(Collectors.toList());
@@ -141,7 +141,7 @@ public class PostManager {
             }
             // 增加关联表中的id
             List<Integer> shouldAddTagIds = enableTagIds.stream().filter(enableTagId -> !assocPostTagIds.contains(enableTagId)).collect(Collectors.toList());
-            shouldAddTagIds.forEach(tagId -> postCategoryDao.insert(new PostCategory(post.getId(), tagId)));
+            shouldAddTagIds.forEach(tagId -> postTagDao.insert(new PostTag(post.getId(), tagId)));
         } else {
             postTagDao.delete(postTagQueryWrapper);
         }

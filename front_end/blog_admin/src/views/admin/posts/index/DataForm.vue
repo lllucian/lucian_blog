@@ -31,10 +31,20 @@
         <el-table-column prop="description" label="描述"> </el-table-column>
         <el-table-column prop="createdAt" label="创建时间"> </el-table-column>
         <el-table-column prop="updatedAt" label="修改时间"> </el-table-column>
-        <el-table-column fixed="right" label="操作" width="120">
-          <template #default>
-            <el-button type="text" size="small">编辑</el-button>
-            <el-button type="text" size="small">删除</el-button>
+        <el-table-column fixed="right" label="操作" width="120" align="center">
+          <template #default="scope">
+            <router-link :to="'/post/'+scope.row.id">
+              <el-button type="text">
+                <Icon icon="ant-design:edit-outlined" :size="18"></Icon>
+              </el-button>
+            </router-link>
+            <el-popconfirm title="确认删除吗？" @confirm="deleteRow(scope.$index, dataTable, scope.row.id)">
+              <template #reference>
+                <el-button type="text">
+                  <Icon icon="akar-icons:trash-can" color="red" :size="18"></Icon>
+                </el-button>
+              </template>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -51,9 +61,11 @@
 import { defineComponent, onMounted, ref, toRef, toRefs, watch } from "vue";
 import Pagination from "/@/components/data/Pagination.vue";
 import { setPageConditions, apiFormData } from "./query";
+import {deleteRequest} from "/@/requests";
+import Icon from "/@/components/basic/Icon.vue";
 
 export default defineComponent({
-  components: { Pagination },
+  components: { Pagination, Icon },
   props: {
     dataTable: {
       type: Array,
@@ -131,7 +143,18 @@ export default defineComponent({
       }
     };
 
-    return { dataTable, pageInfo, getList, loadingTable };
+    const deleteRow = async (index: number, data: Array<Object>, id: number) => {
+      data.splice(index, 1);
+      emit("update:loadingTable", true);
+      try{
+        await deleteRequest(`api/admin/post/${id}`);
+      } finally {
+        pageInfo.value.current = 1;
+        await getList();
+        emit("update:loadingTable", false);
+      }
+    };
+    return { dataTable, pageInfo, getList, loadingTable, deleteRow };
   },
 });
 </script>

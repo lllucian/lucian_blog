@@ -17,7 +17,7 @@ public class PostQuery {
 
     private List<String> updated;
 
-    private String category;
+    private List<Integer> categories;
 
     private List<Integer> tags;
 
@@ -32,7 +32,7 @@ public class PostQuery {
         if (!Collections.isEmpty(created) && created.size() > 1) wrapper.le("p.created_at", created.get(1));
         if (!Collections.isEmpty(updated)) wrapper.ge("p.updated_at", updated.get(0));
         if (!Collections.isEmpty(updated) && updated.size() > 1) wrapper.le("p.updated_at", updated.get(1));
-        if (Strings.isNotBlank(category)) wrapper.eq("ca.name", category);
+        if (!Collections.isEmpty(categories)) wrapper.in("pc.category_id", categories);
         if (!Collections.isEmpty(tags)) wrapper.in("pt.tag_id", tags);
         return wrapper;
     }

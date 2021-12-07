@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lucian.lucian_blog.bean.entity.Tag;
 import com.lucian.lucian_blog.bean.translater.Tag2SelectVO;
 import com.lucian.lucian_blog.bean.translater.Tag2TagIndexVO;
+import com.lucian.lucian_blog.bean.vo.CategorySelectDataVO;
 import com.lucian.lucian_blog.bean.vo.TagFormVO;
 import com.lucian.lucian_blog.bean.vo.TagIndexVO;
 import com.lucian.lucian_blog.bean.vo.TagSelectDataVO;
@@ -108,6 +109,16 @@ public class TagManager {
         List<TagSelectDataVO> searchData = new ArrayList<>();
         if (list.size() == 0) return searchData;
         return tag2SelectVO.tranTag2SelectVOList(list);
+    }
+
+    /**
+     * 获取被选中的option
+     * @param ids 分类id
+     * @return 被选中option
+     */
+    public List<TagSelectDataVO> getSelectData(List<Integer> ids){
+        if (ids == null && ids.size() != 0) return null;
+        return tag2SelectVO.tranTag2SelectVOList(tagService.listByIds(ids));
     }
 
 }

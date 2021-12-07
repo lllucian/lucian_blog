@@ -70,9 +70,8 @@ export default defineComponent({
             const jwtToken = resp.jwtToken;
             if (jwtToken) {
               stroage.commit({ type: "setToken", token: jwtToken });
-              const redictTo = router.currentRoute.value.query["redict_to"] as string || "AdminPost";
-              const redictPage = router.hasRoute(redictTo) ? redictTo : 'AdminPost';
-              router.push({ name: redictPage });
+              const redictTo = router.currentRoute.value.query["redict_to"] as string || "/";
+              await router.push({path: redictTo});
             }
           } else {
             restForm();
