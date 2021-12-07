@@ -159,7 +159,6 @@ export default defineComponent({
       try{
         const data = await getRequest(`api/admin/post/${postId.value}`);
         if (data && data.data) formData.value = data.data;
-        console.log(data)
       } finally {
         formLoading.value = false;
       }
