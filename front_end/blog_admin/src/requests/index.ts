@@ -10,6 +10,8 @@ instance.interceptors.request.use(config => {
     if (stroage.getters.getToken && config.headers && config.headers.common)
     config.headers.common['Authorization'] = stroage.getters.getToken;
     return config;
+}, error => {
+    ElMessage.error({message: '请求错误！'});
 })
 // 响应拦截器
 instance.interceptors.response.use(response => {

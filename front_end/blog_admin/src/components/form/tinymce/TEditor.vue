@@ -54,7 +54,8 @@ import 'tinymce/plugins/textpattern'  //快速排版
 import 'tinymce/plugins/toc'  //目录生成器
 import 'tinymce/plugins/visualblocks'  //显示元素范围
 import 'tinymce/plugins/visualchars'  //显示不可见字符
-import 'tinymce/plugins/wordcount'  //字数统计
+import 'tinymce/plugins/wordcount'
+import {postRequest} from "../../../requests";  //字数统计
 
 
 export default {
@@ -115,7 +116,7 @@ export default {
         // images_upload_url: '/apib/api-upload/uploadimg',  //后端处理程序的url，建议直接自定义上传函数image_upload_handler，这个就可以不用了
         // images_upload_base_path: '/demo',  //相对基本路径--关于图片上传建议查看--http://tinymce.ax-z.cn/general/upload-images.php
         paste_data_images: true,  //图片是否可粘贴
-        images_upload_handler: (blobInfo, success, failure) => {
+        images_upload_handler: async (blobInfo, success, failure) => {
           if(blobInfo.blob().size/1024/1024>2){
             failure("上传失败，图片大小请控制在 2M 以内")
           }else{
@@ -126,15 +127,18 @@ export default {
                 "Content-Type":"multipart/form-data"
               }
             }
-            this.$axios.post(`api-upload/uploadimg`,params,config).then(res=>{
-              if(res.data.code==200){
-                success(res.data.msg)  //上传成功，在成功函数里填入图片路径
-              }else{
-                failure("上传失败")
-              }
-            }).catch(()=>{
-              failure("上传出错，服务器开小差了呢")
-            })
+            // this.$axios.post(`api/admin/upload_file/upload`,params,config).then(res=>{
+            //   if(res.data.code==200){
+            //     success(res.data.msg)  //上传成功，在成功函数里填入图片路径
+            //   }else{
+            //     failure("上传失败")
+            //   }
+            // }).catch(()=>{
+            //   failure("上传出错，服务器开小差了呢")
+            // })
+            const data = await postRequest("api/admin/upload_file/upload", params)
+            if (data && data.data) return success(data.data);
+            return failure("上传失败");
           }
         }
       },
