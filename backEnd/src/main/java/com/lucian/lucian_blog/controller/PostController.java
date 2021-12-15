@@ -1,6 +1,7 @@
 package com.lucian.lucian_blog.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.lucian.lucian_blog.annotation.Log;
 import com.lucian.lucian_blog.bean.vo.PostFormVO;
 import com.lucian.lucian_blog.bean.vo.PostIndexVO;
 import com.lucian.lucian_blog.common.CommonResult;
@@ -28,6 +29,7 @@ public class PostController {
      * @param postQuery 检索条件数据
      * @return 检索后的数据
      */
+    @Log(title = "检索文章")
     @PostMapping("posts")
     public CommonResult<IPage<PostIndexVO>> search(@RequestBody PostQuery postQuery){
         IPage<PostIndexVO> iPage = postManager.queryListByPage(postQuery);
@@ -38,6 +40,7 @@ public class PostController {
      * 一览
      * @return 一览数据
      */
+    @Log(title = "文章一览")
     @GetMapping("posts")
     public CommonResult<IPage<PostIndexVO>> index(){
         IPage<PostIndexVO> iPage = postManager.queryListByPage(null);

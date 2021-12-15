@@ -36,3 +36,4 @@ build/
 spy.log
 src/main/resources/db/.DS_Store
 **/.DS_Store
+**/logs/

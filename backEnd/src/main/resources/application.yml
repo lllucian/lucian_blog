@@ -2,7 +2,12 @@ spring:
   flyway:
     table: schema_version_history
   profiles:
-    active: dev
+    active: @profiles.active@
+logging:
+  config: classpath:log4j2.xml
+  level:
+    com.lucian: @logging.level@
+    org.springframework: warn
 mybatis-plus:
   global-config:
     db-config:

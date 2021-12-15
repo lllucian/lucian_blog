@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <File name="MyFile"
+              fileName="logs/myapp-${date:yyyy-MM-dd}.log">
+            <PatternLayout>
+                <Pattern>%d{yyyy/MM/dd HH:mm:ss.SSS} [%t] %-5level %logger{36}.%M() @%L - %msg%n</Pattern>
+            </PatternLayout>
+        </File>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%highlight{%d{yyyy/MM/dd HH:mm:ss.SSS} %level %logger{36}.%M() @%L - %msg%n}"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="warn">
+            <AppenderRef ref="MyFile"/>
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
