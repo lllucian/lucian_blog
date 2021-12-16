@@ -10,10 +10,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.annotation.Resource;
+
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     UserService userService;
+
+    @Resource
+    JWTFilter jwtFilter;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -40,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests(authorize -> authorize.antMatchers("/admin/**").hasRole("admin"))
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JWTFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .cors().and().csrf().disable();
 //                .httpBasic();
     }

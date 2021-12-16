@@ -23,6 +23,7 @@ public class UserBO implements UserDetails {
     }
 
     public UserBO(User user, List<Role> roles) {
+        this.id = user.getId();
         this.user = user;
         this.roles = roles;
     }

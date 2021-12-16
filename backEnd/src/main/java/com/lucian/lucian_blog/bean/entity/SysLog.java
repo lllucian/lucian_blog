@@ -8,12 +8,12 @@ import lombok.EqualsAndHashCode;
 @TableName("sys_logs")
 @Data
 public class SysLog extends BaseEntity {
-    private String username;
+    private Integer userId;
     private String operation;
     private Integer time;
     private String method;
     private String requestParams;
-    private String responseResult;
+    private Long responseStatus;
     private String ip;
     private String address;
     private String browser;

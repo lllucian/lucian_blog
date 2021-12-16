@@ -6,6 +6,7 @@ import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lucian.lucian_blog.annotation.Log;
 import com.lucian.lucian_blog.bean.entity.SysLog;
+import com.lucian.lucian_blog.common.CommonResult;
 import com.lucian.lucian_blog.dao.SysLogDao;
 import com.lucian.lucian_blog.utils.HttpContextUtils;
 import com.lucian.lucian_blog.utils.IPUtils;
@@ -69,13 +70,13 @@ public class LogAspect {
         // 请求的方法参数值
         List<Object> objectList = Arrays.stream(joinPoint.getArgs()).filter(item -> Objects.nonNull(item) && !isFilterObject(item)).collect(Collectors.toList());
         sysLog.setRequestParams(JSONUtil.toJsonStr(objectList));
-        sysLog.setResponseResult(JSONUtil.toJsonStr(resultObj));
+        sysLog.setResponseStatus(((CommonResult)resultObj).getCode());
         // 获取request
         HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
         // 设置IP地址
         sysLog.setIp(IPUtils.getIpAddr(request));
-        // 记录当前操作用户名
-        sysLog.setUsername(SecurityUtils.getCurrentUserName());
+        // 记录当前操作用户Id
+        sysLog.setUserId(SecurityUtils.getCurrentUserId());
         UserAgent userAgent = UserAgentUtil.parse(request.getHeader("User-Agent"));
         sysLog.setBrowser(userAgent.getBrowser().getName());
         sysLog.setOs(userAgent.getOs().getName());

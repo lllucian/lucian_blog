@@ -139,5 +139,27 @@ export const AdminRoutes: AppRouteModule[] = [
       },
     ],
   },
+  {
+    name: "AdminLog",
+    path: "/sys_logs",
+    component: DEFAULT_LAYOUT,
+    meta: {
+      title: "日志管理",
+      hiddenMenu: false,
+      icon: 'icon-park-outline:log',
+    },
+    children: [
+      {
+        name: "AdminLogIndex",
+        path: "/sys_logs",
+        component: () => import("/@/views/admin/sys_logs/index/Index.vue"),
+        meta: {
+          title: "日志列表",
+          hiddenMenu: false,
+          icon: 'icon-park-outline:log',
+        },
+      }
+    ]
+  }
 ];
 export const basicRoutes = [LoginRoute, ...AdminRoutes];
