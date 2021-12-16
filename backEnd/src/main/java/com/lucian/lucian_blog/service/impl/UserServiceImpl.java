@@ -44,98 +44,48 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    /**
-     * 插入（批量）
-     *
-     * @param entityList 实体对象集合
-     * @param batchSize  插入批次数量
-     */
     @Override
-    public boolean saveBatch(Collection<UserBO> entityList, int batchSize) {
+    public boolean saveBatch(Collection<User> entityList, int batchSize) {
         return false;
     }
 
-    /**
-     * 批量修改插入
-     *
-     * @param entityList 实体对象集合
-     * @param batchSize  每次的数量
-     */
     @Override
-    public boolean saveOrUpdateBatch(Collection<UserBO> entityList, int batchSize) {
+    public boolean saveOrUpdateBatch(Collection<User> entityList, int batchSize) {
         return false;
     }
 
-    /**
-     * 根据ID 批量更新
-     *
-     * @param entityList 实体对象集合
-     * @param batchSize  更新批次数量
-     */
     @Override
-    public boolean updateBatchById(Collection<UserBO> entityList, int batchSize) {
+    public boolean updateBatchById(Collection<User> entityList, int batchSize) {
         return false;
     }
 
-    /**
-     * TableId 注解存在更新记录，否插入一条记录
-     *
-     * @param entity 实体对象
-     */
     @Override
-    public boolean saveOrUpdate(UserBO entity) {
+    public boolean saveOrUpdate(User entity) {
         return false;
     }
 
-    /**
-     * 根据 Wrapper，查询一条记录
-     *
-     * @param queryWrapper 实体对象封装操作类 {@link QueryWrapper}
-     * @param throwEx      有多个 result 是否抛出异常
-     */
     @Override
-    public UserBO getOne(Wrapper<UserBO> queryWrapper, boolean throwEx) {
+    public User getOne(Wrapper<User> queryWrapper, boolean throwEx) {
         return null;
     }
 
-    /**
-     * 根据 Wrapper，查询一条记录
-     *
-     * @param queryWrapper 实体对象封装操作类 {@link QueryWrapper}
-     */
     @Override
-    public Map<String, Object> getMap(Wrapper<UserBO> queryWrapper) {
+    public Map<String, Object> getMap(Wrapper<User> queryWrapper) {
         return null;
     }
 
-    /**
-     * 根据 Wrapper，查询一条记录
-     *
-     * @param queryWrapper 实体对象封装操作类 {@link QueryWrapper}
-     * @param mapper       转换函数
-     */
     @Override
-    public <V> V getObj(Wrapper<UserBO> queryWrapper, Function<? super Object, V> mapper) {
+    public <V> V getObj(Wrapper<User> queryWrapper, Function<? super Object, V> mapper) {
         return null;
     }
 
-    /**
-     * 获取对应 entity 的 BaseMapper
-     *
-     * @return BaseMapper
-     */
     @Override
-    public BaseMapper<UserBO> getBaseMapper() {
-        return null;
+    public BaseMapper<User> getBaseMapper() {
+        return userDao;
     }
 
-    /**
-     * 获取 entity 的 class
-     *
-     * @return {@link Class<User>}
-     */
     @Override
-    public Class<UserBO> getEntityClass() {
-        return null;
+    public Class<User> getEntityClass() {
+        return User.class;
     }
 }

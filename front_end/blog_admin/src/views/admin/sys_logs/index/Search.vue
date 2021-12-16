@@ -13,6 +13,21 @@
       >
         <el-row>
           <el-col :span="8">
+            <el-form-item label="操作者" prop="userId">
+              <el-select-v2
+                  v-model="SearchFormData.userId"
+                  filterable
+                  :options="userOptions"
+                  remote
+                  :remote-method="userRemoteMethod"
+                  :loading="userLoading"
+                  style="width: 100%"
+                  placeholder="请选择操作者"
+                  clearable
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
             <el-form-item label="方法" prop="method">
               <el-input v-model="SearchFormData.method" clearable></el-input>
             </el-form-item>
@@ -96,13 +111,9 @@ export default defineComponent({
       records: [],
     });
 
-    const categoryOptions = ref([]);
+    const userOptions = ref([]);
 
-    const categoryLoading = ref(false);
-
-    const tagOptions = ref([]);
-
-    const tagLoading = ref(false);
+    const userLoading = ref(false);
 
     const commitSearchForm = async () => {
       SearchFormData.value.size = getPagesize();
@@ -123,38 +134,25 @@ export default defineComponent({
       SearchForm.value.resetFields();
     };
 
-    const categoryRemoteMethod = async (query: string) => {
+    const userRemoteMethod = async (query: string) => {
       if (query.trim() !== "") {
-        categoryLoading.value = true;
-        const data = postRequest("api/admin/fetch/categories", { name: query });
-        if ((await data).data) categoryOptions.value = (await data).data;
-        categoryLoading.value = false;
+        userLoading.value = true;
+        const data = postRequest("api/admin/fetch/users", { name: query });
+        if ((await data).data) userOptions.value = (await data).data;
+        userLoading.value = false;
       } else {
-        categoryOptions.value = [];
+        userOptions.value = [];
       }
     };
 
-    const tagRemoteMethod = async (query: string) => {
-      if (query.trim() !== "") {
-        tagLoading.value = true;
-        const data = postRequest("api/admin/fetch/tags", { name: query });
-        if ((await data).data) tagOptions.value = (await data).data;
-        tagLoading.value = false;
-      } else {
-        tagOptions.value = [];
-      }
-    };
     return {
       SearchForm,
       SearchFormData,
       commitSearchForm,
       clearSearchForm,
-      categoryRemoteMethod,
-      categoryOptions,
-      categoryLoading,
-      tagLoading,
-      tagOptions,
-      tagRemoteMethod,
+      userOptions,
+      userRemoteMethod,
+      userLoading,
     };
   },
 });

@@ -31,7 +31,7 @@ public abstract class SysLog2BO {
     protected void setUserInfo(List<SysLog> sysLogs, @MappingTarget List<SysLogBO> sysLogBOS){
         if (sysLogs == null) return;
         // 得出所有log里的userId
-        List<Integer> userIds =sysLogs.stream().map(SysLog::getUserId).collect(Collectors.toList());
+        List<Integer> userIds =sysLogs.stream().map(SysLog::getUserId).distinct().collect(Collectors.toList());
         if (userIds.size() == 0) return;
         List<User> users = userDao.selectBatchIds(userIds);
         Map<Integer, User> userMap = users.stream().collect(Collectors.toMap(User::getId, user -> user, (oldValue, newValue) -> oldValue));
