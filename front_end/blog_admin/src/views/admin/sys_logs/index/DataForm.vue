@@ -17,7 +17,7 @@
         />
         <el-table-column prop="username" label="操作者" width="140" header-align="center"></el-table-column>
         <el-table-column prop="operation" label="操作" width="100" header-align="center"> </el-table-column>
-        <el-table-column prop="time" label="所用时间"  width="100" header-align="center"> </el-table-column>
+        <el-table-column prop="time" label="耗时(毫秒)"  width="100" header-align="center"> </el-table-column>
         <el-table-column prop="method" label="请求方法"  width="200" header-align="center"> </el-table-column>
         <el-table-column prop="requestParams" label="请求参数" header-align="center"> </el-table-column>
         <el-table-column prop="responseStatus" label="返回状态"  header-align="center"> </el-table-column>
