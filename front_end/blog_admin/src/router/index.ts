@@ -17,7 +17,7 @@ router.beforeEach((to, from, next) => {
   if (to.name !== "Login" && !token) {
     next({
       name: "Login",
-      query: { redict_to: to.fullPath as string },
+      query: { redirect_to: to.fullPath as string },
       replace: true,
     });
     ElMessage.error({ message: "请先登录账号！" });
@@ -26,7 +26,7 @@ router.beforeEach((to, from, next) => {
     if (tokenArr.length !== 3) {
       next({
         name: "Login",
-        query: { redict_to: to.fullPath as string },
+        query: { redirect_to: to.fullPath as string },
         replace: true,
       });
       ElMessage.error({ message: "请先登录账号！" });
@@ -37,7 +37,7 @@ router.beforeEach((to, from, next) => {
       if (userInfoObject.exp < new Date().getTime() / 1000) {
         next({
           name: "Login",
-          query: { redict_to: to.path as string },
+          query: { redirect_to: to.path as string },
           replace: true,
         });
         ElMessage.error("登陆信息过期，请重新登陆！");

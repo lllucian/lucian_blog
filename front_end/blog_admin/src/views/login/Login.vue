@@ -7,7 +7,7 @@
       :model="loginFormData"
       :rules="rules"
       ref="loginForm"
-      v-on:keyup.enter="submitForm"
+      @keyup.enter="submitForm"
       v-loading="loading"
     >
       <el-form-item label="用户名" prop="username">
@@ -70,7 +70,7 @@ export default defineComponent({
             const jwtToken = resp.jwtToken;
             if (jwtToken) {
               stroage.commit({ type: "setToken", token: jwtToken });
-              const redictTo = router.currentRoute.value.query["redict_to"] as string || "/";
+              const redictTo = router.currentRoute.value.query["redirect_to"] as string || "/";
               await router.push({path: redictTo});
             }
           } else {
