@@ -5,7 +5,7 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-    url: jdbc:p6spy:mysql://192.168.75.220:3310/lucian_blog
+    url: jdbc:p6spy:mysql://localhost:3306/lucian_blog
   flyway:
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}
@@ -16,5 +16,11 @@ mybatis-plus:
   typeEnumsPackage: com.lucian.lucian_blog.bean.enums
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+minio:
+  url: http://localhost:9000
+  accessKey: admin
+  secretKey: admin123456
+  bucketName: pic
+
 
 

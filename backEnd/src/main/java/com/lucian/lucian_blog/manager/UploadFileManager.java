@@ -1,8 +1,9 @@
 package com.lucian.lucian_blog.manager;
 
 import com.lucian.lucian_blog.bean.entity.UploadFile;
-import com.lucian.lucian_blog.config.FastDFSClient;
 import com.lucian.lucian_blog.service.UploadFileService;
+import com.lucian.lucian_blog.utils.MinIoUtil;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -17,13 +18,13 @@ public class UploadFileManager {
         this.uploadFileService = uploadFileService;
     }
 
-    public String upload(MultipartFile file){
-        String[] fastInfo = FastDFSClient.uploadFile(file);
-        if (fastInfo == null) return null;
+    @SneakyThrows(Exception.class)
+    public String upload(MultipartFile file, String bucketName){
+        String uploadFileURL = MinIoUtil.upload(bucketName, file.getOriginalFilename(), file.getInputStream());
         String originalFilename = file.getOriginalFilename();
         String extension = StringUtils.getFilenameExtension(originalFilename);
-        UploadFile uploadFile = new UploadFile.Builder().fileName(originalFilename).extName(extension).groupName(fastInfo[0]).filePath(fastInfo[1]).build();
+        UploadFile uploadFile = new UploadFile.Builder().fileName(originalFilename).extName(extension).bucketName(bucketName).build();
         uploadFileService.save(uploadFile);
-        return uploadFile.getFastDFSPath(FastDFSClient.getTrackerUrl());
+        return uploadFileURL;
     }
 }

@@ -1,10 +1,8 @@
 package com.lucian.lucian_blog.bean.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.util.StringUtils;
 
 @Getter
 @Setter
@@ -19,23 +17,14 @@ public class UploadFile extends BaseEntity{
     // 上传文件拓展名
     private String extName;
     // 上传至fastdfs的group名
-    @TableField("fdfs_group_name")
-    private String groupName;
-    // 上传至fastdfs的路径
-    @TableField("fdfs_file_path")
-    private String filePath;
+    private String bucketName;
 
     private UploadFile(Builder builder){
         this.userId = builder.userId;
         this.controllerName = builder.controllerName;
         this.fileName = builder.fileName;
         this.extName = builder.extName;
-        this.groupName = builder.groupName;
-        this.filePath = builder.filePath;
-    }
-
-    public String getFastDFSPath(String trackerUrl){
-        return StringUtils.hasText(groupName) && StringUtils.hasText(filePath) ? String.format("%s/%s/%s", trackerUrl, groupName, filePath) : null;
+        this.bucketName = builder.bucketName;
     }
 
     public static class Builder {
@@ -47,8 +36,8 @@ public class UploadFile extends BaseEntity{
         private  String fileName;
         // 上传文件拓展名
         private  String extName;
-        // 上传至fastdfs的group名
-        private  String groupName;
+        // 上传bucketName
+        private  String bucketName;
         // 上传至fastdfs的路径
         private  String filePath;
 
@@ -76,8 +65,8 @@ public class UploadFile extends BaseEntity{
             return this;
         }
 
-        public Builder groupName(String groupName){
-            this.groupName = groupName;
+        public Builder bucketName(String bucketName){
+            this.bucketName = bucketName;
             return this;
         }
 

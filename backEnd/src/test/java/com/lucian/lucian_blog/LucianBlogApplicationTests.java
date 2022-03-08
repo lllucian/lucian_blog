@@ -6,12 +6,10 @@ import com.lucian.lucian_blog.bean.entity.PostCategory;
 import com.lucian.lucian_blog.dao.CategoryDao;
 import com.lucian.lucian_blog.dao.PostCategoryDao;
 import com.lucian.lucian_blog.dao.PostDao;
-import org.csource.common.NameValuePair;
-import org.csource.fastdfs.*;
+import com.lucian.lucian_blog.utils.MinIoUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.*;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
@@ -70,5 +68,10 @@ class LucianBlogApplicationTests {
         postCategory.setPostId(post.getId());
         postCategory.setCategoryId(category.getId());
         postCategoryDao.insert(postCategory);
+    }
+
+    @Test
+    public void testUpload(){
+        MinIoUtil.getAllBuckets().forEach(bucket -> System.out.println(bucket.name()));
     }
 }

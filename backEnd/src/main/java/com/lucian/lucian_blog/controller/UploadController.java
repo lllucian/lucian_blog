@@ -20,8 +20,8 @@ public class UploadController {
     }
 
     @PostMapping("upload")
-    public CommonResult<String> upload(MultipartFile file){
-        String uploadPath = uploadFileManager.upload(file);
+    public CommonResult<String> upload(MultipartFile file, String bucketName){
+        String uploadPath = uploadFileManager.upload(file, bucketName);
         return StringUtils.hasText(uploadPath) ? CommonResult.successNoMessage(uploadPath) : CommonResult.failed();
     }
 }

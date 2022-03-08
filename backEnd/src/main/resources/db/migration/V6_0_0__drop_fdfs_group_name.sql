@@ -1,0 +1,1 @@
+ALTER TABLE upload_files drop column fdfs_group_name;

@@ -1,0 +1,1 @@
+ALTER TABLE upload_files change column fdfs_file_path bucket_name varchar(255);
