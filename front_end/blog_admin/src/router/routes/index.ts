@@ -12,9 +12,9 @@ export const LoginRoute: AppRouteRecordRaw = {
 export const AdminRoutes: AppRouteModule[] = [
   {
     name: "AdminPost",
-    path: "/",
+    path: "/admin",
     component: DEFAULT_LAYOUT,
-    redirect: '/posts',
+    redirect: '/admin/posts',
     meta: {
       title: "文章",
       hiddenMenu: false,
@@ -23,7 +23,7 @@ export const AdminRoutes: AppRouteModule[] = [
     children: [
       {
         name: "AdminPostIndex",
-        path: "/posts",
+        path: "/admin/posts",
         component: () => import("/@/views/admin/posts/index/Index.vue"),
         meta: {
           title: "文章列表",
@@ -33,7 +33,7 @@ export const AdminRoutes: AppRouteModule[] = [
       },
       {
         name: "AdminPostNew",
-        path: "/post/new",
+        path: "/admin/post/new",
         component: () => import("/@/views/admin/posts/new/New.vue"),
         meta: {
           title: "新建文章",
@@ -43,19 +43,19 @@ export const AdminRoutes: AppRouteModule[] = [
       },
       {
         name: 'AdminPostEdit',
-        path: '/post/:id',
+        path: '/admin/post/:id',
         component: () => import("/@/views/admin/posts/edit/Edit.vue"),
         meta: {
           title: '编辑文章',
           hiddenMenu: true,
-          alias: '/posts'
+          alias: '/admin/posts'
         }
       }
     ],
   },
   {
     name: "AdminCategory",
-    path: "/categories",
+    path: "/admin/categories",
     component: DEFAULT_LAYOUT,
     meta: {
       title: "分类",
@@ -65,7 +65,7 @@ export const AdminRoutes: AppRouteModule[] = [
     children: [
       {
         name: "AdminCategoryIndex",
-        path: "/categories",
+        path: "/admin/categories",
         component: () => import("/@/views/admin/categories/index/Index.vue"),
         meta: {
           title: "分类列表",
@@ -75,7 +75,7 @@ export const AdminRoutes: AppRouteModule[] = [
       },
       {
         name: "AdminCategoryNew",
-        path: "/category/new",
+        path: "/admin/category/new",
         component: () => import("/@/views/admin/categories/new/New.vue"),
         meta: {
           title: "新建分类",
@@ -85,20 +85,20 @@ export const AdminRoutes: AppRouteModule[] = [
       },
       {
         name: "AdminCategoryEdit",
-        path: "/category/:id",
+        path: "/admin/category/:id",
         component: () => import("/@/views/admin/categories/edit/Edit.vue"),
         meta: {
           title: "编辑分类",
           hiddenMenu: true,
           icon: 'jam:write',
-          alias: '/categories',
+          alias: '/admin/categories',
         },
       },
     ],
   },
   {
     name: "AdminTag",
-    path: "/tags",
+    path: "/admin/tags",
     component: DEFAULT_LAYOUT,
     meta: {
       title: "标签",
@@ -108,7 +108,7 @@ export const AdminRoutes: AppRouteModule[] = [
     children: [
       {
         name: "AdminTagIndex",
-        path: "/tags",
+        path: "/admin/tags",
         component: () => import("/@/views/admin/tags/index/Index.vue"),
         meta: {
           title: "标签列表",
@@ -118,7 +118,7 @@ export const AdminRoutes: AppRouteModule[] = [
       },
       {
         name: "AdminTagNew",
-        path: "/tag/new",
+        path: "/admin/tag/new",
         component: () => import("/@/views/admin/tags/new/New.vue"),
         meta: {
           title: "新建标签",
@@ -128,7 +128,7 @@ export const AdminRoutes: AppRouteModule[] = [
       },
       {
         name: "AdminTagEdit",
-        path: "/tag/:id",
+        path: "/admin/tag/:id",
         component: () => import("/@/views/admin/tags/edit/Edit.vue"),
         meta: {
           title: "编辑标签",
@@ -141,7 +141,7 @@ export const AdminRoutes: AppRouteModule[] = [
   },
   {
     name: "AdminLog",
-    path: "/sys_logs",
+    path: "/admin/sys_logs",
     component: DEFAULT_LAYOUT,
     meta: {
       title: "日志管理",
@@ -151,7 +151,7 @@ export const AdminRoutes: AppRouteModule[] = [
     children: [
       {
         name: "AdminLogIndex",
-        path: "/sys_logs",
+        path: "/admin/sys_logs",
         component: () => import("/@/views/admin/sys_logs/index/Index.vue"),
         meta: {
           title: "日志列表",

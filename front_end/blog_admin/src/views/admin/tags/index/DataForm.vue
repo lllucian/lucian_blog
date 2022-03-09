@@ -16,14 +16,14 @@
           header-align="center"
         />
         <el-table-column prop="name" label="名称" width="140" header-align="center"></el-table-column>
-        <el-table-column prop="slut" label="别名" header-align="center"> </el-table-column>
+        <el-table-column prop="slug" label="别名" header-align="center"> </el-table-column>
         <el-table-column prop="sort" label="排序" header-align="center"> </el-table-column>
         <el-table-column prop="postCount" label="文章数" header-align="center"> </el-table-column>
         <el-table-column prop="description" label="描述" header-align="center"> </el-table-column>
         <el-table-column prop="createdAt" label="创建时间" width="170" align="center"> </el-table-column>
         <el-table-column fixed="right" label="操作" width="100" align="center">
           <template #default="scope">
-            <router-link :to="'/tag/'+scope.row.id">
+            <router-link :to="'/admin/tag/'+scope.row.id">
               <el-button type="text">
                 <Icon icon="ant-design:edit-outlined" :size="18"></Icon>
               </el-button>

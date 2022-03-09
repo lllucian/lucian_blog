@@ -11,6 +11,11 @@ public class CategoryIndexVO {
     private String name;
 
     /**
+     * 别名
+     */
+    private String slug;
+
+    /**
      * 排序
      */
     private Integer sort;

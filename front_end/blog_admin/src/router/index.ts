@@ -11,6 +11,10 @@ export const router = createRouter({
 
 const defaultTitle = "Lucian Blog";
 router.beforeEach((to, from, next) => {
+  if (to.fullPath.match(/^(?!\/admin)/)){
+    next()
+    return
+  }
   document.title = <string>to.meta.title || defaultTitle;
   stroage.commit({ type: "checkToken" });
   const token = stroage.getters.getToken;

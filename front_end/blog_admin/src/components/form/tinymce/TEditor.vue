@@ -123,11 +123,6 @@ export default {
             let params=new FormData()
             params.append('file',blobInfo.blob())
             params.append('bucketName', 'pic')
-            let config={
-              headers:{
-                "Content-Type":"multipart/form-data"
-              }
-            }
             // this.$axios.post(`api/admin/upload_file/upload`,params,config).then(res=>{
             //   if(res.data.code==200){
             //     success(res.data.msg)  //上传成功，在成功函数里填入图片路径

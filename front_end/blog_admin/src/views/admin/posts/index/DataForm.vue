@@ -33,7 +33,7 @@
         <el-table-column prop="updatedAt" label="修改时间"> </el-table-column>
         <el-table-column fixed="right" label="操作" width="120" align="center">
           <template #default="scope">
-            <router-link :to="'/post/'+scope.row.id">
+            <router-link :to="'/admin/post/'+scope.row.id">
               <el-button type="text">
                 <Icon icon="ant-design:edit-outlined" :size="18"></Icon>
               </el-button>
