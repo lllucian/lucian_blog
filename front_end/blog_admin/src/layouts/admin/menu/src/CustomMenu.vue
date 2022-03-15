@@ -6,15 +6,14 @@
     :collapse="isCollapse"
     :collapse-transition="false"
   >
-    <MenuTree :menuData="basicRoutes"></MenuTree>
+    <MenuTree :menuData="AdminRoutes"></MenuTree>
   </el-menu>
 </template>
 
 <script lang="ts">
 import { defineComponent, toRef } from "vue";
-import {MenuTree} from '/@/layouts/default/menu'
-import {basicRoutes} from '/@/router/routes'
-import {router} from '/@/router'
+import {MenuTree} from '/@/layouts/admin/menu'
+import {AdminRoutes} from '/@/router/routes'
 
 
 export default defineComponent({
@@ -33,7 +32,7 @@ export default defineComponent({
 
     return {
       pageHeight,
-      basicRoutes,
+      AdminRoutes,
       isCollapse,
     };
   },

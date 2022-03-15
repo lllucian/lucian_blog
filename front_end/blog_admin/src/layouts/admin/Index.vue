@@ -39,10 +39,9 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref, watch, getCurrentInstance} from "vue";
+import {defineComponent, onMounted, ref, watch} from "vue";
 import {Message, Setting} from "@element-plus/icons";
 import {CustomMenu} from "./menu";
-// import { watch } from "fs";
 
 export default defineComponent({
   components: {

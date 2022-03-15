@@ -103,7 +103,7 @@ body {
 <style scoped>
 .form {
   width: auto;
-  max-width: 320px;
+  max-width: 470px;
   margin: auto;
   margin-top: 100px;
   padding: 26px 24px 34px;

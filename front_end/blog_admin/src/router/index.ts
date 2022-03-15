@@ -1,21 +1,21 @@
 import { ElMessage } from "element-plus";
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import { stroage } from "../stroage";
-import { basicRoutes } from "./routes";
+import { AdminRoutes, LoginRoute, FrontRoutes } from "./routes";
 import { Base64 } from "js-base64";
 
 export const router = createRouter({
   history: createWebHashHistory(),
-  routes: basicRoutes as unknown as RouteRecordRaw[],
+  routes: [...AdminRoutes, LoginRoute, ...FrontRoutes] as unknown as RouteRecordRaw[],
 });
 
 const defaultTitle = "Lucian Blog";
 router.beforeEach((to, from, next) => {
+  document.title = <string>to.meta.title || defaultTitle;
   if (to.fullPath.match(/^(?!\/admin)/)){
     next()
     return
   }
-  document.title = <string>to.meta.title || defaultTitle;
   stroage.commit({ type: "checkToken" });
   const token = stroage.getters.getToken;
   if (to.name !== "Login" && !token) {

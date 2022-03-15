@@ -1,19 +1,49 @@
-import { router } from "..";
-import { DEFAULT_LAYOUT } from "../constant";
+import { FRONT_LAYOUT, ADMIN_LAYOUT } from "../constant";
 import { AppRouteModule, AppRouteRecordRaw } from "/@/router/types";
 
 export const LoginRoute: AppRouteRecordRaw = {
   name: "Login",
   path: "/login",
   component: () => import("/@/views/login/Login.vue"),
-  meta: { title: "Lucian Blog后台管理系统登陆界面", hiddenMenu: true },
+  meta: { title: "Lucian Blog后台管理系统登陆界面" },
 };
+
+export const FrontRoutes: AppRouteModule[] = [
+  {
+    name: 'Home',
+    path: '/',
+    component: FRONT_LAYOUT,
+    redirect: '/home',
+    meta: {title: "Lucian Blog", hiddenMenu: true},
+    children: [
+      {
+        name: 'HomePage',
+        path: '/home',
+        component: () => import('/@/views/front/home/Index.vue'),
+        meta: {
+          title: 'Lucian Blog',
+          menu: '首页'
+        }
+      },
+      {
+        name: 'PostDetail',
+        path: '/post/:id',
+        component: () => import('/@/views/front/post/Index.vue'),
+        meta: {
+          title: 'Lucian Blog',
+          menu: '博客详情',
+          hiddenMenu: true
+        }
+      }
+    ]
+  }
+]
 
 export const AdminRoutes: AppRouteModule[] = [
   {
     name: "AdminPost",
     path: "/admin",
-    component: DEFAULT_LAYOUT,
+    component: ADMIN_LAYOUT,
     redirect: '/admin/posts',
     meta: {
       title: "文章",
@@ -56,7 +86,7 @@ export const AdminRoutes: AppRouteModule[] = [
   {
     name: "AdminCategory",
     path: "/admin/categories",
-    component: DEFAULT_LAYOUT,
+    component: ADMIN_LAYOUT,
     meta: {
       title: "分类",
       hiddenMenu: false,
@@ -99,7 +129,7 @@ export const AdminRoutes: AppRouteModule[] = [
   {
     name: "AdminTag",
     path: "/admin/tags",
-    component: DEFAULT_LAYOUT,
+    component: ADMIN_LAYOUT,
     meta: {
       title: "标签",
       hiddenMenu: false,
@@ -142,7 +172,7 @@ export const AdminRoutes: AppRouteModule[] = [
   {
     name: "AdminLog",
     path: "/admin/sys_logs",
-    component: DEFAULT_LAYOUT,
+    component: ADMIN_LAYOUT,
     meta: {
       title: "日志管理",
       hiddenMenu: false,
@@ -162,4 +192,4 @@ export const AdminRoutes: AppRouteModule[] = [
     ]
   }
 ];
-export const basicRoutes = [LoginRoute, ...AdminRoutes];
+// export const basicRoutes = [LoginRoute, ...FrontRoutes, ...AdminRoutes];

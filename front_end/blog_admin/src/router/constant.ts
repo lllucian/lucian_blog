@@ -1,1 +1,2 @@
-export const DEFAULT_LAYOUT = () => import('/@/layouts/default/index.vue');
+export const FRONT_LAYOUT = () => import('/@/layouts/front/Index.vue');
+export const ADMIN_LAYOUT = () => import('/@/layouts/admin/Index.vue');
