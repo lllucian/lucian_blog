@@ -74,7 +74,7 @@ public class PostManager {
             List<Category> categories = categoryDao.selectBatchIds(postParam.getCategories());
             categories.forEach(category -> postCategoryDao.insert(new PostCategory(post.getId(), category.getId())));
         }
-        if (postParam.getTags() != null) {
+        if (postParam.getTags() != null && postParam.getTags().size() > 0) {
             List<Tag> tags = tagDao.selectBatchIds(postParam.getTags());
             tags.forEach(tag -> postTagDao.insert(new PostTag(post.getId(), tag.getId())));
         }
@@ -125,7 +125,7 @@ public class PostManager {
     private void updateTags(Post post, PostParam postParam){
         QueryWrapper<PostTag> postTagQueryWrapper = new QueryWrapper<>();
         postTagQueryWrapper.eq("post_id", post.getId());
-        if (postParam.getTags() != null) {
+        if (postParam.getTags() != null && postParam.getTags().size() > 0) {
             // 有效的标签
             List<Integer> enableTagIds = tagDao.selectBatchIds(postParam.getTags()).stream().map(BaseEntity::getId).collect(Collectors.toList());
             // 关联表中的分类

@@ -1,9 +1,11 @@
 <template>
-  <span
-      class="iconify"
-      :data-icon="icon"
-      :style="{fontSize: `${size}px`, color: color}"
-  ></span>
+  <div @click="clickIcon">
+    <span
+        class="iconify"
+        :data-icon="icon"
+        :style="{fontSize: `${size}px`, color: color}"
+    ></span>
+  </div>
 </template>
 <script lang="ts">
   import {defineComponent, toRefs} from "vue";
@@ -24,8 +26,11 @@
         required: false,
       }
     },
-    setup(props) {
-      return {...toRefs(props)}
+    setup(props, ctx) {
+      const clickIcon = () => {
+        ctx.emit('clickMethod')
+      }
+      return {...toRefs(props), clickIcon}
     }
   })
 </script>

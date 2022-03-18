@@ -19,6 +19,6 @@ public class MinioTest {
     @Test
     @SneakyThrows(Exception.class)
     public void uploadFile(){
-        System.out.println(MinIoUtil.upload("pic", "409_bbbb-3.xls",new FileInputStream("/Users/lingxiangdeng/Downloads/409_bbbb-3.xls")));
+        MinIoUtil.upload("pic", "409_bbbb-5.xls",new FileInputStream("/Users/lingxiangdeng/Downloads/ShipInvoice_TRIY-181121TK TOKIWA.xls"));
     }
 }

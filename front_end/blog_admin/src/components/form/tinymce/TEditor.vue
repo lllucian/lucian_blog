@@ -133,7 +133,7 @@ export default {
             //   failure("上传出错，服务器开小差了呢")
             // })
             const data = await postRequest("api/admin/upload_file/upload", params)
-            if (data && data.data) return success(data.data);
+            if (data && data.data) return success(data.data.fileUrl);
             return failure("上传失败");
           }
         }

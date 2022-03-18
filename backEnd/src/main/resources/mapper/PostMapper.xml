@@ -12,6 +12,7 @@
             <result column="likes" property="likes"/>
             <result column="sort" property="sort"/>
             <result column="user_id" property="userId"/>
+            <result column="upload_file_id" property="uploadFileId"/>
             <result column="view_count" property="viewCount"/>
             <result column="created_at" property="createdAt"/>
             <result column="updated_at" property="updatedAt"/>

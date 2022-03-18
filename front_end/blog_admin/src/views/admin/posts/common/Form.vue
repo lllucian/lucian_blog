@@ -2,7 +2,7 @@
   <el-page-header content="文章一览" @back="goBack"/>
   <el-card>
     <template #header>
-      <div class="card-header">
+      <div>
         <h4>{{ title }}</h4>
       </div>
     </template>
@@ -44,11 +44,15 @@
             clearable
         />
       </el-form-item>
+      <el-form-item label="封面" prop="uploadFileId">
+        <UploadImage v-model="formData.uploadFileId" v-model:imageUrl="imageUrl"/>
+      </el-form-item>
       <el-row style="justify-content: center">
         <el-button type="primary" @click="submitForm">提交</el-button>
         <el-button type="warning" @click="clearForm">清空表单内容
         </el-button>
       </el-row>
+
     </el-form>
   </el-card>
 </template>
@@ -57,6 +61,7 @@
 import {defineComponent, onMounted, ref, toRefs} from "vue";
 import {router} from "/@/router";
 import {getRequest, postRequest, putRequest} from "/@/requests";
+import UploadImage from "/@/components/form/upload/UploadImage.vue";
 
 export default defineComponent({
   props: {
@@ -69,6 +74,9 @@ export default defineComponent({
       required: false,
     }
   },
+  components: {
+    UploadImage
+  },
   setup(props) {
     const {title, postId} = toRefs(props);
     const formData = ref({
@@ -76,8 +84,11 @@ export default defineComponent({
       description: '',
       content: '',
       categories: [],
-      tags: []
+      tags: [],
+      uploadFileId: '',
     });
+
+    const imageUrl = ref('');
 
     const form = ref();
 
@@ -93,6 +104,9 @@ export default defineComponent({
       ],
       categories: [
         {required: true, message: "分类必选"}
+      ],
+      uploadFileId: [
+        {required: true, message: "封面必须上传"}
       ]
     });
 
@@ -137,8 +151,12 @@ export default defineComponent({
     }
 
     const submitForm = async () => {
-      const valid = await form.value.validate();
-      if (valid){
+      let validResult = false;
+      await form.value.validate((valid: boolean, fields: object) => {
+        validResult = valid;
+      })
+      // const valid = await form.value.validate();
+      if (validResult){
         formLoading.value = true;
         try{
           let data;
@@ -158,7 +176,15 @@ export default defineComponent({
       formLoading.value = true;
       try{
         const data = await getRequest(`api/admin/post/${postId.value}`);
-        if (data && data.data) formData.value = data.data;
+        if (data && data.data) {
+          formData.value = data.data;
+          formData.value.uploadFileId = data.data.fileUpload;
+          if (data.data.fileUpload) {
+            getRequest(`api/admin/upload_file/get_file_url/${data.data.fileUpload}`).then((data) => {
+              if (data.data) imageUrl.value = data.data
+            });
+          }
+        }
       } finally {
         formLoading.value = false;
       }
@@ -207,6 +233,7 @@ export default defineComponent({
       tagRemoteMethod,
       submitForm,
       clearForm,
+      imageUrl
     }
   }
 })

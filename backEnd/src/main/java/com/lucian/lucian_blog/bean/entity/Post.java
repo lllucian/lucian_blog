@@ -21,4 +21,6 @@ public class Post extends BaseEntity{
     private Integer sort;
     // 作者id
     private Integer userId;
+    // 封面id
+    private Integer uploadFileId;
 }

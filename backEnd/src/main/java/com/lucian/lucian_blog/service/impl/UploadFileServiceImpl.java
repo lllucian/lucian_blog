@@ -16,6 +16,7 @@ import java.util.function.Function;
 @Service
 public class UploadFileServiceImpl implements UploadFileService {
 
+    //@Autowired
     UploadFileDao uploadFileDao;
 
     @Autowired

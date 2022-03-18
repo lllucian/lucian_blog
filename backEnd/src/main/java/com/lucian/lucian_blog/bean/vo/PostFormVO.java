@@ -1,6 +1,5 @@
 package com.lucian.lucian_blog.bean.vo;
 
-import io.swagger.models.auth.In;
 import lombok.Data;
 
 import java.util.List;
@@ -25,4 +24,6 @@ public class PostFormVO{
     private List<Integer> categories;
 
     private List<Integer> tags;
+
+    private Integer fileUpload;
 }

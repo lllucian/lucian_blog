@@ -29,4 +29,7 @@ public class PostParam {
     private List<Integer> categories;
 
     private List<Integer> tags;
+
+    @NotBlank
+    private Integer uploadFileId;
 }

@@ -85,9 +85,19 @@ public class MinIoUtil {
      * @param inputStream 文件io流
      */
     @SneakyThrows(Exception.class)
-    public static String upload(String bucketName, String fileName, InputStream inputStream){
+    public static void upload(String bucketName, String fileName, InputStream inputStream){
         minioClient.putObject(PutObjectArgs.builder().bucket(bucketName)
                 .object(fileName).stream(inputStream, inputStream.available(),-1).build());
+    }
+
+    /**
+     * 上传文件，使用io流方式
+     * @param bucketName 桶名
+     * @param fileName 文件名
+     * @return 文件地址
+     */
+    @SneakyThrows(Exception.class)
+    public static String findOne(String bucketName, String fileName){
         return minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
                 .method(Method.GET).bucket(bucketName).object(fileName).build());
     }

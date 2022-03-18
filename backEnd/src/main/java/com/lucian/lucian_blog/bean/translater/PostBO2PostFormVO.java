@@ -20,7 +20,8 @@ public abstract class PostBO2PostFormVO {
             @Mapping(source = "post.createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd HH:mm:ss"),
             @Mapping(target = "updatedAt", source = "post.updatedAt", dateFormat = "yyyy/MM/dd HH:mm:ss"),
             @Mapping(target = "categories", ignore = true),
-            @Mapping(target = "tags", ignore = true)
+            @Mapping(target = "tags", ignore = true),
+            @Mapping(target = "fileUpload", source="post.uploadFileId")
     })
     public abstract PostFormVO postBO2PostFormVO(PostBO postBO);
 
