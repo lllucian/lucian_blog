@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lucian.back.dao.PostDao">
+    <resultMap id="postBO" type="com.lucian.back.bean.bo.PostBO">
+        <id column="id" property="id"/>
+        <association property="post" javaType="com.lucian.common.bean.entity.Post">
+            <id column="id" property="id"/>
+            <result column="title" property="title"/>
+            <result column="description" property="description"/>
+            <result column="content" property="content"/>
+            <result column="likes" property="likes"/>
+            <result column="sort" property="sort"/>
+            <result column="user_id" property="userId"/>
+            <result column="upload_file_id" property="uploadFileId"/>
+            <result column="view_count" property="viewCount"/>
+            <result column="created_at" property="createdAt"/>
+            <result column="updated_at" property="updatedAt"/>
+            <result column="deleted_at" property="deletedAt"/>
+        </association>
+        <collection property="categories" columnPrefix="ca_" ofType="com.lucian.common.bean.entity.Category">
+            <id property="id" column="id"/>
+            <result column="name" property="name"/>
+        </collection>
+        <collection property="tags" columnPrefix="tag_" ofType="com.lucian.common.bean.entity.Tag">
+            <id property="id" column="id"/>
+            <result column="name" property="name"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryConditionsByPage" resultMap="postBO">
+        select p.*, ca.id as ca_id, ca.name as ca_name, t.id as tag_id, t.name as tag_name
+        from posts p
+                 left join post_categories pc on p.id = pc.post_id and pc.deleted_at is null
+                 left join categories ca on pc.category_id = ca.id and ca.deleted_at is null
+                 left join post_tags pt on p.id = pt.post_id and pt.deleted_at is null
+                 left join tags t on pt.tag_id = t.id and t.deleted_at is null
+      ${ew.customSqlSegment}
+    </select>
+
+    <select id="queryPostDetail" resultMap="postBO">
+        select p.*, ca.id as ca_id, ca.name as ca_name, t.id as tag_id, t.name as tag_name
+        from posts p
+                 left join post_categories pc on p.id = pc.post_id and pc.deleted_at is null
+                 left join categories ca on pc.category_id = ca.id and ca.deleted_at is null
+                 left join post_tags pt on pc.post_id = pt.post_id and pt.deleted_at is null
+                 left join tags t on pt.tag_id = t.id and t.deleted_at is null
+        where p.deleted_at is null and p.id = #{id}
+    </select>
+
+    <insert id="insertAndReturnId" useGeneratedKeys="true" keyProperty="id" parameterType="com.lucian.common.bean.entity.Post">
+        insert into posts (title, description, content, view_count, likes, sort, user_id, created_at, updated_at)
+        values (#{title}, #{description}, #{content}, #{viewCount}, #{likes}, #{sort}, #{userId}, #{createdAt}, #{updatedAt})
+    </insert>
+</mapper>
