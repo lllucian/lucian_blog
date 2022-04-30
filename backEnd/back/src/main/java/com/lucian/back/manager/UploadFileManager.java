@@ -2,9 +2,9 @@ package com.lucian.back.manager;
 
 import com.lucian.back.bean.translate.UploadFile2VO;
 import com.lucian.back.bean.vo.UploadFileVO;
-import com.lucian.back.service.UploadFileService;
-import com.lucian.back.utils.MinIoUtil;
 import com.lucian.common.bean.entity.UploadFile;
+import com.lucian.common.service.UploadFileService;
+import com.lucian.common.utils.MinIoUtil;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

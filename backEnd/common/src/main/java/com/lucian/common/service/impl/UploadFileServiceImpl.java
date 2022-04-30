@@ -1,10 +1,10 @@
-package com.lucian.back.service.impl;
+package com.lucian.common.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lucian.back.dao.UploadFileDao;
-import com.lucian.back.service.UploadFileService;
 import com.lucian.common.bean.entity.UploadFile;
+import com.lucian.common.dao.UploadFileDao;
+import com.lucian.common.service.UploadFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

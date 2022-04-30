@@ -1,4 +1,4 @@
-package com.lucian.back.config;
+package com.lucian.common.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

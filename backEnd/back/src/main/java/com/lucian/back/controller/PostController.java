@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+/**
+ * @author lingxiangdeng
+ */
 @RestController
 @RequestMapping("admin")
 public class PostController {

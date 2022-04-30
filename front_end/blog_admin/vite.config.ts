@@ -23,11 +23,21 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/api": {
+      "/api/login": {
         target: "http://localhost:8888",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
+      "/api/admin": {
+        target: "http://localhost:8888",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+      "/api": {
+        target: "http://localhost:8889",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      }
     },
   },
 });

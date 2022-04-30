@@ -1,4 +1,4 @@
-package com.lucian.back.utils;
+package com.lucian.common.utils;
 
 import com.lucian.common.config.MinioConfig;
 import io.minio.*;

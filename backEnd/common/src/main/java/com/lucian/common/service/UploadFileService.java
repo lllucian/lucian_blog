@@ -1,4 +1,4 @@
-package com.lucian.back.service;
+package com.lucian.common.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lucian.common.bean.entity.UploadFile;

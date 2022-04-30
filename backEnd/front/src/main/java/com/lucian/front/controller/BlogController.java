@@ -1,5 +1,12 @@
 package com.lucian.front.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.lucian.common.response.CommonResult;
+import com.lucian.front.bean.vo.BlogIndexVO;
+import com.lucian.front.manager.BlogManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -9,7 +16,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BlogController {
 
-    public void index(){
+    BlogManager blogManager;
 
+    @Autowired
+    public void setBlogManager(BlogManager blogManager) {
+        this.blogManager = blogManager;
+    }
+
+    /**
+     * 博客一览
+     */
+    @GetMapping("blog/{currentPage}")
+    public CommonResult<IPage<BlogIndexVO>> index(@PathVariable Integer currentPage){
+        return CommonResult.successNoMessage(blogManager.list(currentPage));
     }
 }

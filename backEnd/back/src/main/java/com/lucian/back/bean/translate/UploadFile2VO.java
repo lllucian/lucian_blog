@@ -1,7 +1,7 @@
 package com.lucian.back.bean.translate;
 
 import com.lucian.back.bean.vo.UploadFileVO;
-import com.lucian.back.utils.MinIoUtil;
+import com.lucian.common.utils.MinIoUtil;
 import com.lucian.common.bean.entity.UploadFile;
 import org.mapstruct.*;
 

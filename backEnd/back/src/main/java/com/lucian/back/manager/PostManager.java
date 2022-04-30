@@ -12,6 +12,7 @@ import com.lucian.back.dao.*;
 import com.lucian.back.form_parm.PostParam;
 import com.lucian.back.query_wrapper.PostQuery;
 import com.lucian.common.bean.entity.*;
+import com.lucian.common.utils.SecurityUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,26 +26,54 @@ import java.util.stream.Collectors;
  */
 @Component
 public class PostManager {
-    @Autowired
     PostDao postDao;
 
     @Autowired
+    public void setPostDao(PostDao postDao) {
+        this.postDao = postDao;
+    }
+
     PostBO2PostIndexVO postBO2PostIndexVO;
 
     @Autowired
+    public void setPostBO2PostIndexVO(PostBO2PostIndexVO postBO2PostIndexVO) {
+        this.postBO2PostIndexVO = postBO2PostIndexVO;
+    }
+
     PostBO2PostFormVO postBO2PostFormVO;
 
     @Autowired
+    public void setPostBO2PostFormVO(PostBO2PostFormVO postBO2PostFormVO) {
+        this.postBO2PostFormVO = postBO2PostFormVO;
+    }
+
     CategoryDao categoryDao;
 
     @Autowired
+    public void setCategoryDao(CategoryDao categoryDao) {
+        this.categoryDao = categoryDao;
+    }
+
     PostCategoryDao postCategoryDao;
 
     @Autowired
+    public void setPostCategoryDao(PostCategoryDao postCategoryDao) {
+        this.postCategoryDao = postCategoryDao;
+    }
+
     TagDao tagDao;
 
     @Autowired
+    public void setTagDao(TagDao tagDao) {
+        this.tagDao = tagDao;
+    }
+
     PostTagDao postTagDao;
+
+    @Autowired
+    public void setPostTagDao(PostTagDao postTagDao) {
+        this.postTagDao = postTagDao;
+    }
 
     public IPage<PostIndexVO> queryListByPage(PostQuery postQuery){
         if (postQuery == null) {
@@ -73,6 +102,7 @@ public class PostManager {
     @Transactional(rollbackFor = Exception.class)
     public boolean insert(PostParam postParam){
         Post post = new Post();
+        post.setUserId(SecurityUtils.getCurrentUserId());
         BeanUtils.copyProperties(postParam, post);
         postDao.insert(post);
         if (postParam.getCategories() != null) {

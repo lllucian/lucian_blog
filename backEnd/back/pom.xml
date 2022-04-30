@@ -21,11 +21,6 @@
             <groupId>com.lucian</groupId>
             <artifactId>common</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.minio</groupId>
-            <artifactId>minio</artifactId>
-            <version>8.3.7</version>
-        </dependency>
     </dependencies>
 
 </project>

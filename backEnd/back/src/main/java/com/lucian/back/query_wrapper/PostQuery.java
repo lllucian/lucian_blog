@@ -51,6 +51,7 @@ public class PostQuery {
         if (!Collections.isEmpty(tags)) {
             wrapper.in("pt.tag_id", tags);
         }
+        wrapper.isNull("p.deleted_at");
         return wrapper;
     }
 }

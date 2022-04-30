@@ -13,7 +13,7 @@
       >
         <el-row>
           <el-col :span="8">
-            <el-form-item label="分类" prop="category">
+            <el-form-item label="分类" prop="categories">
               <el-select-v2
                 v-model="SearchFormData.categories"
                 filterable
