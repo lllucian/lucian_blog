@@ -1,6 +1,6 @@
 package com.lucian.back.utils;
 
-import com.lucian.back.config.MinioConfig;
+import com.lucian.common.config.MinioConfig;
 import io.minio.*;
 import io.minio.http.Method;
 import io.minio.messages.Bucket;
