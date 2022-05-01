@@ -6,6 +6,7 @@
         :on-success="handleImageSuccess"
         class="image-uploader"
         drag
+        accept="image/*"
         action="api/admin/upload_file/upload"
         :data="{bucketName: 'pic'}"
         name="file"
