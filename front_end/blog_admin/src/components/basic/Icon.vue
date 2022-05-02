@@ -2,7 +2,7 @@
   <div @click="clickIcon">
     <span
         class="iconify"
-        :data-icon="icon"
+        :data-icon="customIcon"
         :style="{fontSize: `${size}px`, color: color}"
     ></span>
   </div>
@@ -12,7 +12,7 @@
 
   export default defineComponent({
     props: {
-      icon: {
+      customIcon: {
         type: String,
         required: true
       },
