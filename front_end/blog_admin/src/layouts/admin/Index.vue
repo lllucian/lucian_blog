@@ -13,11 +13,9 @@
           <span class="iconify" data-icon="ant-design:menu-fold-outlined" style="font-size: 20px;" ></span>
         </div>
       </div>
-      <div style="float:right">
+      <div style="float:right;display: flex;justify-content: center;align-items: center;">
         <el-dropdown>
-          <el-icon style="margin-right: 15px">
-            <setting/>
-          </el-icon>
+          <Icon icon="ep:setting"></Icon>
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item>View</el-dropdown-item>
@@ -40,14 +38,13 @@
 
 <script lang="ts">
 import {defineComponent, onMounted, ref, watch} from "vue";
-import {Message, Setting} from "@element-plus/icons";
+import {default as Icon} from "/@/components/basic/Icon.vue";
 import {CustomMenu} from "./menu";
 
 export default defineComponent({
   components: {
-    Message,
-    Setting,
     CustomMenu,
+    Icon
   },
   setup() {
     const pageHeight = ref(window.innerHeight + "px");

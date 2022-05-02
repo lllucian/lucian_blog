@@ -1,15 +1,12 @@
 package com.lucian.back.controller;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.lucian.back.bean.vo.CategorySelectDataVO;
+import com.lucian.back.bean.vo.PostSelectDataVO;
 import com.lucian.back.bean.vo.TagSelectDataVO;
 import com.lucian.back.bean.vo.UserSelectDataVO;
-import com.lucian.back.manager.CategoryManager;
-import com.lucian.back.manager.TagManager;
-import com.lucian.back.manager.UserManager;
-import com.lucian.back.query_wrapper.CategorySelectQuery;
-import com.lucian.back.query_wrapper.PostQuery;
-import com.lucian.back.query_wrapper.TagSelectQuery;
-import com.lucian.back.query_wrapper.UserSelectQuery;
+import com.lucian.back.manager.*;
+import com.lucian.back.query_wrapper.*;
 import com.lucian.common.response.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +37,14 @@ public class FetchController {
     @Autowired
     public void setUserManager(UserManager userManager) {
         this.userManager = userManager;
+    }
+
+
+    TopPostManager topPostManager;
+
+    @Autowired
+    public void setTopPostManager(TopPostManager topPostManager) {
+        this.topPostManager = topPostManager;
     }
 
     /**
@@ -92,5 +97,11 @@ public class FetchController {
     @PostMapping("users")
     public CommonResult<List<UserSelectDataVO>> searchUser(@RequestBody UserSelectQuery userSelectQuery){
         return CommonResult.successNoMessage(userManager.selectData(userSelectQuery));
+    }
+
+    @PostMapping("top_posts/posts")
+    public CommonResult<List<PostSelectDataVO>> searchPostSelect(@RequestBody PostSelectQuery postSelectQuery){
+        TopPostManager topPostManager = SpringUtil.getBean(TopPostManager.class);
+        return CommonResult.successNoMessage(topPostManager.selectSearch(postSelectQuery));
     }
 }

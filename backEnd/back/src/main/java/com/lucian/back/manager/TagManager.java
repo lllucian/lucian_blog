@@ -51,7 +51,7 @@ public class TagManager {
      * @param tagParam 表单数据
      * @return 是否创建成功
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public boolean createRecord(TagParam tagParam){
         Tag tag = new Tag();
         // 数据转换
@@ -100,9 +100,13 @@ public class TagManager {
      * @return 是否删除成功
      */
     public Boolean deleteOne(Integer id){
-        if (id == null) return false;
+        if (id == null) {
+            return false;
+        }
         Tag tag = tagService.getById(id);
-        if (tag == null) return false;
+        if (tag == null) {
+            return false;
+        }
         return tagService.removeById(id);
     }
 

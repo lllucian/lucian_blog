@@ -106,7 +106,7 @@ body {
   max-width: 470px;
   margin: auto;
   margin-top: 100px;
-  padding: 26px 24px 34px;
+  padding: 50px 24px 34px;
   background: #fff;
   border: 1px solid #c3c4c7;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);

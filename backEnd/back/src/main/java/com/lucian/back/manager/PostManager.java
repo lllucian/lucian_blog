@@ -11,6 +11,7 @@ import com.lucian.back.bean.vo.PostIndexVO;
 import com.lucian.back.dao.*;
 import com.lucian.back.form_parm.PostParam;
 import com.lucian.back.query_wrapper.PostQuery;
+import com.lucian.back.service.PostService;
 import com.lucian.common.bean.entity.*;
 import com.lucian.common.utils.SecurityUtils;
 import org.springframework.beans.BeanUtils;
@@ -31,6 +32,13 @@ public class PostManager {
     @Autowired
     public void setPostDao(PostDao postDao) {
         this.postDao = postDao;
+    }
+
+    PostService postService;
+
+    @Autowired
+    public void setPostService(PostService postService) {
+        this.postService = postService;
     }
 
     PostBO2PostIndexVO postBO2PostIndexVO;
@@ -206,4 +214,5 @@ public class PostManager {
         postTagDao.delete(postTagQueryWrapper);
         return true;
     }
+
 }

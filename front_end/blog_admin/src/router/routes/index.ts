@@ -84,6 +84,28 @@ export const AdminRoutes: AppRouteModule[] = [
     ],
   },
   {
+    name: "AdminTopPosts",
+    path: "/admin/top_posts",
+    component: ADMIN_LAYOUT,
+    meta: {
+      title: "轮播图",
+      hiddenMenu: false,
+      icon: 'bx:carousel'
+    },
+    children: [
+      {
+        name: 'AdminTopPostIndex',
+        path: '/admin/top_posts',
+        component: () => import("/@/views/admin/top_posts/Index.vue"),
+        meta: {
+          title: '轮播图',
+          hiddenMenu: false,
+          icon: 'bx:carousel'
+        }
+      }
+    ]
+  },
+  {
     name: "AdminCategory",
     path: "/admin/categories",
     component: ADMIN_LAYOUT,

@@ -1,9 +1,13 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, HeadersDefaults  } from "axios";
 import { ElMessage } from "element-plus";
 import {stroage} from "/@/stroage"
 const instance: AxiosInstance = axios.create();
 
 // instance.defaults.headers.common['Authorization'] = stroage.getters.getToken;
+
+interface CommonHeaderProperties extends HeadersDefaults {
+    Authorization: string;
+}
 
 // 请求拦截器
 instance.interceptors.request.use(config => {

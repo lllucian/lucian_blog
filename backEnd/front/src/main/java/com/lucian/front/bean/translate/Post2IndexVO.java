@@ -47,7 +47,10 @@ public abstract class Post2IndexVO {
 
     @AfterMapping
     protected void setUsername(List<Post> posts, @MappingTarget List<BlogIndexVO> blogIndexVO){
-        Map<Integer, List<BlogIndexVO>> postWithUserId = blogIndexVO.stream().filter(post -> Objects.nonNull(post.getUserId())).collect(Collectors.toMap(BlogIndexVO::getUserId, postVO -> new ArrayList<BlogIndexVO>(){{add(postVO);}}, (oldValue, newValue) -> {
+        Map<Integer, List<BlogIndexVO>> postWithUserId = blogIndexVO.stream()
+                .filter(post -> Objects.nonNull(post.getUserId()))
+                .collect(Collectors.toMap(BlogIndexVO::getUserId,
+                        postVO -> new ArrayList<BlogIndexVO>(){{add(postVO);}}, (oldValue, newValue) -> {
             oldValue.addAll(newValue);
             return oldValue;
         }));
