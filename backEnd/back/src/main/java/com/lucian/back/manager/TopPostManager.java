@@ -18,7 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -46,6 +49,13 @@ public class TopPostManager {
     @Autowired
     public void setPostService(PostService postService) {
         this.postService = postService;
+    }
+
+    Post2SelectVO post2SelectVO;
+
+    @Autowired
+    public void setPost2SelectVO(Post2SelectVO post2SelectVO) {
+        this.post2SelectVO = post2SelectVO;
     }
 
     public List<TopPostIndexVO> list() {
@@ -86,6 +96,11 @@ public class TopPostManager {
         return postTranslate.translate(list);
     }
 
+    /**
+     * 改变轮播图的顺序
+     * @param changeTopPostSortParam 轮播图id集合
+     * @return 是否改变顺序成功
+     */
     @Transactional(rollbackFor = Exception.class)
     public boolean changeSortNumber(List<ChangeTopPostSortParam> changeTopPostSortParam){
         // 将id通过sort排序
@@ -104,5 +119,51 @@ public class TopPostManager {
             }
         }
         return true;
+    }
+
+    /**
+     * 编辑轮播图
+     * @param topPostId 轮播图id
+     * @param topPostParam 轮播图参数
+     * @return 是否更新成功
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateObject(Integer topPostId, TopPostParam topPostParam) {
+        System.out.println(topPostParam);
+        TopPost topPost = topPostService.getById(topPostId);
+        if (Objects.isNull(topPost)){
+            return false;
+        }
+        BeanUtils.copyProperties(topPostParam, topPost);
+        return topPostService.updateById(topPost);
+    }
+
+    /**
+     * 获取已选择的post信息
+     * @param postId post id
+     * @return post信息
+     */
+    public PostSelectDataVO postSelected(Integer postId){
+        Post post = postService.getById(postId);
+        return post2SelectVO.translate(post);
+    }
+
+    /**
+     * 获取没有选择的post信息（除自身选过的post）
+     * @param id topPost id
+     * @param query 关键词
+     * @return 筛选过的post信息
+     */
+    public List<PostSelectDataVO> postList(Integer id, String query){
+        QueryWrapper<TopPost> queryWrapper = new QueryWrapper<>();
+        queryWrapper.ne("id", id);
+        List<Integer> selectedPostIds = topPostService.list(queryWrapper).stream().map(TopPost::getPostId).collect(Collectors.toList());
+        QueryWrapper<Post> postQueryWrapper = new QueryWrapper<>();
+        if (!selectedPostIds.isEmpty()){
+            postQueryWrapper.notIn("id", selectedPostIds);
+        }
+        postQueryWrapper.like("title", query);
+        List<Post> effectivePost = postService.list(postQueryWrapper);
+        return post2SelectVO.translate(effectivePost);
     }
 }

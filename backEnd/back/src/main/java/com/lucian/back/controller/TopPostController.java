@@ -1,5 +1,6 @@
 package com.lucian.back.controller;
 
+import com.lucian.back.bean.vo.PostSelectDataVO;
 import com.lucian.back.bean.vo.TopPostIndexVO;
 import com.lucian.back.form_parm.ChangeTopPostSortParam;
 import com.lucian.back.form_parm.TopPostParam;
@@ -40,8 +41,44 @@ public class TopPostController{
         return topPostManager.createRecord(topPostParam) ? CommonResult.success(null, "创建成功！") : CommonResult.failed("创建失败");
     }
 
+    /**
+     * 轮播图拖拽排序
+     * @param changeTopPostSortParam 轮播图id
+     * @return 是否排序成功
+     */
     @PostMapping("top_posts/drag_sort")
     public CommonResult<String> dragSort(@RequestBody List<ChangeTopPostSortParam> changeTopPostSortParam){
         return topPostManager.changeSortNumber(changeTopPostSortParam) ? CommonResult.success(null, "排序成功") : CommonResult.failed("排序失败");
+    }
+
+    /**
+     * 轮播图信息更新
+     * @param id 轮播图id
+     * @param topPostParam 轮播图信息
+     * @return 是否更新成功
+     */
+    @PostMapping("top_post/{id}")
+    public CommonResult<String> update(@PathVariable Integer id, @RequestBody @Valid TopPostParam topPostParam){
+        return topPostManager.updateObject(id, topPostParam) ? CommonResult.success(null, "更新成功") : CommonResult.failed("更新失败");
+    }
+
+    /**
+     * 获取编辑的选中的post信息
+     * @param postId 文章id
+     * @return select2 文章信息
+     */
+    @GetMapping("top_post/post_selected/{postId}")
+    public CommonResult<PostSelectDataVO> postSelected(@PathVariable Integer postId){
+        return CommonResult.successNoMessage(topPostManager.postSelected(postId));
+    }
+
+    /**
+     * 编辑模式下，select2 检索框 检索要包括现在已选择过的postId
+     * @param id 当前topPost id
+     * @return select2 集合
+     */
+    @GetMapping("top_post/post_select/{id}")
+    public CommonResult<List<PostSelectDataVO>> editSelect(@PathVariable Integer id, String query){
+        return CommonResult.successNoMessage(topPostManager.postList(id, query));
     }
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lucian.front.dao.SliderDao">
+
+<select id="list" resultType="com.lucian.common.bean.entity.Post">
+    select * from posts inner join top_posts on top_posts.post_id = posts.id AND top_posts.deleted_at IS NULL ${ew.customSqlSegment};
+</select>
+</mapper>

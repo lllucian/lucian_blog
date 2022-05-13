@@ -1,25 +1,24 @@
 <template>
   <Carousel :wrap-around="true" :autoplay="autoplay">
-    <Slide v-for="slide in 10" :key="slide">
+    <Slide v-for="(slider, index) in sliders" :key="index">
       <div class="carousel__item" :style="{height: pageHeight}">
           <div class="row slider-text justify-content-center align-items-center" style="width: 100%;">
             <div class="col-md-6 text">
               <div class="author mb-4 d-flex align-items-center">
-                <a href="#" class="img" style="background-image: url('/src/assets/person_1.jpg');"></a>
+                <a href="#" class="img" :style="{backgroundImage: `url('${slider.imageUrl}')`}"></a>
                 <div class="ml-3 info">
                   <span>Written by</span>
-                  <h3><a href="#">Dave Lewis</a>, <span>October 04, 2018</span></h3>
+                  <h3><a href="#">{{slider.username}}</a>, <span>{{slider.createdAt}}</span></h3>
                 </div>
               </div>
               <div class="text-2">
-                <span class="big">Lucian</span>
-                <h1 class="mb-4"><a href="#">Switzerland famous for chocolate making</a></h1>
-                <p class="mb-4">A small river named Duden flows by their place and supplies it with the necessary regelialia</p>
+                <span class="big">{{slider.username}}</span>
+                <h1 class="mb-4"><a href="#">{{slider.title}}</a></h1>
+                <p class="mb-4">{{slider.description}}</p>
                 <p><a href="#" class="btn btn-primary p-3 px-xl-4 py-xl-3">Continue Reading</a></p>
               </div>
             </div>
-            <div class="img col-md-6" style="background-image: url('/src/assets/bg_1.jpg');width:100%;"
-                 :style="{height: pageHeight}"></div>
+            <div class="img col-md-6" :style="{backgroundImage: `url(${slider.imageUrl})`, width: '100%', height: pageHeight}"></div>
         </div>
 
       </div>
@@ -36,6 +35,7 @@ import {defineComponent, onMounted, ref, toRefs} from 'vue'
 import {Carousel, Navigation, Pagination, Slide} from 'vue3-carousel';
 
 import 'vue3-carousel/dist/carousel.css';
+import {getRequest} from "/@/requests";
 
 export default defineComponent({
   components: {
@@ -53,6 +53,7 @@ export default defineComponent({
     const pageWidth = ref(window.innerWidth + "px");
     const {isAutoPlay, playSpeed} = toRefs(props);
     const autoplay = ref(0);
+    const sliders = ref([]);
     if (isAutoPlay.value) autoplay.value = playSpeed.value;
 
     const getPageRiseHeight = async () => {
@@ -60,10 +61,18 @@ export default defineComponent({
       pageWidth.value = window.innerWidth + "px";
     };
 
+    const loadData = async () => {
+      const data = await getRequest("/api/sliders");
+      if (data && data.data){
+        sliders.value = data.data;
+      }
+    }
+
     onMounted(() => {
       window.addEventListener("resize", getPageRiseHeight);
+      loadData();
     });
-    return {pageHeight, pageWidth, autoplay}
+    return {pageHeight, pageWidth, autoplay, sliders}
   }
 });
 </script>

@@ -5,10 +5,29 @@
         <el-col :span="24">
           <el-table :data="topPosts" border style="width: 100%" ref="dragTable">
             <el-table-column prop="id" label="ID" width="50" align="center"></el-table-column>
-            <el-table-column prop="postTitle" label="标题"></el-table-column>
-            <el-table-column prop="isHidden" label="是否隐藏" width="180" header-align="center">
+            <el-table-column prop="postTitle" label="标题">
               <template #default="scope">
-                <div style="display: flex; align-items: center">
+                <template v-if="scope.row.edit">
+                  <el-select-v2 v-model="scope.row.tempObj.postId"
+                                filterable remote :options="scope.row.postOptions"
+                  :remote-method="(query) => editPostRemoteOptions(query, scope.row)"></el-select-v2>
+                </template>
+                <template v-else>
+                  {{ scope.row.postTitle }}
+                </template>
+              </template>
+            </el-table-column>
+            <el-table-column prop="isHidden" label="是否隐藏" width="180" align="center">
+              <template #default="scope">
+                <template v-if="scope.row.edit">
+                  <el-switch
+                      v-model="scope.row.tempObj.isHidden"
+                      size="large"
+                      active-text="隐藏"
+                      inactive-text="显示"
+                  />
+                </template>
+                <template v-else>
                   <el-switch
                       v-model="scope.row.isHidden"
                       size="large"
@@ -16,7 +35,8 @@
                       inactive-text="显示"
                       :disabled="true"
                   />
-                </div>
+                </template>
+
               </template>
             </el-table-column>
             <el-table-column
@@ -25,6 +45,23 @@
                 width="80"
             >
               <Icon icon="ant-design:drag-outlined" :size="20" :style="{cursor: 'pointer'}"></Icon>
+            </el-table-column>
+            <el-table-column align="center" label="操作" width="160">
+              <template #default="scope">
+                <template v-if="scope.row.edit">
+                  <el-button type="warning" @click="cancelEdit(scope.row)">
+                    <Icon icon="fluent:calendar-cancel-16-regular" :size="18"></Icon>
+                  </el-button>
+                  <el-button type="primary" @click="confirmEdit(scope.row)">
+                    <Icon icon="line-md:confirm-circle" :size="18"></Icon>
+                  </el-button>
+                </template>
+                <template v-else>
+                  <el-button type="default" @click="editMode(scope.row)">
+                    <Icon icon="ant-design:edit-outlined" :size="18"></Icon>
+                  </el-button>
+                </template>
+              </template>
             </el-table-column>
           </el-table>
           <el-button class="mt-4" style="width: 100%" @click="dialogVisible = true"
@@ -76,12 +113,41 @@ import Sortable from "sortablejs"
 
 const tempFormData = reactive({
   postId: '',
-  isHidden: false
+  isHidden: false,
+});
+
+const topPosts = ref<any[]>([]);
+
+
+const editMode = (async (row: any) => {
+  row.edit = true;
+  const data = await getRequest(`/api/admin/top_post/post_selected/${row.tempObj.postId}`);
+  if (data.data) {
+    row.postOptions.push(data.data);
+  } else {
+    row.tempObj.postId = '';
+  }
+  // 将其他行的编辑状态给取消
+  topPosts.value.forEach((topPost: any) => {
+    if (topPost == row) return;
+    cancelEdit(topPost);
+  });
+});
+
+const cancelEdit = ((row: any) => {
+  row.edit = false;
+  row.tempObj.postId = row.postId;
+  row.tempObj.isHidden = row.isHidden;
+  row.postOptions = [];
+});
+
+const confirmEdit = (async (row: any) => {
+  await postRequest(`/api/admin/top_post/${row.id}`, row.tempObj);
+  await loadData();
 });
 
 const dialogForm = ref<FormInstance>();
 
-const topPosts = ref([]);
 
 nextTick(() => {
   setSort()
@@ -93,6 +159,14 @@ const loadData = async () => {
   const data = await getRequest("/api/admin/top_posts");
   if (data.data) {
     topPosts.value = data.data;
+    topPosts.value.forEach((v: any) => {
+      v.tempObj = {
+        postId: v.postId,
+        isHidden: v.isHidden,
+      };
+      v.postOptions = [];
+      v.edit = false;
+    });
     data.data.forEach((topPost: any) => {
       sortList.value.push({id: topPost.id});
     });
@@ -115,6 +189,19 @@ const formRules = reactive({
 });
 
 const postOptions = ref([]);
+
+const editPostRemoteOptions = async(query: string, row: any) => {
+  if (query !== '') {
+    const data = await getRequest(`/api/admin/top_post/post_select/${row.id}`, {query: query});
+    if (data && data.data) {
+      row.postOptions = data.data;
+    } else {
+      row.postOptions = []
+    }
+  } else {
+    row.postOptions = []
+  }
+}
 
 const remoteMethod = async (query: string) => {
   if (query !== '') {
@@ -151,7 +238,7 @@ const setSort = () => {
   Sortable.create(el, {
         ghostClass: 'sortable-ghost',
         onEnd: evt => {
-          if (typeof (evt.oldIndex) !== 'undefined' && typeof (evt.newIndex) !== 'undefined'){
+          if (typeof (evt.oldIndex) !== 'undefined' && typeof (evt.newIndex) !== 'undefined') {
             const targetRow = sortList.value.splice(evt.oldIndex, 1)[0];
             sortList.value.splice(evt.newIndex, 0, targetRow);
             postRequest("/api/admin/top_posts/drag_sort", sortList.value);
