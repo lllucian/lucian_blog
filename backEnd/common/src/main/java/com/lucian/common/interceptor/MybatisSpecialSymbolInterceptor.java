@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author lingxiangdeng
+ */
 public class MybatisSpecialSymbolInterceptor implements InnerInterceptor {
 
     /**

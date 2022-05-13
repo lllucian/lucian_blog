@@ -41,20 +41,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests(authorize -> authorize
-//                .anyRequest().authenticated().withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
-//                    public <O extends FilterSecurityInterceptor> O postProcess(O o) {
-//                        o.setAccessDecisionManager(accessDecisionManager);
-//                        o.setSecurityMetadataSource(roleFilter);
-//                        return o;
-//                    }
-//                })).formLogin(AbstractAuthenticationFilterConfigurer::permitAll);
         // 简化配置
         http.authorizeRequests(authorize -> authorize.antMatchers("/admin/**").hasRole("admin"))
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .cors().and().csrf().disable();
-//                .httpBasic();
     }
 }

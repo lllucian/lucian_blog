@@ -26,7 +26,7 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     public boolean saveBatch(Collection<UploadFile> entityList, int batchSize) {
-        if (entityList.size() == 0) return false;
+        if (entityList.size() == 0) {return false;}
         AtomicInteger successCount = new AtomicInteger();
         entityList.forEach(list -> successCount.addAndGet(uploadFileDao.insert(list)));
         return batchSize == successCount.get();
