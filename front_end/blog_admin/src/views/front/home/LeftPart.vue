@@ -6,7 +6,7 @@
       </div>
       <div class="row mt-5">
         <div class="col text-center">
-          <FrontPagination v-model:currentPage="currentPage" :totalPages="pageData.pages"></FrontPagination>
+          <FrontPagination v-model:currentPage="currentPage" :totalPages="pageData.pages" v-if="pageData.total !== 0"></FrontPagination>
         </div>
       </div>
     </div>
