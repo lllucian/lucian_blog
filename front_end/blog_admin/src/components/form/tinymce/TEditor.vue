@@ -1,13 +1,11 @@
 <template>
-  <div class="tinymce-box">
+  <div class="tinymce-box" :style="{width: '100%'}">
     <Editor v-model="contentValue" :init="init" :disabled="disabled" @onClick="onClick" v-bind="$attrs" />
     <el-input v-model="contentValue" v-show="false" v-bind="$attrs"></el-input>
   </div>
 </template>
 
 <script>
-// import api from '../api/api.js'
-
 //引入tinymce编辑器
 import Editor from '@tinymce/tinymce-vue'
 
@@ -55,7 +53,7 @@ import 'tinymce/plugins/toc'  //目录生成器
 import 'tinymce/plugins/visualblocks'  //显示元素范围
 import 'tinymce/plugins/visualchars'  //显示不可见字符
 import 'tinymce/plugins/wordcount'
-import {postRequest} from "../../../requests";  //字数统计
+import {postRequest} from "/@/requests";  //字数统计
 
 
 export default {
@@ -105,6 +103,7 @@ export default {
 
         height: 400,  //注：引入autoresize插件时，此属性失效
         placeholder: '在这里输入文字',
+        width: '100%',
         branding: false,  //tiny技术支持信息是否显示
         resize: false,  //编辑器宽高是否可变，false-否,true-高可变，'both'-宽高均可，注意引号
         // statusbar: false,  //最下方的元素路径和字数统计那一栏是否显示
@@ -148,9 +147,6 @@ export default {
     contentValue (newValue) {
       this.$emit('input', newValue)
     },
-  },
-  created(){
-
   },
   mounted(){
     tinymce.init({})

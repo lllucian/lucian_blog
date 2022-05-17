@@ -62,6 +62,8 @@ import {defineComponent, onMounted, ref, toRefs} from "vue";
 import {router} from "/@/router";
 import {getRequest, postRequest, putRequest} from "/@/requests";
 import UploadImage from "/@/components/form/upload/UploadImage.vue";
+import TEditor from "/@/components/form/tinymce/TEditor.vue"
+
 
 export default defineComponent({
   props: {
@@ -75,7 +77,8 @@ export default defineComponent({
     }
   },
   components: {
-    UploadImage
+    UploadImage,
+    TEditor
   },
   setup(props) {
     const {title, postId} = toRefs(props);

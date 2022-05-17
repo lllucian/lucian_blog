@@ -2,7 +2,7 @@ import {getRequest} from "/@/requests";
 
 
 export const apiFormData = async (currentPage: Number) => {
-    const data = await getRequest(`api/blog/${currentPage}`);
+    const data = await getRequest(`api/blogs/${currentPage}`);
 
     if(data.data && data.data.records){
         return {

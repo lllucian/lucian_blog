@@ -10427,6 +10427,13 @@ h1, h2, h3, h4, h5,
     font-weight: 700;
 }
 
+.hero-wrap .slider-text h3 {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.82);
+    line-height: 1;
+    font-weight: 700;
+}
+
 @media (max-width: 991.98px) {
     .hero-wrap .slider-text h1 {
         font-size: 40px;
