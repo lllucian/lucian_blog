@@ -1,5 +1,5 @@
 <template>
-  <Carousel :wrap-around="true" :autoplay="autoplay">
+  <Carousel :wrap-around="true" :autoplay="autoplay" v-if="sliders.length!==0">
     <Slide v-for="(slider, index) in sliders" :key="index">
       <div class="carousel__item" :style="{height: pageHeight}">
           <div class="row slider-text justify-content-center align-items-center" style="width: 100%;">
