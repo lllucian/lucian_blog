@@ -1,7 +1,7 @@
 create table sys_logs
 (
-    id              int auto_increment not null,
-    user_id         int(255),
+    id              varchar(255) not null,
+    user_id         varchar(255),
     operation       varchar(255),
     time            bigint,
     method          varchar(255),

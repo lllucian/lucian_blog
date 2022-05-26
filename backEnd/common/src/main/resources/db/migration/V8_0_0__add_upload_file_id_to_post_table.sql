@@ -1,1 +1,0 @@
-ALTER TABLE posts add column upload_file_id INTEGER;

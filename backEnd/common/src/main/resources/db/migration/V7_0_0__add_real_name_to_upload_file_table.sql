@@ -1,1 +1,0 @@
-ALTER TABLE upload_files add column real_name varchar(255);

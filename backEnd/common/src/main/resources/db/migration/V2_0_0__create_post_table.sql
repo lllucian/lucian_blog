@@ -1,13 +1,14 @@
 create table posts
 (
-    `id`          int not null auto_increment,
+    `id`          varchar(255) not null,
     `title`       varchar(255),
     `description` varchar(255),
     `content`     text,
     `view_count`  int,
     `likes`       int,
     `sort`        int,
-    `user_id`     int,
+    `user_id`     varchar(255),
+    `upload_file_id` varchar(255),
     `created_at`  datetime,
     `updated_at`  datetime,
     `deleted_at`  datetime,
@@ -16,12 +17,12 @@ create table posts
 
 create table categories
 (
-    `id`          int not null auto_increment,
+    `id`          varchar(255) not null,
     `sort`        int,
     `name`        varchar(100),
     `slug`        varchar(20),
     `description` text,
-    `parent_id`   int,
+    `parent_id`   varchar(255),
     `created_at`  datetime,
     `updated_at`  datetime,
     `deleted_at`  datetime,
@@ -30,7 +31,7 @@ create table categories
 
 create table tags
 (
-    `id`          int not null auto_increment,
+    `id`          varchar(255) not null,
     `sort`        int,
     `name`        varchar(20),
     `slug`        varchar(20),
@@ -43,9 +44,9 @@ create table tags
 
 create table post_categories
 (
-    `id`          int not null auto_increment,
-    `post_id`     int,
-    `category_id` int,
+    `id`          varchar(255) not null,
+    `post_id`     varchar(255),
+    `category_id` varchar(255),
     `sort`        int,
     `created_at`  datetime,
     `updated_at`  datetime,
@@ -55,9 +56,9 @@ create table post_categories
 
 create table post_tags
 (
-    `id`         int not null auto_increment,
-    `post_id`    int,
-    `tag_id`     int,
+    `id`         varchar(255) not null,
+    `post_id`    varchar(255),
+    `tag_id`     varchar(255),
     `sort`       int,
     `created_at` datetime,
     `updated_at` datetime,

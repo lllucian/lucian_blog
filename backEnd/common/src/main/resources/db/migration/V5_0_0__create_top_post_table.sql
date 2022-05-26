@@ -1,7 +1,7 @@
 CREATE TABLE top_posts
 (
-  `id` int auto_increment not null,
-  `post_id` int,
+  `id` varchar(255) not null,
+  `post_id` varchar(255),
   `sort` int,
   `is_hidden` tinyint(2) default 0,
   `created_at` datetime,

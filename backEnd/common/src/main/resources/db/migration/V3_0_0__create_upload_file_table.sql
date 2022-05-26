@@ -1,14 +1,13 @@
-create table `upload_files`
-(
-    `id`              int auto_increment not null,
-    `user_id`         int,
-    `controller_name` varchar(255),
-    `file_name`       varchar(255),
-    `ext_name`        varchar(255),
-    `fdfs_group_name` varchar(255),
-    `fdfs_file_path`  varchar(255),
-    `created_at`      datetime,
-    `updated_at`      datetime,
-    `deleted_at`      datetime,
-    primary key (`id`)
-) collate utf8mb4_bin;
+CREATE TABLE `upload_files` (
+                                `id` varchar(255) NOT NULL,
+                                `user_id` varchar(255) DEFAULT NULL,
+                                `controller_name` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+                                `file_name` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+                                `ext_name` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+                                `bucket_name` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+                                `created_at` datetime DEFAULT NULL,
+                                `updated_at` datetime DEFAULT NULL,
+                                `deleted_at` datetime DEFAULT NULL,
+                                `real_name` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+                                PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
