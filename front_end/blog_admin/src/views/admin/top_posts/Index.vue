@@ -4,7 +4,7 @@
       <el-row>
         <el-col :span="24">
           <el-table :data="topPosts" border style="width: 100%" ref="dragTable">
-            <el-table-column prop="id" label="ID" width="50" align="center"></el-table-column>
+            <el-table-column type="index" label="ID" width="50" align="center"></el-table-column>
             <el-table-column prop="postTitle" label="标题">
               <template #default="scope">
                 <template v-if="scope.row.edit">
