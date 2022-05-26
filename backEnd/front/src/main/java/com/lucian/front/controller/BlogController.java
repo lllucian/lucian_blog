@@ -35,7 +35,7 @@ public class BlogController {
     }
 
     @GetMapping("blog/{id}")
-    public CommonResult<BlogDetailVO> detail(@PathVariable Integer id){
+    public CommonResult<BlogDetailVO> detail(@PathVariable String id){
         BlogDetailVO detail = blogManager.detail(id);
         return Objects.nonNull(detail) ? CommonResult.successNoMessage(detail) : CommonResult.failed("没有该文章");
     }

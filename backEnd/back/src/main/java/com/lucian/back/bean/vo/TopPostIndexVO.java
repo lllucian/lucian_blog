@@ -10,12 +10,12 @@ public class TopPostIndexVO {
     /**
      * 主键
      */
-    private Integer id;
+    private String id;
 
     /**
      * 文章id
      */
-    private Integer postId;
+    private String postId;
 
     /**
      * 文章标题

@@ -16,5 +16,5 @@ public class UserSelectDataVO {
     /**
      * 值
      */
-    private Integer value;
+    private String value;
 }

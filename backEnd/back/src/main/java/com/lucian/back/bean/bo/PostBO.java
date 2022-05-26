@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Data
 public class PostBO {
-    private Integer id;
+    private String id;
 
     private Post post;
 

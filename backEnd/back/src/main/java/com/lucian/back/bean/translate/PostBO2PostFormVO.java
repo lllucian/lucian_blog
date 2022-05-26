@@ -41,11 +41,11 @@ public abstract class PostBO2PostFormVO {
     @AfterMapping
     protected void setCategoriesAndTags(PostBO postBO, @MappingTarget PostFormVO postFormVO){
         List<Category> categories = postBO.getCategories();
-        List<Integer> caCollect = categories.stream().map(Category::getId).collect(Collectors.toList());
+        List<String> caCollect = categories.stream().map(Category::getId).collect(Collectors.toList());
         postFormVO.setCategories(caCollect);
 
         List<Tag> tags = postBO.getTags();
-        List<Integer> tagCollect = tags.stream().map(Tag::getId).collect(Collectors.toList());
+        List<String> tagCollect = tags.stream().map(Tag::getId).collect(Collectors.toList());
         postFormVO.setTags(tagCollect);
     }
 }

@@ -10,7 +10,7 @@ public class BlogIndexVO {
     /**
      * 主键id
      */
-    private Integer id;
+    private String id;
 
     /**
      * 封面图片url
@@ -35,7 +35,7 @@ public class BlogIndexVO {
     /**
      * 用户id
      */
-    private Integer userId;
+    private String userId;
 
     /**
      * 创建时间

@@ -7,7 +7,7 @@ import lombok.Data;
  */
 @Data
 public class TopPostParam {
-    private Integer postId;
+    private String postId;
 
     private Boolean isHidden;
 

@@ -14,7 +14,7 @@ public class SecurityUtils {
      * 获取登陆用户名
      * @return 登陆名
      */
-    public static Integer getCurrentUserId(){
+    public static String getCurrentUserId(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             return ((UserBO)authentication.getDetails()).getId();

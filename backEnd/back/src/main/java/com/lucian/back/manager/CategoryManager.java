@@ -50,10 +50,10 @@ public class CategoryManager {
         Page<Category> categories = categoryDao.selectPage(page, categoryQuery.getQueryWrapper());
         IPage<CategoryBO> categoryBOs = categories.convert(category -> category2BO.translate(category));
         List<CategoryBO> records = categoryBOs.getRecords();
-        List<Integer> parentIds = records.stream().map(Category::getParentId).distinct().filter(Objects::nonNull).collect(Collectors.toList());
+        List<String> parentIds = records.stream().map(Category::getParentId).distinct().filter(Objects::nonNull).collect(Collectors.toList());
         if (parentIds.size() != 0) {
             List<Category> parentCategories = categoryDao.selectBatchIds(parentIds);
-            Map<Integer, Category> collect = parentCategories.stream().collect(Collectors.toMap(Category::getId, Function.identity(), (key1, key2) -> key2));
+            Map<String, Category> collect = parentCategories.stream().collect(Collectors.toMap(Category::getId, Function.identity(), (key1, key2) -> key2));
             records = records.stream().peek(bo -> {
                 Category parentCategory = collect.get(bo.getParentId());
                 if (parentCategory != null) {
@@ -81,7 +81,7 @@ public class CategoryManager {
      * @param id 分类id
      * @return 分类
      */
-    public CategoryFormVO findOne(Integer id) {
+    public CategoryFormVO findOne(String id) {
         if (id == null) {
             return null;
         }
@@ -100,7 +100,7 @@ public class CategoryManager {
      * @param categoryParam 要更新的分类信息
      * @return 是否更新成功
      */
-    public boolean update(Integer id, CategoryParam categoryParam){
+    public boolean update(String id, CategoryParam categoryParam){
         if (id == null) {
             return false;
         }
@@ -117,7 +117,7 @@ public class CategoryManager {
      * @param id 分类id
      * @return 是否删除成功
      */
-    public boolean delete(Integer id) {
+    public boolean delete(String id) {
         if (id == null) {
             return false;
         }
@@ -169,7 +169,7 @@ public class CategoryManager {
 //        });
 //        return categories;
 //    }
-    public List<CategorySelectDataVO> parentCategory(Integer categoryId){
+    public List<CategorySelectDataVO> parentCategory(String categoryId){
         List<Category> list = categoryService.list();
         if (list == null || list.size() == 0) {
             return null;
@@ -189,7 +189,7 @@ public class CategoryManager {
      * @param methodName 是本身的id或者parentId
      * @return 移除后的分类
      */
-    public List<Category> getNodeData(List<Category> list, Integer categoryId, String methodName){
+    public List<Category> getNodeData(List<Category> list, String categoryId, String methodName){
         // 先找有没有这个分类id
         List<Category> parentCategory = list.stream().filter(category -> {
             try {
@@ -215,7 +215,7 @@ public class CategoryManager {
      * @param ids 分类id
      * @return options
      */
-    public List<CategorySelectDataVO> getSelectData(List<Integer> ids){
+    public List<CategorySelectDataVO> getSelectData(List<String> ids){
         if (ids == null || ids.size() == 0) {
             return null;
         }

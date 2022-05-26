@@ -47,7 +47,7 @@ public abstract class Post2IndexVO {
 
     @AfterMapping
     protected void setUsername(List<Post> posts, @MappingTarget List<BlogIndexVO> blogIndexVO){
-        Map<Integer, List<BlogIndexVO>> postWithUserId = blogIndexVO.stream()
+        Map<String, List<BlogIndexVO>> postWithUserId = blogIndexVO.stream()
                 .filter(post -> Objects.nonNull(post.getUserId()))
                 .collect(Collectors.toMap(BlogIndexVO::getUserId,
                         postVO -> new ArrayList<BlogIndexVO>(){{add(postVO);}}, (oldValue, newValue) -> {
@@ -55,12 +55,12 @@ public abstract class Post2IndexVO {
             return oldValue;
         }));
         // 提取用户id 去users表中查出userName
-        Set<Integer> userIds = postWithUserId.keySet();
+        Set<String> userIds = postWithUserId.keySet();
         if (userIds.size() == 0) {
             return;
         }
         UserService userService = SpringUtil.getBean(UserService.class);
-        Map<Integer, String> userNameCollect = userService.listByIds(userIds).stream().collect(Collectors.toMap(BaseEntity::getId, User::getUsername));
+        Map<String, String> userNameCollect = userService.listByIds(userIds).stream().collect(Collectors.toMap(BaseEntity::getId, User::getUsername));
         userNameCollect.forEach((userId, userName) -> {
             postWithUserId.get(userId).forEach(blog -> blog.setUsername(userName));
         });
@@ -68,14 +68,14 @@ public abstract class Post2IndexVO {
 
     @AfterMapping
     protected void setImageUrl(List<Post> posts, @MappingTarget List<BlogIndexVO> blogIndexVO) {
-        Map<Integer, Integer> imageIdWithPostId = posts.stream().filter(post -> Objects.nonNull(post.getUploadFileId())).collect(Collectors.toMap(Post::getUploadFileId, BaseEntity::getId));
-        Map<Integer, Post> postWithFileUpload = posts.stream().filter(post -> Objects.nonNull(post.getUploadFileId())).collect(Collectors.toMap(Post::getUploadFileId, post -> post));
-        Set<Integer> fileUploadIds = postWithFileUpload.keySet();
+        Map<String, String> imageIdWithPostId = posts.stream().filter(post -> Objects.nonNull(post.getUploadFileId())).collect(Collectors.toMap(Post::getUploadFileId, BaseEntity::getId));
+        Map<String, Post> postWithFileUpload = posts.stream().filter(post -> Objects.nonNull(post.getUploadFileId())).collect(Collectors.toMap(Post::getUploadFileId, post -> post));
+        Set<String> fileUploadIds = postWithFileUpload.keySet();
         if (fileUploadIds.size() == 0) {
             return;
         }
-        Map<Integer, BlogIndexVO> blogIdWithBlogIndexVO = blogIndexVO.stream().collect(Collectors.toMap(BlogIndexVO::getId, post -> post));
-        Map<Integer, String> fileUploadCollect = uploadFileService.listByIds(fileUploadIds).stream().collect(Collectors.toMap(BaseEntity::getId, uploadFile -> MinIoUtil.findOne(uploadFile.getBucketName(), uploadFile.getFileName())));
+        Map<String, BlogIndexVO> blogIdWithBlogIndexVO = blogIndexVO.stream().collect(Collectors.toMap(BlogIndexVO::getId, post -> post));
+        Map<String, String> fileUploadCollect = uploadFileService.listByIds(fileUploadIds).stream().collect(Collectors.toMap(BaseEntity::getId, uploadFile -> MinIoUtil.findOne(uploadFile.getBucketName(), uploadFile.getFileName())));
         fileUploadCollect.forEach((fileUploadId, fileUploadUrl) -> {
             blogIdWithBlogIndexVO.get(imageIdWithPostId.get(fileUploadId)).setImageUrl(fileUploadUrl);
         });

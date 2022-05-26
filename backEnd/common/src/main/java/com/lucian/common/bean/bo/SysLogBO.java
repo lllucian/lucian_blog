@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 public class SysLogBO {
-    private Integer id;
+    private String id;
     /**
      * 操作者
      */

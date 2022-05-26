@@ -46,14 +46,14 @@ public abstract class SysLog2BO {
             return;
         }
         // 得出所有log里的userId
-        List<Integer> userIds =sysLogs.stream().map(SysLog::getUserId).distinct().collect(Collectors.toList());
+        List<String> userIds =sysLogs.stream().map(SysLog::getUserId).distinct().collect(Collectors.toList());
         if (userIds.size() == 0) {
             return;
         }
         List<User> users = userDao.selectBatchIds(userIds);
-        Map<Integer, User> userMap = users.stream().collect(Collectors.toMap(User::getId, user -> user, (oldValue, newValue) -> oldValue));
+        Map<String, User> userMap = users.stream().collect(Collectors.toMap(User::getId, user -> user, (oldValue, newValue) -> oldValue));
         // 得出log和userId的映射map
-        Map<Integer, Integer> logUserRelations = sysLogs.stream().collect(Collectors.toMap(SysLog::getId, SysLog::getUserId, (oldValue, newValue) -> oldValue));
+        Map<String, String> logUserRelations = sysLogs.stream().collect(Collectors.toMap(SysLog::getId, SysLog::getUserId, (oldValue, newValue) -> oldValue));
         sysLogBOS.forEach(sysLogBO -> {
             if (logUserRelations.containsKey(sysLogBO.getId())) {
                 sysLogBO.setUser(userMap.get(logUserRelations.get(sysLogBO.getId())));

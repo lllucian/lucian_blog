@@ -82,7 +82,7 @@ public class TopPostManager {
             postSelectQuery = new PostSelectQuery();
         }
         QueryWrapper<Post> queryWrapper = postSelectQuery.getQueryWrapper();
-        List<Integer> postIds = topPostService.list().stream().map(TopPost::getPostId).filter(Objects::nonNull).collect(Collectors.toList());
+        List<String> postIds = topPostService.list().stream().map(TopPost::getPostId).filter(Objects::nonNull).collect(Collectors.toList());
         if (postIds.size() > 0) {
             queryWrapper.notIn("id", postIds);
         }
@@ -105,7 +105,7 @@ public class TopPostManager {
     public boolean changeSortNumber(List<ChangeTopPostSortParam> changeTopPostSortParam){
         // 将id通过sort排序
         List<ChangeTopPostSortParam> collect = changeTopPostSortParam.stream().filter(sort -> Objects.nonNull(sort.getId())).collect(Collectors.toList());
-        Map<Integer, TopPost> postMap = topPostService.list().stream().collect(Collectors.toMap(TopPost::getId, topPost -> topPost));
+        Map<String, TopPost> postMap = topPostService.list().stream().collect(Collectors.toMap(TopPost::getId, topPost -> topPost));
         int sortNum = 0;
         // 开始排序
         for (ChangeTopPostSortParam topPostSortParam : collect) {
@@ -128,7 +128,7 @@ public class TopPostManager {
      * @return 是否更新成功
      */
     @Transactional(rollbackFor = Exception.class)
-    public boolean updateObject(Integer topPostId, TopPostParam topPostParam) {
+    public boolean updateObject(String topPostId, TopPostParam topPostParam) {
         System.out.println(topPostParam);
         TopPost topPost = topPostService.getById(topPostId);
         if (Objects.isNull(topPost)){
@@ -143,7 +143,7 @@ public class TopPostManager {
      * @param postId post id
      * @return post信息
      */
-    public PostSelectDataVO postSelected(Integer postId){
+    public PostSelectDataVO postSelected(String postId){
         Post post = postService.getById(postId);
         return post2SelectVO.translate(post);
     }
@@ -154,10 +154,10 @@ public class TopPostManager {
      * @param query 关键词
      * @return 筛选过的post信息
      */
-    public List<PostSelectDataVO> postList(Integer id, String query){
+    public List<PostSelectDataVO> postList(String id, String query){
         QueryWrapper<TopPost> queryWrapper = new QueryWrapper<>();
         queryWrapper.ne("id", id);
-        List<Integer> selectedPostIds = topPostService.list(queryWrapper).stream().map(TopPost::getPostId).collect(Collectors.toList());
+        List<String> selectedPostIds = topPostService.list(queryWrapper).stream().map(TopPost::getPostId).collect(Collectors.toList());
         QueryWrapper<Post> postQueryWrapper = new QueryWrapper<>();
         if (!selectedPostIds.isEmpty()){
             postQueryWrapper.notIn("id", selectedPostIds);

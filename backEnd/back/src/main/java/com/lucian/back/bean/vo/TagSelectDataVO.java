@@ -11,7 +11,7 @@ public class TagSelectDataVO {
     /**
      * select值
      */
-    private Integer value;
+    private String value;
     /**
      * select标签
      */

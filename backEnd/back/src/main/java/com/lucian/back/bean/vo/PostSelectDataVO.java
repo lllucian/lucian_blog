@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 public class PostSelectDataVO {
-    private Integer value;
+    private String value;
 
     private String label;
 }

@@ -29,7 +29,7 @@ public class Category extends BaseEntity {
     /**
      * 父分类id
      */
-    private Integer parentId;
+    private String parentId;
     /**
      * 排序
      */

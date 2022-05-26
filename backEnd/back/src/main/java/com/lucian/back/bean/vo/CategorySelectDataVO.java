@@ -15,7 +15,7 @@ public class CategorySelectDataVO {
     /**
      * id
      */
-    private Integer value;
+    private String value;
 
     /**
      * label

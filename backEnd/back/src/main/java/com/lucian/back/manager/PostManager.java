@@ -97,7 +97,7 @@ public class PostManager {
      * @param id 博客id
      * @return 博客详情
      */
-    public PostFormVO postDetail(Integer id) {
+    public PostFormVO postDetail(String id) {
         PostBO postBO = postDao.queryPostDetail(id);
         return postBO == null ? null : postBO2PostFormVO.postBO2PostFormVO(postBO);
     }
@@ -130,7 +130,7 @@ public class PostManager {
      * @return 是否插入成功
      */
     @Transactional(rollbackFor = Exception.class)
-    public boolean update(Integer postId, PostParam postParam){
+    public boolean update(String postId, PostParam postParam){
         Post post = new Post();
         BeanUtils.copyProperties(postParam, post);
         post.setId(postId);
@@ -148,11 +148,11 @@ public class PostManager {
         postCategoryQueryWrapper.eq("post_id", post.getId());
         if (postParam.getCategories() != null) {
             // 有效的分类
-            List<Integer> enableCategoryIds = categoryDao.selectBatchIds(postParam.getCategories()).stream().map(BaseEntity::getId).collect(Collectors.toList());
+            List<String> enableCategoryIds = categoryDao.selectBatchIds(postParam.getCategories()).stream().map(BaseEntity::getId).collect(Collectors.toList());
             // 关联表中的分类
-            List<Integer> assocPostCategoryIds = postCategoryDao.selectList(postCategoryQueryWrapper).stream().map(PostCategory::getCategoryId).collect(Collectors.toList());
+            List<String> assocPostCategoryIds = postCategoryDao.selectList(postCategoryQueryWrapper).stream().map(PostCategory::getCategoryId).collect(Collectors.toList());
             // 删除关联表中的ids
-            List<Integer> deleteCategoryIds = assocPostCategoryIds.stream().filter(postCategoryId -> !enableCategoryIds.contains(postCategoryId)).collect(Collectors.toList());
+            List<String> deleteCategoryIds = assocPostCategoryIds.stream().filter(postCategoryId -> !enableCategoryIds.contains(postCategoryId)).collect(Collectors.toList());
             if (deleteCategoryIds.size() != 0) {
                 QueryWrapper<PostCategory> deleteConditions = new QueryWrapper<>();
                 deleteConditions.eq("post_id", post.getId());
@@ -160,7 +160,7 @@ public class PostManager {
                 postCategoryDao.delete(deleteConditions);
             }
             // 增加关联表中的id
-            List<Integer> shouldAddCategoryIds = enableCategoryIds.stream().filter(enableCategoryId -> !assocPostCategoryIds.contains(enableCategoryId)).collect(Collectors.toList());
+            List<String> shouldAddCategoryIds = enableCategoryIds.stream().filter(enableCategoryId -> !assocPostCategoryIds.contains(enableCategoryId)).collect(Collectors.toList());
             shouldAddCategoryIds.forEach(categoryId -> postCategoryDao.insert(new PostCategory(post.getId(), categoryId)));
         } else {
             postCategoryDao.delete(postCategoryQueryWrapper);
@@ -172,11 +172,11 @@ public class PostManager {
         postTagQueryWrapper.eq("post_id", post.getId());
         if (postParam.getTags() != null && postParam.getTags().size() > 0) {
             // 有效的标签
-            List<Integer> enableTagIds = tagDao.selectBatchIds(postParam.getTags()).stream().map(BaseEntity::getId).collect(Collectors.toList());
+            List<String> enableTagIds = tagDao.selectBatchIds(postParam.getTags()).stream().map(BaseEntity::getId).collect(Collectors.toList());
             // 关联表中的分类
-            List<Integer> assocPostTagIds = postTagDao.selectList(postTagQueryWrapper).stream().map(PostTag::getTagId).collect(Collectors.toList());
+            List<String> assocPostTagIds = postTagDao.selectList(postTagQueryWrapper).stream().map(PostTag::getTagId).collect(Collectors.toList());
             // 删除关联表中的ids
-            List<Integer> deleteTagIds = assocPostTagIds.stream().filter(postTagId -> !enableTagIds.contains(postTagId)).collect(Collectors.toList());
+            List<String> deleteTagIds = assocPostTagIds.stream().filter(postTagId -> !enableTagIds.contains(postTagId)).collect(Collectors.toList());
             if (deleteTagIds.size() != 0) {
                 QueryWrapper<PostTag> deleteConditions = new QueryWrapper<>();
                 deleteConditions.eq("post_id", post.getId());
@@ -184,7 +184,7 @@ public class PostManager {
                 postTagDao.delete(deleteConditions);
             }
             // 增加关联表中的id
-            List<Integer> shouldAddTagIds = enableTagIds.stream().filter(enableTagId -> !assocPostTagIds.contains(enableTagId)).collect(Collectors.toList());
+            List<String> shouldAddTagIds = enableTagIds.stream().filter(enableTagId -> !assocPostTagIds.contains(enableTagId)).collect(Collectors.toList());
             shouldAddTagIds.forEach(tagId -> postTagDao.insert(new PostTag(post.getId(), tagId)));
         } else {
             postTagDao.delete(postTagQueryWrapper);
@@ -197,7 +197,7 @@ public class PostManager {
      * @return 是否删除成功
      */
     @Transactional(rollbackFor = Exception.class)
-    public boolean deletePost(Integer id){
+    public boolean deletePost(String id){
         Post post = postDao.selectById(id);
         if (post == null) {
             return false;

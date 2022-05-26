@@ -12,7 +12,7 @@ import org.springframework.util.StringUtils;
 @Getter
 @Setter
 public class SysLogQuery {
-    private Integer userId;
+    private String userId;
 
     private String operation;
 
@@ -33,8 +33,8 @@ public class SysLogQuery {
         if (StringUtils.hasText(method)) {
             wrapper.like("method", method);
         }
-        // id 倒序排序
-        wrapper.orderByDesc("id");
+        // created_at 倒序排序
+        wrapper.orderByDesc("created_at");
         return wrapper;
     }
 }

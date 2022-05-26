@@ -53,7 +53,7 @@ public class TagController {
      * @return 指定id的标签
      */
     @GetMapping("tag/{id}")
-    public CommonResult<TagFormVO> edit(@PathVariable Integer id){
+    public CommonResult<TagFormVO> edit(@PathVariable String id){
         TagFormVO formVO = tagManager.findOne(id);
         return formVO == null ? CommonResult.failed(ResultCode.FIND_FAILED) : CommonResult.successNoMessage(formVO);
     }
@@ -75,7 +75,7 @@ public class TagController {
      * @return 是否更新成功
      */
     @PutMapping("tag/{id}")
-    public CommonResult<String> update(@PathVariable Integer id, @RequestBody @Valid TagParam tagParam){
+    public CommonResult<String> update(@PathVariable String id, @RequestBody @Valid TagParam tagParam){
         return tagManager.updateOne(id, tagParam) ? CommonResult.success(null, "更新成功！") : CommonResult.failed("更新失败");
     }
 
@@ -85,7 +85,7 @@ public class TagController {
      * @return 是否删除成功
      */
     @DeleteMapping("tag/{id}")
-    public CommonResult<String> delete(@PathVariable Integer id){
+    public CommonResult<String> delete(@PathVariable String id){
         return tagManager.deleteOne(id) ? CommonResult.success(null, "删除成功！") :CommonResult.failed("删除失败");
     }
 }

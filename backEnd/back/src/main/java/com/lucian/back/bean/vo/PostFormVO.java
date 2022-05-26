@@ -14,7 +14,7 @@ public class PostFormVO{
     /**
      * id 主键
      */
-    private Integer id;
+    private String id;
 
     /**
      * 标题
@@ -49,15 +49,15 @@ public class PostFormVO{
     /**
      * 分类
      */
-    private List<Integer> categories;
+    private List<String> categories;
 
     /**
      * 标签
      */
-    private List<Integer> tags;
+    private List<String> tags;
 
     /**
      * 封面图片上传至uploadFile的id
      */
-    private Integer fileUpload;
+    private String fileUpload;
 }

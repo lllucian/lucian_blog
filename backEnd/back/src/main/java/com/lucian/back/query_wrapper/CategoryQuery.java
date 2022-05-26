@@ -30,7 +30,7 @@ public class CategoryQuery {
             categoryQueryQueryWrapper.like("slug", slug);
         }
         categoryQueryQueryWrapper.orderByAsc("sort");
-        categoryQueryQueryWrapper.orderByDesc("id");
+        categoryQueryQueryWrapper.orderByDesc("created_at");
         return categoryQueryQueryWrapper;
     }
 }

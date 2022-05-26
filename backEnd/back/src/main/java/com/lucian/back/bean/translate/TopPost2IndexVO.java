@@ -39,7 +39,7 @@ public abstract class TopPost2IndexVO {
     @AfterMapping
     public void setPostDetail(@MappingTarget List<TopPostIndexVO> topPostIndexList) {
         // 将postId提取出来，从而去查询post.title
-        Map<Integer, ArrayList<TopPostIndexVO>> postIdWithTopPostIndex = topPostIndexList.stream().filter(topPostIndexVO -> Objects.nonNull(topPostIndexVO.getPostId()))
+        Map<String, ArrayList<TopPostIndexVO>> postIdWithTopPostIndex = topPostIndexList.stream().filter(topPostIndexVO -> Objects.nonNull(topPostIndexVO.getPostId()))
                 .collect(Collectors.toMap(TopPostIndexVO::getPostId, topPost -> new ArrayList<TopPostIndexVO>() {{
                             add(topPost);
                         }},
@@ -48,13 +48,13 @@ public abstract class TopPost2IndexVO {
                             return oldValue;
                         }));
         //提取出postId
-        Set<Integer> postIds = postIdWithTopPostIndex.keySet();
+        Set<String> postIds = postIdWithTopPostIndex.keySet();
         if (postIds.size() == 0){
             return;
         }
         PostService postService = SpringUtil.getBean(PostService.class);
         // 用TopPost中的postId去获取post信息
-        Map<Integer, String> postIdWithTitleMap = postService.listByIds(postIds).stream().collect(Collectors.toMap(Post::getId, Post::getTitle));
+        Map<String, String> postIdWithTitleMap = postService.listByIds(postIds).stream().collect(Collectors.toMap(Post::getId, Post::getTitle));
         postIdWithTitleMap.forEach((postId, postTitle) -> {
             postIdWithTopPostIndex.get(postId).forEach(topPost -> topPost.setPostTitle(postTitle));
         });

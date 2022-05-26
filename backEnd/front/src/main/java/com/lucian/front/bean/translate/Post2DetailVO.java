@@ -47,7 +47,7 @@ public abstract class Post2DetailVO {
     @AfterMapping
     protected void setUsername(Post post, @MappingTarget BlogDetailVO blogDetailVO){
         // 获取用户id
-        Integer userId = post.getUserId();
+        String userId = post.getUserId();
         if (Objects.isNull(userId)) {
             return;
         }
@@ -62,7 +62,7 @@ public abstract class Post2DetailVO {
 
     @AfterMapping
     protected void setImageUrl(Post post, @MappingTarget BlogDetailVO blogDetailVO) {
-        Integer uploadFileId = post.getUploadFileId();
+        String uploadFileId = post.getUploadFileId();
         if (Objects.isNull(uploadFileId)){
             return;
         }

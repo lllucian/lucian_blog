@@ -47,9 +47,4 @@
                  left join tags t on pt.tag_id = t.id and t.deleted_at is null
         where p.deleted_at is null and p.id = #{id}
     </select>
-
-    <insert id="insertAndReturnId" useGeneratedKeys="true" keyProperty="id" parameterType="com.lucian.common.bean.entity.Post">
-        insert into posts (title, description, content, view_count, likes, sort, user_id, created_at, updated_at)
-        values (#{title}, #{description}, #{content}, #{viewCount}, #{likes}, #{sort}, #{userId}, #{createdAt}, #{updatedAt})
-    </insert>
 </mapper>

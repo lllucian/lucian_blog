@@ -24,10 +24,10 @@ public class PostCategory extends BaseEntity {
     /**
      * 文章id
      */
-    private Integer postId;
+    private String postId;
 
     /**
      * 分类id
      */
-    private Integer categoryId;
+    private String categoryId;
 }

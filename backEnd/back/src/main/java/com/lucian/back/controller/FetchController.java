@@ -75,7 +75,7 @@ public class FetchController {
      * @return 获取可以选择的分类
      */
     @PostMapping({"getParentId", "getParentId/{categoryId}"})
-    public CommonResult<List<CategorySelectDataVO>> getCanSelectCategory(@PathVariable(required = false) Integer categoryId){
+    public CommonResult<List<CategorySelectDataVO>> getCanSelectCategory(@PathVariable(required = false) String categoryId){
         return CommonResult.successNoMessage(categoryManager.parentCategory(categoryId));
     }
 

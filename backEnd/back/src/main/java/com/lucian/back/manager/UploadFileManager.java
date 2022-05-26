@@ -45,7 +45,7 @@ public class UploadFileManager {
     }
 
 
-    public String getFileURL(Integer fileId) {
+    public String getFileURL(String fileId) {
         UploadFile uploadFile = uploadFileService.getById(fileId);
         return MinIoUtil.findOne(uploadFile.getBucketName(), uploadFile.getFileName());
     }

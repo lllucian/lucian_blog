@@ -40,18 +40,18 @@ public class CategoryController {
     }
 
     @GetMapping("category/{id}")
-    public CommonResult<CategoryFormVO> findOne(@PathVariable Integer id){
+    public CommonResult<CategoryFormVO> findOne(@PathVariable String id){
         CategoryFormVO categoryFormVO = categoryManager.findOne(id);
         return categoryFormVO != null ? CommonResult.successNoMessage(categoryFormVO) : CommonResult.failed(ResultCode.FIND_FAILED);
     }
 
     @PutMapping("category/{id}")
-    public CommonResult<String> update(@PathVariable Integer id, @RequestBody @Valid CategoryParam categoryParam){
+    public CommonResult<String> update(@PathVariable String id, @RequestBody @Valid CategoryParam categoryParam){
         return categoryManager.update(id, categoryParam) ? CommonResult.success(null, "更新成功") : CommonResult.failed("更新失败");
     }
 
     @DeleteMapping("category/{id}")
-    public CommonResult<String> delete(@PathVariable Integer id){
+    public CommonResult<String> delete(@PathVariable String id){
         return categoryManager.delete(id) ? CommonResult.success(null, "删除成功") : CommonResult.failed("删除失败");
     }
 }

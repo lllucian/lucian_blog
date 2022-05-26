@@ -11,7 +11,7 @@ public class TagIndexVO {
     /**
      * 主键id
      */
-    private Integer id;
+    private String id;
     /**
      * 别名
      */
@@ -27,7 +27,7 @@ public class TagIndexVO {
     /**
      * 相关文章
      */
-    private int postCount;
+    private Integer postCount;
     /**
      * 创建时间
      */

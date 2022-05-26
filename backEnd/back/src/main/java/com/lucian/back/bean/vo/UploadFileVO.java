@@ -11,7 +11,7 @@ public class UploadFileVO {
     /**
      * 文件id 主键
      */
-    private Integer id;
+    private String id;
 
     /**
      * 文件地址

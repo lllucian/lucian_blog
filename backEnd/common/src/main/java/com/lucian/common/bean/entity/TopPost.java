@@ -15,7 +15,7 @@ public class TopPost extends BaseEntity{
     /**
      * 文章id
      */
-    private Integer postId;
+    private String postId;
 
     /**
      * 排序

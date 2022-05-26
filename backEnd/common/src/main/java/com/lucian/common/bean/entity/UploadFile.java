@@ -15,7 +15,7 @@ public class UploadFile extends BaseEntity {
     /**
      * 上传者id
      */
-    private Integer userId;
+    private String userId;
     /**
      * 上传的controller
      */

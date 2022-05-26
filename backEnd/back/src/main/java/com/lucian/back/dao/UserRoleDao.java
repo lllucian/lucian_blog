@@ -5,5 +5,5 @@ import com.lucian.common.bean.entity.Role;
 import java.util.List;
 
 public interface UserRoleDao {
-    List<Role> getRoleListByUserId(Integer userId);
+    List<Role> getRoleListByUserId(String userId);
 }

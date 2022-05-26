@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Data
 public class UserBO implements UserDetails {
-    private Integer id;
+    private String id;
 
     User user;
 

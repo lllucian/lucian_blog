@@ -58,7 +58,7 @@ public class TopPostController{
      * @return 是否更新成功
      */
     @PostMapping("top_post/{id}")
-    public CommonResult<String> update(@PathVariable Integer id, @RequestBody @Valid TopPostParam topPostParam){
+    public CommonResult<String> update(@PathVariable String id, @RequestBody @Valid TopPostParam topPostParam){
         return topPostManager.updateObject(id, topPostParam) ? CommonResult.success(null, "更新成功") : CommonResult.failed("更新失败");
     }
 
@@ -68,7 +68,7 @@ public class TopPostController{
      * @return select2 文章信息
      */
     @GetMapping("top_post/post_selected/{postId}")
-    public CommonResult<PostSelectDataVO> postSelected(@PathVariable Integer postId){
+    public CommonResult<PostSelectDataVO> postSelected(@PathVariable String postId){
         return CommonResult.successNoMessage(topPostManager.postSelected(postId));
     }
 
@@ -78,7 +78,7 @@ public class TopPostController{
      * @return select2 集合
      */
     @GetMapping("top_post/post_select/{id}")
-    public CommonResult<List<PostSelectDataVO>> editSelect(@PathVariable Integer id, String query){
+    public CommonResult<List<PostSelectDataVO>> editSelect(@PathVariable String id, String query){
         return CommonResult.successNoMessage(topPostManager.postList(id, query));
     }
 }

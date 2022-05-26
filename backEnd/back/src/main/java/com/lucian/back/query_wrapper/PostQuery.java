@@ -20,9 +20,9 @@ public class PostQuery {
 
     private List<String> updated;
 
-    private List<Integer> categories;
+    private List<String> categories;
 
-    private List<Integer> tags;
+    private List<String> tags;
 
     private Integer current = 1;
 

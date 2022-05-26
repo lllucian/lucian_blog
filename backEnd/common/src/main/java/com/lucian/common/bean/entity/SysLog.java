@@ -15,7 +15,7 @@ public class SysLog extends BaseEntity {
     /**
      * 用户id
      */
-    private Integer userId;
+    private String userId;
     /**
      * 操作
      */

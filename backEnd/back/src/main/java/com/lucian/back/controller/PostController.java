@@ -66,7 +66,7 @@ public class PostController {
      * @return 博客详情数据
      */
     @GetMapping("post/{id}")
-    public CommonResult<PostFormVO> edit(@PathVariable Integer id){
+    public CommonResult<PostFormVO> edit(@PathVariable String id){
         PostFormVO postFormVO = postManager.postDetail(id);
         if (postFormVO == null) {
             return CommonResult.failed(ResultCode.FIND_FAILED);
@@ -81,7 +81,7 @@ public class PostController {
      * @return 是否更新成功
      */
     @PutMapping("post/{id}")
-    public CommonResult<String> update(@PathVariable Integer id, @Valid @RequestBody PostParam postParam){
+    public CommonResult<String> update(@PathVariable String id, @Valid @RequestBody PostParam postParam){
         return postManager.update(id, postParam) ? CommonResult.success(null, "修改成功"): CommonResult.failed("修改失败");
     }
 
@@ -91,7 +91,7 @@ public class PostController {
      * @return 是否删除成功
      */
     @DeleteMapping("post/{id}")
-    public CommonResult<String> delete(@PathVariable Integer id) {
+    public CommonResult<String> delete(@PathVariable String id) {
         return postManager.deletePost(id) ? CommonResult.success(null, "删除成功") : CommonResult.failed("删除失败");
     }
 }

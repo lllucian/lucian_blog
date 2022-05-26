@@ -64,7 +64,7 @@ public class TagManager {
      * @param id 标签id
      * @return 标签对象
      */
-    public TagFormVO findOne(Integer id){
+    public TagFormVO findOne(String id){
         if (id == null) {
             return null;
         }
@@ -81,7 +81,7 @@ public class TagManager {
      * @param tagParam 表单数据
      * @return 是否更新成功
      */
-    public Boolean updateOne(Integer id, TagParam tagParam){
+    public Boolean updateOne(String id, TagParam tagParam){
         if (id == null) {
             return false;
         }
@@ -99,7 +99,7 @@ public class TagManager {
      * @param id 标签id
      * @return 是否删除成功
      */
-    public Boolean deleteOne(Integer id){
+    public Boolean deleteOne(String id){
         if (id == null) {
             return false;
         }
@@ -132,7 +132,7 @@ public class TagManager {
      * @param ids 分类id
      * @return 被选中option
      */
-    public List<TagSelectDataVO> getSelectData(List<Integer> ids){
+    public List<TagSelectDataVO> getSelectData(List<String> ids){
         if (ids == null && ids.size() != 0) {
             return null;
         }

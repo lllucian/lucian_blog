@@ -30,7 +30,7 @@ public class UploadController {
     }
 
     @GetMapping("get_file_url/{id}")
-    public CommonResult<String> getFileURL(@PathVariable("id") Integer fileId){
+    public CommonResult<String> getFileURL(@PathVariable("id") String fileId){
         String fileURL = uploadFileManager.getFileURL(fileId);
         return StringUtils.hasText(fileURL) ? CommonResult.successNoMessage(fileURL) : CommonResult.failed();
     }

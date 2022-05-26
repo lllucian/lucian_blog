@@ -23,9 +23,9 @@ public class PostTag extends BaseEntity {
     /**
      * 文章id
      */
-    private Integer postId;
+    private String postId;
     /**
      * 标签id
      */
-    private Integer tagId;
+    private String tagId;
 }

@@ -13,7 +13,7 @@ public class PostIndexVO {
     /**
      * 文章id
      */
-    private Integer id;
+    private String id;
 
     /**
      * 文章标题

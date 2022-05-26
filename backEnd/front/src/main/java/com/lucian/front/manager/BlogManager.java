@@ -44,7 +44,7 @@ public class BlogManager {
         return blogData;
     }
 
-    public BlogDetailVO detail(Integer id){
+    public BlogDetailVO detail(String id){
         if (Objects.isNull(id)) {
             return null;
         }

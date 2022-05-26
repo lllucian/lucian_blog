@@ -11,5 +11,5 @@ public class ChangeTopPostSortParam {
     /**
      * 要改变排序的id
      */
-    private Integer id;
+    private String id;
 }

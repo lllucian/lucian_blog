@@ -11,7 +11,7 @@ public class CategoryIndexVO {
     /**
      * 分类id
      */
-    private Integer id;
+    private String id;
     /**
      * 分类名
      */
