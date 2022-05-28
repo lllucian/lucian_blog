@@ -1,5 +1,5 @@
 <template>
-  <Form title="新建文章"></Form>
+  <Form :title="$route.meta.title"></Form>
 </template>
 
 <script lang="ts">

@@ -96,6 +96,10 @@ export default defineComponent({
 body {
   margin: 0;
 }
+
+.card-header {
+  background-color: unset !important;
+}
 </style>
 <style scoped>
 .header-left {
