@@ -95,7 +95,7 @@ export default defineComponent({
           } else {
             data = await postRequest("api/admin/tag", formData.value);
           }
-          if (data) await router.push({name: 'AdminTagIndex'})
+          if (await data) await router.push({name: 'AdminTagIndex'})
         } finally {
           formLoading.value = false;
         }
