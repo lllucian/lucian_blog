@@ -14,5 +14,7 @@ create table sys_logs
     created_at      datetime,
     updated_at      datetime,
     deleted_at      datetime,
-    primary key (id)
+    primary key (id),
+    index user_id(`user_id`),
+    index deleted_at (`deleted_at`)
 ) collate utf8mb4_bin;

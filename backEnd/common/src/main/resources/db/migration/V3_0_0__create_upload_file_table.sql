@@ -9,5 +9,7 @@ CREATE TABLE `upload_files` (
                                 `updated_at` datetime DEFAULT NULL,
                                 `deleted_at` datetime DEFAULT NULL,
                                 `real_name` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
-                                PRIMARY KEY (`id`)
+                                PRIMARY KEY (`id`),
+                                index user_id (`user_id`),
+                                index deleted_at (`deleted_at`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;

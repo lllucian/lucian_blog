@@ -7,7 +7,8 @@ CREATE TABLE roles
     `created_at` datetime,
     `updated_at` datetime,
     `deleted_at` datetime,
-    primary key (`id`)
+    primary key (`id`),
+    index deleted_at (`deleted_at`)
 ) COLLATE = 'utf8mb4_general_ci';
 
 CREATE TABLE user_roles
@@ -18,5 +19,8 @@ CREATE TABLE user_roles
     `created_at` datetime,
     `updated_at` datetime,
     `deleted_at` datetime,
-    primary key (`id`)
+    primary key (`id`),
+    index user_id (`user_id`),
+    index role_id (`role_id`),
+    index deleted_at (`deleted_at`)
 ) COLLATE = 'utf8mb4_general_ci';

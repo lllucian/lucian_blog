@@ -12,7 +12,10 @@ create table posts
     `created_at`  datetime,
     `updated_at`  datetime,
     `deleted_at`  datetime,
-    primary key (`id`)
+    primary key (`id`),
+    index user_id(`user_id`),
+    index upload_file_id(`upload_file_id`),
+    index deleted_at(`deleted_at`)
 ) collate = "utf8mb4_general_ci";
 
 create table categories
@@ -26,7 +29,8 @@ create table categories
     `created_at`  datetime,
     `updated_at`  datetime,
     `deleted_at`  datetime,
-    primary key (`id`)
+    primary key (`id`),
+    index deleted_at (`deleted_at`)
 ) collate = "utf8mb4_general_ci";
 
 create table tags
@@ -39,7 +43,8 @@ create table tags
     `created_at`  datetime,
     `updated_at`  datetime,
     `deleted_at`  datetime,
-    primary key (`id`)
+    primary key (`id`),
+    index deleted_at (`deleted_at`)
 ) collate = "utf8mb4_general_ci";
 
 create table post_categories
@@ -51,7 +56,10 @@ create table post_categories
     `created_at`  datetime,
     `updated_at`  datetime,
     `deleted_at`  datetime,
-    primary key (`id`)
+    primary key (`id`),
+    index post_id (`post_id`),
+    index category_id (`category_id`),
+    index deleted_at (`deleted_at`)
 ) collate = "utf8mb4_general_ci";
 
 create table post_tags
@@ -63,5 +71,8 @@ create table post_tags
     `created_at` datetime,
     `updated_at` datetime,
     `deleted_at` datetime,
-    primary key (`id`)
+    primary key (`id`),
+    index post_id (`post_id`),
+    index tag_id (`tag_id`),
+    index deleted_at (`deleted_at`)
 ) collate = "utf8mb4_general_ci";

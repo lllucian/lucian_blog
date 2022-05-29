@@ -7,5 +7,8 @@ CREATE TABLE top_posts
   `created_at` datetime,
   `updated_at` datetime,
   `deleted_at` datetime,
-  primary key (`id`)
+  primary key (`id`),
+  index post_id (`post_id`),
+  index is_hidden (`is_hidden`),
+  index deleted_at (`deleted_at`)
 ) COLLATE = 'utf8mb4_general_ci';
