@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import {defineComponent, onMounted, ref, watch} from "vue";
-import {default as Icon} from "/@/components/basic/Icon.vue";
+import {default as Icon} from "/@/components/common/basic/Icon.vue";
 import {CustomMenu} from "./menu";
 
 export default defineComponent({

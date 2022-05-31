@@ -61,8 +61,8 @@
 import {defineComponent, onMounted, ref, toRefs} from "vue";
 import {router} from "/@/router";
 import {getRequest, postRequest, putRequest} from "/@/requests";
-import UploadImage from "/@/components/form/upload/UploadImage.vue";
-import TEditor from "/@/components/form/tinymce/TEditor.vue"
+import UploadImage from "/@/components/backend/form/upload/UploadImage.vue";
+import TEditor from "/@/components/backend/form/tinymce/TEditor.vue"
 
 
 export default defineComponent({

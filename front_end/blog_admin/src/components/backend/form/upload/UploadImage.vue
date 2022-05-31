@@ -43,7 +43,7 @@
 </template>
 <script lang="ts">
 import {defineComponent, onMounted, ref, toRefs, watch} from "vue";
-import Icon from "/@/components/basic/Icon.vue";
+import Icon from "/@/components/common/basic/Icon.vue";
 import {getRequest} from "/@/requests";
 
 export default defineComponent({

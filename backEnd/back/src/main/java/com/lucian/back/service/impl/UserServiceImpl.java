@@ -3,10 +3,10 @@ package com.lucian.back.service.impl;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lucian.common.bean.bo.UserBO;
 import com.lucian.back.dao.UserDao;
 import com.lucian.back.dao.UserRoleDao;
 import com.lucian.back.service.UserService;
+import com.lucian.common.bean.bo.UserBO;
 import com.lucian.common.bean.entity.Role;
 import com.lucian.common.bean.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,7 @@ import java.util.function.Function;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     @Autowired
     UserDao userDao;
 
@@ -34,8 +35,8 @@ public class UserServiceImpl implements UserService {
         return userDao.selectOne(wrapper);
     }
 
-    // 查找用户名
     @Override
+    // 查找用户名
     public UserDetails loadUserByUsername(String nickName) throws UsernameNotFoundException {
         User user = getUserByNickName(nickName);
         if (user == null) {

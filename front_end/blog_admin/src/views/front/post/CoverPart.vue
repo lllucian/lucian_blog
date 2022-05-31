@@ -7,8 +7,8 @@
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center"
              data-scrollax-parent="true" :style="{height: pageHeight}">
           <div class="col-md-9 text-center ftco-animate" :class="animateClass">
-            <p class="breadcrumbs"><span class="mr-2"><a
-                href="index.html">Home</a></span> <span>Articles</span></p>
+            <p class="breadcrumbs"><span class="mr-2">
+              <router-link to="/">首页</router-link></span><span>文章</span></p>
             <h1 class="mb-3 bread">{{props.title}}</h1>
             <h3 class="mb-3 bread" >{{props.description}}</h3>
           </div>
@@ -26,7 +26,6 @@ const props = defineProps<{
   title: String,
   description: String
 }>();
-console.log(props.imageUrl)
 
 const vScroll = {
   mounted: (el: any, binding: any) => {

@@ -1,0 +1,18 @@
+{
+  "index": {
+    "refresh_interval": "5s",
+    "analysis": {
+      "analyzer": {
+        "ik_max_word_html_strip": {
+          "char_filter": [
+            "html_strip"
+          ],
+          "tokenizer": "ik_max_word"
+        }
+      }
+    }
+  },
+  "number_of_shards": "1",
+  "number_of_replicas": "0"
+}
+}

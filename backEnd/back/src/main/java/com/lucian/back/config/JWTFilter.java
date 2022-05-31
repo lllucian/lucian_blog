@@ -1,5 +1,6 @@
 package com.lucian.back.config;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lucian.back.service.UserService;
 import com.lucian.common.response.CommonResult;
@@ -8,12 +9,10 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -24,11 +23,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@Component
 public class JWTFilter extends OncePerRequestFilter {
-
-    @Autowired
-    UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -43,6 +38,7 @@ public class JWTFilter extends OncePerRequestFilter {
             String username = claims.getSubject();
             List<GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList((String) claims.get("authorities"));
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, null, authorities);
+            UserService userService = SpringUtil.getBean(UserService.class);
             token.setDetails(userService.loadUserByUsername(username));
             SecurityContextHolder.getContext().setAuthentication(token);
             filterChain.doFilter(request, response);
@@ -59,5 +55,9 @@ public class JWTFilter extends OncePerRequestFilter {
             out.flush();
             out.close();
         }
+    }
+
+    public static JWTFilter jwtFilter(){
+        return new JWTFilter();
     }
 }

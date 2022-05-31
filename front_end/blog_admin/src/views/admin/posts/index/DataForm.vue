@@ -20,7 +20,7 @@
         <el-table-column label="标签" width="120">
           <template #default="scope">
             <el-tag
-              size="medium"
+              size="large"
               v-for="(tag, index) in scope.row.tags"
               :key="index"
               >{{ tag }}</el-tag
@@ -59,10 +59,10 @@
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, ref, toRef, toRefs, watch } from "vue";
-import Pagination from "/@/components/data/Pagination.vue";
+import Pagination from "/@/components/backend/data/Pagination.vue";
 import { setPageConditions, apiFormData } from "./query";
 import {deleteRequest} from "/@/requests";
-import Icon from "/@/components/basic/Icon.vue";
+import Icon from "/@/components/common/basic/Icon.vue";
 
 export default defineComponent({
   components: { Pagination, Icon },

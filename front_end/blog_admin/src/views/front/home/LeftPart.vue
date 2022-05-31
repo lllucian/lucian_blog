@@ -16,7 +16,7 @@
 import {defineComponent, onMounted, ref, watch} from "vue";
 import postPart from "/@/views/front/home/PostPart.vue";
 import {apiFormData} from './page'
-import FrontPagination from "/@/components/data/FrontPagination.vue";
+import FrontPagination from "/@/components/front/data/Pagination.vue";
 
 export default defineComponent({
   components: {

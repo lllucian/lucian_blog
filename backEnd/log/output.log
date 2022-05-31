@@ -1,0 +1,50 @@
+11:03:07.893 [restartedMain] INFO  com.lucian.front.FrontApplication - Starting FrontApplication using Java 1.8.0_322 on lingxiangdeMacBook-Pro-2.local with PID 9091 (/Users/lingxiangdeng/person_project/lucian_blog/backEnd/front/target/classes started by lingxiangdeng in /Users/lingxiangdeng/person_project/lucian_blog/backEnd)
+11:03:07.895 [restartedMain] DEBUG com.lucian.front.FrontApplication - Running with Spring Boot v2.5.5, Spring v5.3.10
+11:03:07.895 [restartedMain] INFO  com.lucian.front.FrontApplication - The following profiles are active: dev
+11:03:08.909 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8889"]
+11:03:08.909 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+11:03:08.910 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.53]
+11:03:08.944 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+11:05:59.027 [restartedMain] INFO  com.lucian.front.FrontApplication - Starting FrontApplication using Java 1.8.0_322 on lingxiangdeMacBook-Pro-2.local with PID 9147 (/Users/lingxiangdeng/person_project/lucian_blog/backEnd/front/target/classes started by lingxiangdeng in /Users/lingxiangdeng/person_project/lucian_blog/backEnd)
+11:05:59.029 [restartedMain] DEBUG com.lucian.front.FrontApplication - Running with Spring Boot v2.5.5, Spring v5.3.10
+11:05:59.029 [restartedMain] INFO  com.lucian.front.FrontApplication - The following profiles are active: dev
+11:05:59.991 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8889"]
+11:05:59.992 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+11:05:59.992 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.53]
+11:06:00.026 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+13:04:07.795 [restartedMain] WARN  org.elasticsearch.client.RestClient - request [HEAD http://localhost:9200/posts?ignore_throttled=false&ignore_unavailable=false&expand_wildcards=open%2Cclosed&allow_no_indices=false] returned 2 warnings: [299 Elasticsearch-7.17.3-5ad023604c8d7416c9eb6c0eadb62b14e766caff "Elasticsearch built-in security features are not enabled. Without authentication, your cluster could be accessible to anyone. See https://www.elastic.co/guide/en/elasticsearch/reference/7.17/security-minimal-setup.html to enable security."],[299 Elasticsearch-7.17.3-5ad023604c8d7416c9eb6c0eadb62b14e766caff "[ignore_throttled] parameter is deprecated because frozen indices have been deprecated. Consider cold or frozen tiers in place of frozen indices."]
+13:04:08.213 [restartedMain] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 7.7.3 by Redgate
+13:04:08.424 [restartedMain] INFO  o.f.c.i.database.base.DatabaseType - Database: jdbc:mysql://localhost:3307/lucian_blog (MySQL 8.0)
+13:04:08.489 [restartedMain] INFO  o.f.core.internal.command.DbValidate - Successfully validated 7 migrations (execution time 00:00.018s)
+13:04:08.518 [restartedMain] INFO  o.f.c.i.s.JdbcTableSchemaHistory - Creating Schema History table `lucian_blog`.`schema_version_history` ...
+13:04:08.566 [restartedMain] INFO  o.f.c.i.s.DefaultSqlScriptExecutor - 0 rows affected
+13:04:08.588 [restartedMain] INFO  o.f.c.i.s.DefaultSqlScriptExecutor - 0 rows affected
+13:04:08.610 [restartedMain] INFO  o.f.core.internal.command.DbMigrate - Current version of schema `lucian_blog`: << Empty Schema >>
+13:04:08.618 [restartedMain] INFO  o.f.core.internal.command.DbMigrate - Migrating schema `lucian_blog` to version "1.0.1 - create user table"
+13:04:08.647 [restartedMain] WARN  o.f.c.i.s.DefaultSqlScriptExecutor - DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+13:04:08.647 [restartedMain] WARN  o.f.c.i.s.DefaultSqlScriptExecutor - DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+13:04:08.647 [restartedMain] INFO  o.f.c.i.s.DefaultSqlScriptExecutor - 0 rows affected
+13:04:08.707 [restartedMain] INFO  o.f.core.internal.command.DbMigrate - Migrating schema `lucian_blog` to version "1.0.2 - create role table"
+13:04:08.728 [restartedMain] WARN  o.f.c.i.s.DefaultSqlScriptExecutor - DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+13:04:08.729 [restartedMain] INFO  o.f.c.i.s.DefaultSqlScriptExecutor - 0 rows affected
+13:04:08.742 [restartedMain] INFO  o.f.c.i.s.DefaultSqlScriptExecutor - 0 rows affected
+13:04:08.776 [restartedMain] INFO  o.f.core.internal.command.DbMigrate - Migrating schema `lucian_blog` to version "1.0.3 - insert default user"
+13:04:08.780 [restartedMain] INFO  o.f.c.i.s.DefaultSqlScriptExecutor - 1 rows affected
+13:04:08.785 [restartedMain] INFO  o.f.c.i.s.DefaultSqlScriptExecutor - 1 rows affected
+13:04:08.788 [restartedMain] INFO  o.f.c.i.s.DefaultSqlScriptExecutor - 1 rows affected
+13:04:08.824 [restartedMain] INFO  o.f.core.internal.command.DbMigrate - Migrating schema `lucian_blog` to version "2.0.0 - create post table"
+13:04:08.843 [restartedMain] INFO  o.f.c.i.s.DefaultSqlScriptExecutor - 0 rows affected
+13:04:08.858 [restartedMain] INFO  o.f.c.i.s.DefaultSqlScriptExecutor - 0 rows affected
+13:04:08.872 [restartedMain] INFO  o.f.c.i.s.DefaultSqlScriptExecutor - 0 rows affected
+13:04:08.885 [restartedMain] INFO  o.f.c.i.s.DefaultSqlScriptExecutor - 0 rows affected
+13:04:08.917 [restartedMain] INFO  o.f.c.i.s.DefaultSqlScriptExecutor - 0 rows affected
+13:04:08.959 [restartedMain] INFO  o.f.core.internal.command.DbMigrate - Migrating schema `lucian_blog` to version "3.0.0 - create upload file table"
+13:04:08.975 [restartedMain] INFO  o.f.c.i.s.DefaultSqlScriptExecutor - 0 rows affected
+13:04:09.014 [restartedMain] INFO  o.f.core.internal.command.DbMigrate - Migrating schema `lucian_blog` to version "4.0.0 - create sys logs table"
+13:04:09.029 [restartedMain] INFO  o.f.c.i.s.DefaultSqlScriptExecutor - 0 rows affected
+13:04:09.073 [restartedMain] INFO  o.f.core.internal.command.DbMigrate - Migrating schema `lucian_blog` to version "5.0.0 - create top post table"
+13:04:09.095 [restartedMain] WARN  o.f.c.i.s.DefaultSqlScriptExecutor - DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+13:04:09.095 [restartedMain] INFO  o.f.c.i.s.DefaultSqlScriptExecutor - 0 rows affected
+13:04:09.123 [restartedMain] INFO  o.f.core.internal.command.DbMigrate - Successfully applied 7 migrations to schema `lucian_blog`, now at version v5.0.0 (execution time 00:00.524s)
+13:04:09.222 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8889"]
+13:04:09.328 [restartedMain] INFO  com.lucian.front.FrontApplication - Started FrontApplication in 7090.503 seconds (JVM running for 7091.039)

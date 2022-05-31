@@ -7,7 +7,7 @@ import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import { stroage } from '/@/stroage'
-import TEditor from '/@/components/form/tinymce/TEditor.vue'
+import TEditor from '/@/components/backend/form/tinymce/TEditor.vue'
 import '@purge-icons/generated'
 import BootstrapVue3 from 'bootstrap-vue-3'
 

@@ -53,7 +53,7 @@
 <script lang="ts">
 import { defineComponent, Ref, ref } from "vue";
 import { postRequest } from "/@/requests";
-import DateTimePickerComponent from "/@/components/form/datepicker/DateTimePickerComponent.vue";
+import DateTimePickerComponent from "/@/components/backend/form/datepicker/DateTimePickerComponent.vue";
 import {
   apiFormData,
   getPagesize,

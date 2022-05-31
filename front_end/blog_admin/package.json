@@ -24,7 +24,7 @@
     "vue-axios": "^3.4.0",
     "vue-router": "^4.0.12",
     "vue-waypoint": "^4.2.1",
-    "vue3-carousel": "^0.1.36",
+    "vue3-carousel": "^0.1.40",
     "vuex": "^4.0.2"
   },
   "devDependencies": {

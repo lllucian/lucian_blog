@@ -18,10 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author lingxiangdeng
@@ -33,8 +30,9 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     }
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse resp) throws AuthenticationException, IOException, ServletException {
-        User user = new ObjectMapper().readValue(req.getInputStream(), User.class);
-        return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(username, password));
     }
     @Override
     protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse resp, FilterChain chain, Authentication authResult) throws IOException, ServletException {

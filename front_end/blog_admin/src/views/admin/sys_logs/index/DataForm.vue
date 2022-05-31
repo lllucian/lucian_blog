@@ -31,9 +31,9 @@
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, ref, toRefs, watch } from "vue";
-import Pagination from "/@/components/data/Pagination.vue";
+import Pagination from "/@/components/backend/data/Pagination.vue";
 import { setPageConditions, apiFormData } from "./query";
-import Icon from "/@/components/basic/Icon.vue"
+import Icon from "/@/components/common/basic/Icon.vue"
 
 export default defineComponent({
   components: { Pagination, Icon },

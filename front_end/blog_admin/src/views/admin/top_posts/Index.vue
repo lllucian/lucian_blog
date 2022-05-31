@@ -105,9 +105,9 @@
 
 </template>
 <script lang="ts" setup>
-import {nextTick, onMounted, reactive, ref, watch} from "vue";
+import {nextTick, onMounted, reactive, ref} from "vue";
 import {getRequest, postRequest} from "/@/requests";
-import {default as Icon} from "/@/components/basic/Icon.vue";
+import {default as Icon} from "/@/components/common/basic/Icon.vue";
 import {FormInstance} from "element-plus";
 import Sortable from "sortablejs"
 

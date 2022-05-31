@@ -11,6 +11,9 @@ spring:
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
     driver-class-name: ${spring.datasource.driver-class-name}
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   typeEnumsPackage: com.lucian.common.bean.enums
