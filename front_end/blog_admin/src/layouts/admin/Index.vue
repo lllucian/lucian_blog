@@ -6,25 +6,23 @@
 
     <el-container>
       <el-header class="header-content"
-          style="font-size: 12px; border-bottom: 1px solid #eee"
+                 style="font-size: 12px; border-bottom: 1px solid #eee"
       >
-      <div class="header-left">
-        <div class="icon-menu" @click="changeCollapse">
-          <span class="iconify" data-icon="ant-design:menu-fold-outlined" style="font-size: 20px;" ></span>
+        <div class="header-left">
+          <div class="icon-menu" @click="changeCollapse">
+            <span class="iconify" data-icon="ant-design:menu-fold-outlined" style="font-size: 20px;"></span>
+          </div>
         </div>
-      </div>
-      <div style="float:right;display: flex;justify-content: center;align-items: center;">
-        <el-dropdown>
-          <Icon icon="ep:setting"></Icon>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item>View</el-dropdown-item>
-              <el-dropdown-item>Add</el-dropdown-item>
-              <el-dropdown-item>Delete</el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-        <span>Tom</span>
+        <div style="float:right;display: flex;justify-content: center;align-items: center;">
+          <el-dropdown>
+            <Icon icon="ep:setting"></Icon>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item @click="logout">注销</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+          <span>{{ username }}</span>
         </div>
       </el-header>
 
@@ -36,50 +34,57 @@
   <el-backtop></el-backtop>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import {defineComponent, onMounted, ref, watch} from "vue";
 import {default as Icon} from "/@/components/common/basic/Icon.vue";
 import {CustomMenu} from "./menu";
+import {stroage} from "/@/stroage";
+import {Base64} from "js-base64";
+import {useRoute, useRouter} from "vue-router";
 
-export default defineComponent({
-  components: {
-    CustomMenu,
-    Icon
-  },
-  setup() {
-    const pageHeight = ref(window.innerHeight + "px");
 
-    const getPageRizeHeight = async () => {
-      pageHeight.value = window.innerHeight + "px";
-    };
+const pageHeight = ref(window.innerHeight + "px");
 
-    const collapseMenu = ref(false);
+const getPageRizeHeight = async () => {
+  pageHeight.value = window.innerHeight + "px";
+};
 
-    const iconData = ref('ant-design:menu-fold-outlined');
+const collapseMenu = ref(false);
 
-    const menuWidth = ref('200px');
+const iconData = ref('ant-design:menu-fold-outlined');
 
-    onMounted(() => {
-      window.addEventListener("resize", getPageRizeHeight);
-    });
+const menuWidth = ref('200px');
 
-    watch(collapseMenu, (newValue, oldValue) => {
-        iconData.value = newValue ? 'ant-design:menu-unfold-outlined' : 'ant-design:menu-fold-outlined';
-        document.getElementsByClassName('icon-menu')[0].getElementsByTagName("svg")[0].setAttribute("data-icon", iconData.value);
-        menuWidth.value = newValue ? '46px' : '200px';
-    });
+const username = ref<String>();
 
-    const changeCollapse = () => collapseMenu.value = !collapseMenu.value;
-
-    return {
-      pageHeight,
-      menuWidth,
-      iconData,
-      collapseMenu,
-      changeCollapse,
-    };
-  },
+const setUserName = (() => {
+  const token = stroage.getters.getToken;
+  const tokenArr = token!.split(".");
+  const payload = tokenArr[1];
+  const userInfo = Base64.decode(payload);
+  const userInfoObject = JSON.parse(userInfo);
+  username.value = userInfoObject.sub;
 });
+const router = useRouter();
+
+const logout = (() => {
+  stroage.commit({ type: "clearToken" });
+
+  router.push({path: router.currentRoute.value.path, query: {date: new Date().getDate()}});
+});
+onMounted(() => {
+  window.addEventListener("resize", getPageRizeHeight);
+  setUserName()
+});
+
+watch(collapseMenu, (newValue, oldValue) => {
+  iconData.value = newValue ? 'ant-design:menu-unfold-outlined' : 'ant-design:menu-fold-outlined';
+  document.getElementsByClassName('icon-menu')[0].getElementsByTagName("svg")[0].setAttribute("data-icon", iconData.value);
+  menuWidth.value = newValue ? '46px' : '200px';
+});
+
+const changeCollapse = () => collapseMenu.value = !collapseMenu.value;
+
 </script>
 
 <style>
@@ -105,10 +110,10 @@ body {
 .header-left {
   display: flex;
   height: 100%;
-  align-items:center;
+  align-items: center;
 }
 
-.icon-menu{
+.icon-menu {
   cursor: pointer;
 }
 
