@@ -1,5 +1,6 @@
 # lucian_blog
 使用SpringBoot + Vue3 + TypeScript做的一个博客系统
+
 # 环境要求
 + springboot 2.7.0
 + jdk1.8
@@ -10,7 +11,15 @@
 + minio
 + elasticsearch 7.17.3
 + canal-adapter(这个会在下面解释如何安装)
-
+# docker mysql用户创建并允许远程连接
+1. 使用 `docker-compose exec db mysql -uroot -p`连接mysql并输入密码
+2. 执行以下代码
+   ```mysql
+   use mysql;
+   CREATE USER 'lucian'@'%' IDENTIFIED BY '123456';
+   GRANT ALL PRIVILEGES ON *.* TO 'lucian'@'%';
+   FLUSH PRIVILEGES;
+   ```
 # 安装并使用canal-server
 1. [下载canal-adapter](https://github.com/alibaba/canal/releases/download/canal-1.1.6/canal.adapter-1.1.6.tar.gz)
 2. 解压该压缩包并将该压缩包里的内容放至你想放的位置
