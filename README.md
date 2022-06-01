@@ -1,3 +1,5 @@
+# lucian_blog
+使用SpringBoot + Vue3 + TypeScript做的一个博客系统
 # 环境要求
 + springboot 2.7.0
 + jdk1.8
