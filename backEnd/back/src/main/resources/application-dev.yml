@@ -2,7 +2,7 @@ server:
   port: 8888
 spring:
   datasource:
-    username: root
+    username: lucian
     password: 123456
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
     url: jdbc:p6spy:mysql://localhost:3307/lucian_blog
@@ -11,6 +11,8 @@ spring:
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
     driver-class-name: ${spring.datasource.driver-class-name}
+  elasticsearch:
+    uris: http://localhost:9200
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -21,8 +23,8 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 minio:
   url: http://localhost:9000
-  accessKey: admin
-  secretKey: admin123456
+  accessKey: lucian
+  secretKey: lucian123456
   bucketName: pic
 
 

@@ -4,32 +4,70 @@ services:
   db_admin:
     image: adminer:4.8.1-standalone
     restart: always
+    depends_on:
+      - db
+    networks:
+      - lucian_blog
     ports:
-      - 9000:8080
+      - "9009:8080"
+    links:
+      - db:db
   db:
-    image: mysql:8.0.24
+    image: mysql/mysql-server:8.0.26
     restart: always
-    ports:
-      - 3310:3306
+    networks:
+      - lucian_blog
     command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4
+    ports:
+      - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: 123456
       MYSQL_DATABASE: lucian_blog
-  mongo:
-    image: mongo
-    restart: always
-    ports:
-      - 27017:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
 
-  mongo-express:
-    image: mongo-express
+  es7:
+    image: elasticsearch:7.17.3
     restart: always
     ports:
-      - 8081:8081
+      - "9200:9200"
+    networks:
+      - lucian_blog
+    volumes:
+      - ./docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: example
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ES_JAVA_OPTS: "-Xms256m -Xmx256m"
+      discovery.type: "single-node"
+  kibana:
+    image: kibana:7.17.3
+    restart: always
+    ports:
+      - "5666:5601"
+    networks:
+      - lucian_blog
+    links:
+      - es7:es7
+    depends_on:
+      - es7
+    environment:
+      ELASTICSEARCH_HOSTS: http://es7:9200
+  minio:
+    image: bitnami/minio:2022.5.26-debian-10-r4
+    platform: linux/amd64
+    environment:
+      MINIO_ROOT_USER: lucian
+      MINIO_ROOT_PASSWORD: lucian123456
+    ports:
+      - "9000:9000"
+    networks:
+      - lucian_blog
+  canal-server:
+    image: canal/canal-server:v1.1.6
+    ports:
+      - "11111:11111"
+    networks:
+      - lucian_blog
+    volumes:
+      - ./docker/canal-server/config/example/instance.properties:/home/admin/canal-server/conf/example/instance.properties
+networks:
+  lucian_blog: {}
+
+
