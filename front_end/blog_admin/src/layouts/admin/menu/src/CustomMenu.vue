@@ -5,6 +5,7 @@
     :router="true"
     :collapse="isCollapse"
     :collapse-transition="false"
+    class="el-menu-vertical"
   >
     <MenuTree :menuData="AdminRoutes"></MenuTree>
   </el-menu>
@@ -40,7 +41,7 @@ export default defineComponent({
 </script>
 
 <style>
-.el-menu-vertical-demo:not(.el-menu--collapse) {
+.el-menu-vertical:not(.el-menu--collapse) {
   width: 200px;
 }
 </style>
