@@ -7,8 +7,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static com.lucian.back.config.JWTFilter.jwtFilter;
-
 /**
  * @author lingxiangdeng
  */
@@ -32,7 +30,7 @@ public class MyCustomDsl extends AbstractHttpConfigurer<MyCustomDsl, HttpSecurit
         AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
         http.addFilterBefore(new JWTLoginFilter("/login", authenticationManager),
                         UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilter(new JWTFilter(authenticationManager));
     }
 
     public static MyCustomDsl customDsl() {

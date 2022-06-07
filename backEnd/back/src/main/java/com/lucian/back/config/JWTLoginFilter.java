@@ -5,6 +5,7 @@ import com.lucian.common.bean.entity.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -27,12 +28,17 @@ import java.util.Map;
  * @author lingxiangdeng
  */
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
+    private final boolean postOnly = true;
+
     protected JWTLoginFilter(String defaultFilterProcessesUrl, AuthenticationManager authenticationManager){
         super(new AntPathRequestMatcher(defaultFilterProcessesUrl));
         setAuthenticationManager(authenticationManager);
     }
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse resp) throws AuthenticationException, IOException, ServletException {
+        if (this.postOnly && !req.getMethod().equals("POST")) {
+            throw new AuthenticationServiceException("Authentication method not supported: " + req.getMethod());
+        }
         User user = new ObjectMapper().readValue(req.getInputStream(), User.class);
         return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
     }
