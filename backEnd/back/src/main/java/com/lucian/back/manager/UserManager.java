@@ -2,11 +2,16 @@ package com.lucian.back.manager;
 
 import com.lucian.back.bean.translate.User2SelectVO;
 import com.lucian.back.bean.vo.UserSelectDataVO;
+import com.lucian.back.form_parm.UserParam;
 import com.lucian.back.query_wrapper.UserSelectQuery;
 import com.lucian.back.service.UserService;
 import com.lucian.common.bean.entity.User;
+import com.lucian.common.bean.enums.EnabledStatusEnum;
+import com.lucian.common.bean.enums.LockedStatusEnum;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,5 +45,19 @@ public class UserManager {
         }
         List<User> list = userService.list(userSelectQuery.getQueryWrapper());
         return user2SelectVO.translateList(list);
+    }
+
+    @Transactional
+    public boolean createUser(UserParam userParam) {
+        User user = new User();
+        BeanUtils.copyProperties(userParam, user);
+        userService.save(user);
+        if (user.getEnabled() == null){
+            user.setEnabled(EnabledStatusEnum.ENABLED);
+        }
+        if (user.getLocked() == null) {
+            user.setLocked(LockedStatusEnum.UNLOCKED);
+        }
+        return false;
     }
 }

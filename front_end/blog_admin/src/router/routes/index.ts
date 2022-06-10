@@ -186,7 +186,7 @@ export const AdminRoutes: AppRouteModule[] = [
           title: "编辑标签",
           hiddenMenu: true,
           icon: 'carbon:tag-edit',
-          alias: '/tags',
+          alias: '/admin/tags',
         },
       },
     ],
@@ -211,6 +211,49 @@ export const AdminRoutes: AppRouteModule[] = [
           icon: 'icon-park-outline:log',
         },
       }
+    ]
+  },
+  {
+    name: 'AdminRoles',
+    path: "/admin/roles",
+    component: ADMIN_LAYOUT,
+    meta: {
+      title: "角色管理",
+      hiddenMenu: false,
+      icon: 'fa6-solid:arrows-down-to-people'
+    },
+    children: [
+      {
+        name: 'AdminRolesIndex',
+        path: "/admin/roles",
+        component: () => import("/@/views/admin/roles/index/Index.vue"),
+        meta: {
+          title: '角色列表',
+          hiddenMenu: false,
+          icon: 'fa6-solid:arrows-down-to-people'
+        }
+      },
+      {
+        name: 'AdminRoleCreate',
+        path: "/admin/role/new",
+        component: () => import("/@/views/admin/roles/new/New.vue"),
+        meta: {
+          title: '角色创建',
+          hiddenMenu: false,
+          icon: 'fa6-solid:arrows-down-to-people'
+        }
+      },
+      {
+        name: "AdminRoleEdit",
+        path: "/admin/role/:id",
+        component: () => import("/@/views/admin/roles/edit/Edit.vue"),
+        meta: {
+          title: "角色编辑",
+          hiddenMenu: true,
+          icon: 'fa6-solid:arrows-down-to-people',
+          alias: "/admin/roles"
+        },
+      },
     ]
   }
 ];

@@ -32,9 +32,10 @@
 </template>
 <script lang="ts" setup>
 import Icon from "/@/components/common/basic/Icon.vue"
-import {inject, ref} from "vue";
+import {inject, nextTick, ref, unref} from "vue";
 import {onKeyStroke} from '@vueuse/core'
 import {useRefs} from "/@/hook/core/useRefs";
+import {useRouter} from "vue-router";
 
 const [refs, setRefs] = useRefs();
 
@@ -46,16 +47,6 @@ const setActiveIndex = ((e: any) => {
   const index = e.target.dataset.index;
   activeIndex.value = Number(index);
 })
-
-// const {
-//   searchData = [{
-//     hit_content: "从 3.<mark>1</mark>.0 开始被废弃。请 …",
-//     title: "杂项"
-//   }, {hit_content: "从 3.<mark>1</mark>.0 开始被废弃。请 …", title: "杂项"}]
-// } = defineProps<{ searchData?: Array<{ hit_content: String, title: String }> }>();
-// const searchInfo = ref([...searchData, ...searchData, ...searchData, ...searchData, ...searchData, ...searchData]);
-
-// const searchInfo = ref<Array<{hit_content: String, title :String, document_id: String}>>([]);
 
 const searchInfo = inject("searchResult", <Array<any>>[]);
 const handleUp = (() => {
@@ -77,8 +68,24 @@ const handleDown = (() => {
   }
 });
 
+//Enter key
+const handleEnter = (async () => {
+  if (!searchInfo.length) {
+    return;
+  }
+  const result = unref(searchInfo);
+  const index = unref(activeIndex);
+  if (result.length === 0 || index < 0) {
+    return;
+  }
+  const to = result[index];
+  await nextTick();
+  await useRouter().push(to.path);
+})
+
 onKeyStroke('ArrowUp', handleUp);
 onKeyStroke('ArrowDown', handleDown);
+onKeyStroke('Enter', handleEnter);
 </script>
 <style scoped>
 .DocSearch-Dropdown {

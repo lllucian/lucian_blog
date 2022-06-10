@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts" setup>
-import {defineComponent, onMounted, ref, watch} from "vue";
+import {defineComponent, nextTick, onMounted, ref, watch} from "vue";
 import {default as Icon} from "/@/components/common/basic/Icon.vue";
 import {CustomMenu} from "./menu";
 import {stroage} from "/@/stroage";
@@ -70,6 +70,7 @@ const router = useRouter();
 const logout = (() => {
   stroage.commit({ type: "clearToken" });
 
+  nextTick()
   router.push({path: router.currentRoute.value.path, query: {date: new Date().getDate()}});
 });
 onMounted(() => {
@@ -80,7 +81,7 @@ onMounted(() => {
 watch(collapseMenu, (newValue, oldValue) => {
   iconData.value = newValue ? 'ant-design:menu-unfold-outlined' : 'ant-design:menu-fold-outlined';
   document.getElementsByClassName('icon-menu')[0].getElementsByTagName("svg")[0].setAttribute("data-icon", iconData.value);
-  menuWidth.value = newValue ? '46px' : '200px';
+  menuWidth.value = newValue ? '64px' : '200px';
 });
 
 const changeCollapse = () => collapseMenu.value = !collapseMenu.value;

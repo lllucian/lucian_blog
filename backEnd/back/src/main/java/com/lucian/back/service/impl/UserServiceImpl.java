@@ -1,8 +1,7 @@
 package com.lucian.back.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lucian.back.dao.UserDao;
 import com.lucian.back.dao.UserRoleDao;
 import com.lucian.back.service.UserService;
@@ -14,13 +13,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserService {
 
     @Autowired
     UserDao userDao;
@@ -35,8 +31,13 @@ public class UserServiceImpl implements UserService {
         return userDao.selectOne(wrapper);
     }
 
+    /**
+     * 查找用户名
+     * @param nickName the username identifying the user whose data is required.
+     * @return 用户
+     * @throws UsernameNotFoundException 无法找到用户
+     */
     @Override
-    // 查找用户名
     public UserDetails loadUserByUsername(String nickName) throws UsernameNotFoundException {
         User user = getUserByNickName(nickName);
         if (user == null) {
@@ -44,51 +45,5 @@ public class UserServiceImpl implements UserService {
         }
         List<Role> roles = userRoleDao.getRoleListByUserId(user.getId());
         return new UserBO(user, roles);
-    }
-
-
-    @Override
-    public boolean saveBatch(Collection<User> entityList, int batchSize) {
-        return false;
-    }
-
-    @Override
-    public boolean saveOrUpdateBatch(Collection<User> entityList, int batchSize) {
-        return false;
-    }
-
-    @Override
-    public boolean updateBatchById(Collection<User> entityList, int batchSize) {
-        return false;
-    }
-
-    @Override
-    public boolean saveOrUpdate(User entity) {
-        return false;
-    }
-
-    @Override
-    public User getOne(Wrapper<User> queryWrapper, boolean throwEx) {
-        return null;
-    }
-
-    @Override
-    public Map<String, Object> getMap(Wrapper<User> queryWrapper) {
-        return null;
-    }
-
-    @Override
-    public <V> V getObj(Wrapper<User> queryWrapper, Function<? super Object, V> mapper) {
-        return null;
-    }
-
-    @Override
-    public BaseMapper<User> getBaseMapper() {
-        return userDao;
-    }
-
-    @Override
-    public Class<User> getEntityClass() {
-        return User.class;
     }
 }

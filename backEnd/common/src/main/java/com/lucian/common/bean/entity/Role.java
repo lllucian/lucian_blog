@@ -1,5 +1,6 @@
 package com.lucian.common.bean.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -9,6 +10,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@TableName("roles")
 public class Role extends BaseEntity {
     /**
      * 序列化id
