@@ -30,7 +30,8 @@ public class SecurityConfiguration {
             "/v2/api-docs",
             "/v3/api-docs",
             "/webjars/**",
-            "/errorpl-"
+            "/error",
+            "/doc.html"
     };
 
     @Bean
