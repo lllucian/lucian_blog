@@ -1,18 +1,15 @@
-import axios, { AxiosInstance, HeadersDefaults  } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig  } from "axios";
 import { ElMessage } from "element-plus";
 import {stroage} from "/@/stroage"
 const instance: AxiosInstance = axios.create();
 
 // instance.defaults.headers.common['Authorization'] = stroage.getters.getToken;
 
-interface CommonHeaderProperties extends HeadersDefaults {
-    Authorization: string;
-}
 
 // 请求拦截器
-instance.interceptors.request.use(config => {
-    if (stroage.getters.getToken && config.headers && config.headers.common)
-    config.headers.common['Authorization'] = `Bearer ${stroage.getters.getToken}`;
+instance.interceptors.request.use((config: AxiosRequestConfig) => {
+    if (stroage.getters.getToken && config.headers)
+    config.headers['Authorization'] = `Bearer ${stroage.getters.getToken}`;
     return config;
 }, error => {
     ElMessage.error({message: '请求错误！'});
