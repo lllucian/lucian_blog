@@ -2,11 +2,11 @@ package com.lucian.back.bean.translate;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lucian.back.bean.vo.RoleIndexVO;
-import com.lucian.back.dao.UserDao;
-import com.lucian.back.dao.UserRoleDao;
 import com.lucian.common.bean.entity.Role;
 import com.lucian.common.bean.entity.User;
 import com.lucian.common.bean.entity.UserRole;
+import com.lucian.common.dao.UserDao;
+import com.lucian.common.dao.UserRoleDao;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;

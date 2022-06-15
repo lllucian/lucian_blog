@@ -1,6 +1,7 @@
 package com.lucian.common.utils;
 
-import com.lucian.common.bean.bo.UserBO;
+import cn.hutool.extra.spring.SpringUtil;
+import com.lucian.common.service.UserService;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,7 +18,9 @@ public class SecurityUtils {
     public static String getCurrentUserId(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            return ((UserBO)authentication.getDetails()).getId();
+            UserService userService = SpringUtil.getBean(UserService.class);
+
+            return userService.getUserByNickName(authentication.getName()).getId();
         }
         return null;
     }

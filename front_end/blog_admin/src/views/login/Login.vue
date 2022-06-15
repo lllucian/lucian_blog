@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onBeforeMount } from "vue";
-import { postRequest } from "/@/requests";
+import {authorizeRequests, postRequest} from "/@/requests";
 import { router } from "/@/router";
 import { stroage } from "/@/stroage";
 
@@ -62,16 +62,16 @@ export default defineComponent({
       if (valid) {
         try {
           loading.value = true;
-          const resp: any = await postRequest(
+          const resp: any = await authorizeRequests(
             "/api/login",
             loginFormData.value
           );
           if (resp) {
-            const jwtToken = resp.jwtToken;
+            const jwtToken = resp.data;
             if (jwtToken) {
               stroage.commit({ type: "setToken", token: jwtToken });
-              const redictTo = router.currentRoute.value.query["redirect_to"] as string || "/";
-              await router.push({path: redictTo});
+              const redirectTo = router.currentRoute.value.query["redirect_to"] as string || "/";
+              await router.push({path: redirectTo});
             }
           } else {
             restForm();

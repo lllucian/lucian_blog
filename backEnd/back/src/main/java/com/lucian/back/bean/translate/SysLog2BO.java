@@ -3,7 +3,7 @@ package com.lucian.back.bean.translate;
 import com.lucian.common.bean.bo.SysLogBO;
 import com.lucian.common.bean.entity.SysLog;
 import com.lucian.common.bean.entity.User;
-import com.lucian.back.dao.UserDao;
+import com.lucian.common.dao.UserDao;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

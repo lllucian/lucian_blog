@@ -26,6 +26,9 @@ minio:
   accessKey: lucian
   secretKey: lucian123456
   bucketName: pic
+jwt:
+  private.key: classpath:app.key
+  public.key: classpath:app.pub
 
 
 

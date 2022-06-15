@@ -1,13 +1,13 @@
-package com.lucian.back.service.impl;
+package com.lucian.common.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lucian.back.dao.UserDao;
-import com.lucian.back.dao.UserRoleDao;
-import com.lucian.back.service.UserService;
 import com.lucian.common.bean.bo.UserBO;
 import com.lucian.common.bean.entity.Role;
 import com.lucian.common.bean.entity.User;
+import com.lucian.common.dao.UserDao;
+import com.lucian.common.dao.UserRoleDao;
+import com.lucian.common.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

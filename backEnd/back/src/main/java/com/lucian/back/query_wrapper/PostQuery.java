@@ -2,11 +2,11 @@ package com.lucian.back.query_wrapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lucian.common.bean.entity.Post;
-import io.jsonwebtoken.lang.Collections;
 import lombok.Data;
 import org.apache.logging.log4j.util.Strings;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author lingxiangdeng
@@ -33,22 +33,22 @@ public class PostQuery {
         if (Strings.isNotBlank(title)) {
             wrapper.like("p.title", title);
         }
-        if (!Collections.isEmpty(created)) {
+        if (!Objects.isNull(created) && created.size() > 0) {
             wrapper.ge("p.created_at", created.get(0));
         }
-        if (!Collections.isEmpty(created) && created.size() > 1) {
+        if (!Objects.isNull(created) && created.size() > 1) {
             wrapper.le("p.created_at", created.get(1));
         }
-        if (!Collections.isEmpty(updated)) {
+        if (!Objects.isNull(updated) && updated.size() > 0) {
             wrapper.ge("p.updated_at", updated.get(0));
         }
-        if (!Collections.isEmpty(updated) && updated.size() > 1) {
+        if (!Objects.isNull(updated) && updated.size() > 1) {
             wrapper.le("p.updated_at", updated.get(1));
         }
-        if (!Collections.isEmpty(categories)) {
+        if (!Objects.isNull(categories) && categories.size() > 0) {
             wrapper.in("pc.category_id", categories);
         }
-        if (!Collections.isEmpty(tags)) {
+        if (!Objects.isNull(tags) && tags.size() > 0) {
             wrapper.in("pt.tag_id", tags);
         }
         wrapper.isNull("p.deleted_at");

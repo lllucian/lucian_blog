@@ -1,4 +1,4 @@
-package com.lucian.back.dao;
+package com.lucian.common.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lucian.common.bean.entity.Role;

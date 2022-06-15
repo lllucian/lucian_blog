@@ -12,7 +12,7 @@ interface CommonHeaderProperties extends HeadersDefaults {
 // 请求拦截器
 instance.interceptors.request.use(config => {
     if (stroage.getters.getToken && config.headers && config.headers.common)
-    config.headers.common['Authorization'] = stroage.getters.getToken;
+    config.headers.common['Authorization'] = `Bearer ${stroage.getters.getToken}`;
     return config;
 }, error => {
     ElMessage.error({message: '请求错误！'});
@@ -46,4 +46,9 @@ export const deleteRequest = (url: string) => {
 
 export const putRequest = (url: string, data?:object) => {
     return instance.put(url, data);
+}
+
+
+export const authorizeRequests = (url: string, auth: {username: string, password: string}) => {
+    return instance.post(url, {}, {auth: auth})
 }
