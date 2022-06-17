@@ -30,7 +30,7 @@ public class AuthController {
     @PostMapping("login")
     public CommonResult<String> login(Authentication authentication){
         Instant now = Instant.now();
-        long expiry = 30 *  60 * 1000;
+        long expiry = 30 * 60;
         // @formatter:off
         String scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
