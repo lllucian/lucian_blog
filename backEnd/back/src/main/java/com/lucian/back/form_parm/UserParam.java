@@ -1,7 +1,10 @@
 package com.lucian.back.form_parm;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.lucian.back.annotation.Unique;
 import com.lucian.common.bean.enums.EnabledStatusEnum;
 import com.lucian.common.bean.enums.LockedStatusEnum;
+import com.lucian.common.dao.UserDao;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +18,11 @@ import javax.validation.constraints.Size;
  **/
 @Getter
 @Setter
+@Unique.List(value = {@Unique(baseMapper= UserDao.class, fields = {"username"}), @Unique(baseMapper= UserDao.class, fields = {"email"})})
 public class UserParam {
+
+    @TableId
+    private String id;
     /**
      * 用户名
      */
