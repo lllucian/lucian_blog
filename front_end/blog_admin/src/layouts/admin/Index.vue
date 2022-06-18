@@ -1,37 +1,43 @@
 <template>
-  <el-container :style="{ height: pageHeight, border: '1px solid #eee' }">
-    <el-aside style="background-color: rgb(238, 241, 246)" :width="menuWidth">
-      <CustomMenu :pageHeight="pageHeight" v-model="collapseMenu"></CustomMenu>
-    </el-aside>
+  <el-scrollbar>
+    <el-container :style="{ height: pageHeight, border: '1px solid #eee' }">
+      <el-scrollbar :style="{height: pageHeight}">
+        <el-aside style="background-color: rgb(238, 241, 246)" :width="menuWidth">
+          <CustomMenu :pageHeight="pageHeight" v-model="collapseMenu"></CustomMenu>
+        </el-aside>
+      </el-scrollbar>
 
-    <el-container>
-      <el-header class="header-content"
-                 style="font-size: 12px; border-bottom: 1px solid #eee"
-      >
-        <div class="header-left">
-          <div class="icon-menu" @click="changeCollapse">
-            <span class="iconify" data-icon="ant-design:menu-fold-outlined" style="font-size: 20px;"></span>
+      <el-container>
+        <el-header class="header-content"
+                   style="font-size: 12px; border-bottom: 1px solid #eee"
+        >
+          <div class="header-left">
+            <div class="icon-menu" @click="changeCollapse">
+              <span class="iconify" data-icon="ant-design:menu-fold-outlined" style="font-size: 20px;"></span>
+            </div>
           </div>
-        </div>
-        <div style="float:right;display: flex;justify-content: center;align-items: center;">
-          <el-dropdown>
-            <Icon icon="ep:setting"></Icon>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item @click="logout">注销</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-          <span>{{ username }}</span>
-        </div>
-      </el-header>
+          <div style="float:right;display: flex;justify-content: center;align-items: center;">
+            <el-dropdown>
+              <Icon icon="ep:setting"></Icon>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item @click="logout">注销</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+            <span>{{ username }}</span>
+          </div>
+        </el-header>
 
-      <el-main>
-        <routerView/>
-      </el-main>
+        <el-main>
+          <el-scrollbar>
+            <routerView/>
+          </el-scrollbar>
+        </el-main>
+      </el-container>
     </el-container>
-  </el-container>
-  <el-backtop></el-backtop>
+    <el-backtop></el-backtop>
+  </el-scrollbar>
 </template>
 
 <script lang="ts" setup>
@@ -68,7 +74,7 @@ const setUserName = (() => {
 const router = useRouter();
 
 const logout = (() => {
-  stroage.commit({ type: "clearToken" });
+  stroage.commit({type: "clearToken"});
 
   nextTick()
   router.push({path: router.currentRoute.value.path, query: {date: new Date().getDate()}});
