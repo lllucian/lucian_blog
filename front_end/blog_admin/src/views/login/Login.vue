@@ -63,7 +63,7 @@ export default defineComponent({
         try {
           loading.value = true;
           const resp: any = await authorizeRequests(
-            "/api/login",
+            "/api/admin/login",
             loginFormData.value
           );
           if (resp) {
