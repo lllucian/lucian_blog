@@ -1,5 +1,6 @@
 package com.lucian.back.controller;
 
+import com.lucian.back.manager.UserManager;
 import com.lucian.common.response.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,13 @@ import java.util.stream.Collectors;
  **/
 @RestController
 public class AuthController {
+
+    UserManager userManager;
+
+    @Autowired
+    public void setUserManager(UserManager userManager) {
+        this.userManager = userManager;
+    }
 
     JwtEncoder encoder;
 
@@ -44,6 +52,7 @@ public class AuthController {
                 .build();
         // @formatter:on
         String jwtToken = this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+        userManager.recordUserInfo(authentication.getName());
         return CommonResult.success(jwtToken, "登陆成功！");
     }
 }
