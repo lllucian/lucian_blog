@@ -17,7 +17,7 @@ import javax.validation.Valid;
  * @author lingxiangdeng
  */
 @RestController
-@RequestMapping("admin")
+@RequestMapping
 public class TagController {
 
     TagManager tagManager;

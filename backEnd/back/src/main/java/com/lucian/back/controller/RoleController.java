@@ -19,7 +19,7 @@ import javax.validation.Valid;
  * @date 2022/06/02 15:05
  **/
 @RestController
-@RequestMapping("admin")
+@RequestMapping
 @Api(tags = "角色")
 public class RoleController {
 

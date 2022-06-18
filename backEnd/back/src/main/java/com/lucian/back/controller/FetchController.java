@@ -17,7 +17,7 @@ import java.util.List;
  * @author lingxiangdeng
  */
 @RestController
-@RequestMapping("admin/fetch")
+@RequestMapping("fetch")
 public class FetchController {
     CategoryManager categoryManager;
 

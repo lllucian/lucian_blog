@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author lingxiangdeng
  */
 @RestController
-@RequestMapping("admin")
+@RequestMapping
 public class SysLogController {
 
     SysLogManager sysLogManager;

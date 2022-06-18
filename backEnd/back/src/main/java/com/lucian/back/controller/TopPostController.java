@@ -16,7 +16,7 @@ import java.util.List;
  * @author lingxiangdeng
  */
 @RestController
-@RequestMapping("admin")
+@RequestMapping
 public class TopPostController{
 
     TopPostManager topPostManager;

@@ -19,7 +19,7 @@ import javax.validation.Valid;
  * @author lingxiangdeng
  */
 @RestController
-@RequestMapping("admin")
+@RequestMapping
 public class PostController {
     @Autowired
     PostService postService;

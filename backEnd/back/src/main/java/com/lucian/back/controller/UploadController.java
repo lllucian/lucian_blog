@@ -14,7 +14,7 @@ import java.util.Objects;
  * @author lingxiangdeng
  */
 @RestController
-@RequestMapping("admin/upload_file")
+@RequestMapping("upload_file")
 public class UploadController {
     UploadFileManager uploadFileManager;
 
