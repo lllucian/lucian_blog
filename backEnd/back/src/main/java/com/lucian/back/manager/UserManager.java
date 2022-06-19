@@ -1,12 +1,20 @@
 package com.lucian.back.manager;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lucian.back.bean.translate.User2SelectVO;
+import com.lucian.back.bean.translate.UserBO2IndexVO;
+import com.lucian.back.bean.vo.UserIndexVO;
 import com.lucian.back.bean.vo.UserSelectDataVO;
 import com.lucian.back.form_parm.UserParam;
+import com.lucian.back.query_wrapper.UserQuery;
 import com.lucian.back.query_wrapper.UserSelectQuery;
 import com.lucian.back.service.RoleService;
 import com.lucian.back.service.UserRoleService;
+import com.lucian.common.bean.bo.UserBO;
 import com.lucian.common.bean.entity.Role;
 import com.lucian.common.bean.entity.User;
 import com.lucian.common.bean.entity.UserRole;
@@ -68,8 +76,6 @@ public class UserManager {
         return user2SelectVO.translateList(list);
     }
 
-
-
     /**
      * 创建用户
      *
@@ -111,5 +117,28 @@ public class UserManager {
         wrapper.set("sign_current_ip", user.getSignCurrentIp());
         wrapper.set("sign_last_ip", user.getSignLastIp());
         userService.update(wrapper);
+    }
+
+    /**
+     * 获取符合条件的list
+     * @param userQuery 查询条件
+     * @return
+     */
+    public IPage<UserIndexVO> getList(UserQuery userQuery){
+        if (userQuery == null) {
+            userQuery = new UserQuery();
+        }
+        Page<User> page = new Page<>(userQuery.getCurrent(), userQuery.getSize());
+        IPage<UserBO> userBOIPage = userService.queryListByPage(page, userQuery.getQueryWrapper());
+        UserBO2IndexVO UserBO2IndexVO = SpringUtil.getBean(UserBO2IndexVO.class);
+        List<UserBO> records = userBOIPage.getRecords();
+        if (CollUtil.isEmpty(records)) {
+            return null;
+        }
+        List<UserIndexVO> userIndexVOS = UserBO2IndexVO.translate(records);
+        IPage<UserIndexVO> userIndexVOIPage = new Page<>();
+        BeanUtils.copyProperties(userBOIPage, userIndexVOIPage);
+        userIndexVOIPage.setRecords(userIndexVOS);
+        return userIndexVOIPage;
     }
 }

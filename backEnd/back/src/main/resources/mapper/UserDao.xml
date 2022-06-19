@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lucian.common.dao.UserDao">
+    <resultMap id="userBO" type="com.lucian.common.bean.bo.UserBO">
+        <id column="id" property="id"/>
+        <association property="user" javaType="com.lucian.common.bean.entity.User">
+            <result column="email" property="email"/>
+            <result column="username" property="username"/>
+            <result column="sign_current_ip" property="signCurrentIp"/>
+            <result column="sign_last_ip" property="signLastIp"/>
+            <result column="enabled" property="enabled"  typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
+            <result column="locked" property="locked" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
+        </association>
+        <collection property="roles" ofType="com.lucian.common.bean.entity.Role">
+            <result column="zh_name" property="zhName"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryListByPage" resultMap="userBO">
+        SELECT users.id, users.email, users.username, users.enabled, users.locked, roles.zh_name
+        FROM users
+                 LEFT JOIN user_roles ON users.id = user_roles.user_id AND user_roles.deleted_at IS NULL
+                 LEFT JOIN roles ON user_roles.role_id = roles.id AND roles.deleted_at IS NULL
+                  ${ew.customSqlSegment}
+    </select>
+</mapper>

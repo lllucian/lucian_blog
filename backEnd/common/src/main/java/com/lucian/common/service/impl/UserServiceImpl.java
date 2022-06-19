@@ -1,6 +1,9 @@
 package com.lucian.common.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lucian.common.bean.bo.UserBO;
 import com.lucian.common.bean.entity.Role;
@@ -45,5 +48,10 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         }
         List<Role> roles = userRoleDao.getRoleListByUserId(user.getId());
         return new UserBO(user, roles);
+    }
+
+    @Override
+    public IPage<UserBO> queryListByPage(Page<User> page, Wrapper<User> queryWrapper) {
+        return userDao.queryListByPage(page, queryWrapper);
     }
 }

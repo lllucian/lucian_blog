@@ -133,7 +133,7 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.8.2</version>
+            <version>5.8.3</version>
         </dependency>
         <!--  Needed to avoid conflict with OkHttp being used in auth0-java and okhttp3 being used by spring -->
         <dependency>

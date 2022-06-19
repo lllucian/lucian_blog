@@ -11,6 +11,7 @@ import lombok.Setter;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 /**
  * @author denglingxiang
@@ -46,10 +47,15 @@ public class UserParam {
     /**
      * 是否启用
      */
-    private EnabledStatusEnum enabled;
+    private EnabledStatusEnum enabled = EnabledStatusEnum.ENABLED;
 
     /**
      * 是否被锁定
      */
-    private LockedStatusEnum locked;
+    private LockedStatusEnum locked = LockedStatusEnum.UNLOCKED;
+
+    /**
+     * 角色id
+     */
+    private List<String> roleIds;
 }
