@@ -8,8 +8,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.Map;
-
 /**
  * 表单验证错误exception
  * @author lingxiangdeng
@@ -18,7 +16,7 @@ import java.util.Map;
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
 public class HibernateValidateException {
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public CommonResult<Map> handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    public CommonResult<String> handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         StringBuilder message = new StringBuilder();
         for (FieldError error : e.getBindingResult().getFieldErrors()) {
             message.append(error.getField()).append(error.getDefaultMessage()).append(",");

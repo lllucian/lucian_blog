@@ -1,18 +1,26 @@
 package com.lucian.back.manager;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.extra.spring.SpringUtil;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lucian.back.bean.translate.Role2IndexVO;
+import com.lucian.back.bean.translate.Role2SelectVO;
 import com.lucian.back.bean.vo.RoleFormVO;
 import com.lucian.back.bean.vo.RoleIndexVO;
+import com.lucian.back.bean.vo.RoleSelectDataVO;
 import com.lucian.back.form_parm.RoleParam;
 import com.lucian.back.query_wrapper.RoleQuery;
+import com.lucian.back.query_wrapper.RoleSelectQuery;
 import com.lucian.back.service.RoleService;
 import com.lucian.common.bean.entity.Role;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -105,5 +113,22 @@ public class RoleManager {
             return false;
         }
         return roleService.removeById(id);
+    }
+
+    /**
+     * 下拉框选项
+     * @param roleQuery 查询条件
+     * @return 下拉框选值
+     */
+    public List<RoleSelectDataVO> selectList(RoleSelectQuery roleQuery){
+        if (ObjectUtil.isNull(roleQuery)) {
+            roleQuery = new RoleSelectQuery();
+        }
+        Wrapper<Role> queryWrapper = roleQuery.getQueryWrapper();
+        if (queryWrapper.isEmptyOfWhere()) return null;
+        List<Role> list = roleService.list(queryWrapper);
+        if (CollUtil.isEmpty(list)) return null;
+        Role2SelectVO role2SelectVO = SpringUtil.getBean(Role2SelectVO.class);
+        return role2SelectVO.translate(list);
     }
 }

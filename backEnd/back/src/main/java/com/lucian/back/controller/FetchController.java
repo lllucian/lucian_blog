@@ -1,10 +1,7 @@
 package com.lucian.back.controller;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.lucian.back.bean.vo.CategorySelectDataVO;
-import com.lucian.back.bean.vo.PostSelectDataVO;
-import com.lucian.back.bean.vo.TagSelectDataVO;
-import com.lucian.back.bean.vo.UserSelectDataVO;
+import com.lucian.back.bean.vo.*;
 import com.lucian.back.manager.*;
 import com.lucian.back.query_wrapper.*;
 import com.lucian.common.response.CommonResult;
@@ -103,5 +100,11 @@ public class FetchController {
     public CommonResult<List<PostSelectDataVO>> searchPostSelect(@RequestBody PostSelectQuery postSelectQuery){
         TopPostManager topPostManager = SpringUtil.getBean(TopPostManager.class);
         return CommonResult.successNoMessage(topPostManager.selectSearch(postSelectQuery));
+    }
+
+    @PostMapping("roles")
+    public CommonResult<List<RoleSelectDataVO>> searchRoleSelect(@RequestBody RoleSelectQuery roleSelectQuery){
+        RoleManager roleManager = SpringUtil.getBean(RoleManager.class);
+        return CommonResult.successNoMessage(roleManager.selectList(roleSelectQuery));
     }
 }
