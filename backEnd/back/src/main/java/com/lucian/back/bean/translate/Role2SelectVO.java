@@ -26,6 +26,6 @@ public abstract class Role2SelectVO {
     @AfterMapping
     public void setLabelValue(@MappingTarget List<RoleSelectDataVO> roleSelectDataVOS, List<Role> roles) {
         Map<String, String> roleMap = roles.stream().collect(Collectors.toMap(Role::getId, role -> String.format("%s(%s)", role.getZhName(), role.getName())));
-        roleSelectDataVOS.stream().peek(role -> role.setLabel(roleMap.get(role.getValue())));
+        roleSelectDataVOS.forEach(role -> role.setLabel(roleMap.get(role.getValue())));
     }
 }

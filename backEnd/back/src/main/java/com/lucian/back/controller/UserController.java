@@ -6,10 +6,7 @@ import com.lucian.back.manager.UserManager;
 import com.lucian.back.query_wrapper.UserQuery;
 import com.lucian.common.response.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author denglingxiang
@@ -45,5 +42,11 @@ public class UserController {
     public CommonResult<IPage<UserIndexVO>> index(UserQuery userQuery){
         IPage<UserIndexVO> list = userManager.getList(userQuery);
         return CommonResult.successNoMessage(list);
+    }
+
+    @DeleteMapping("user/{id}")
+    public CommonResult<String> remove(@PathVariable String id){
+        boolean removeFlag = userManager.removeById(id);
+        return removeFlag ? CommonResult.success(null, "删除成功") : CommonResult.failed("删除失败");
     }
 }

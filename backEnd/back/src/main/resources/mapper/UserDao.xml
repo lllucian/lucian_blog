@@ -17,7 +17,7 @@
     </resultMap>
 
     <select id="queryListByPage" resultMap="userBO">
-        SELECT users.id, users.email, users.username, users.enabled, users.locked, roles.zh_name
+        SELECT users.id, users.email, users.username, users.enabled, users.locked, roles.zh_name, users.sign_last_ip, users.sign_current_ip
         FROM users
                  LEFT JOIN user_roles ON users.id = user_roles.user_id AND user_roles.deleted_at IS NULL
                  LEFT JOIN roles ON user_roles.role_id = roles.id AND roles.deleted_at IS NULL

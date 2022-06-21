@@ -1,0 +1,43 @@
+<template>
+  <el-row>
+    <el-col :span="24">
+      <Search v-model:dataTable="tableInfo.dataTable" v-model:size="tableInfo.size" v-model:current="tableInfo.current"
+              v-model:total="tableInfo.total" v-model:loadingTable="loadingTable"></Search>
+    </el-col>
+  </el-row>
+  <el-row>
+    <el-col :span="24">
+      <DataForm v-model:dataTable="tableInfo.dataTable" v-model:size="tableInfo.size"
+                v-model:current="tableInfo.current" v-model:total="tableInfo.total"
+                v-model:loadingTable="loadingTable"></DataForm>
+    </el-col>
+  </el-row>
+  <el-backtop target=".el-main"/>
+</template>
+<script lang="ts" setup>
+import {ref} from "vue";
+import Search from "./Search.vue";
+import DataForm from "./DataForm.vue";
+
+const tableInfo = ref<{
+  dataTable: any[],
+  size: number,
+  current: number,
+  total: number
+}>({
+  dataTable: [],
+  size: 10,
+  current: 1,
+  total: 0
+});
+const loadingTable = ref<boolean>(false);
+</script>
+<style lang="scss" scoped>
+.el-row {
+  margin-bottom: 20px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+</style>

@@ -15,18 +15,16 @@ import org.apache.logging.log4j.util.Strings;
 @Getter
 @Setter
 public class RoleSelectQuery {
-    // 权限名
-    private String name;
-    // 权限中文名
-    private String zhName;
+    // 检索关键字
+    private String query;
 
     public Wrapper<Role> getQueryWrapper(){
         QueryWrapper<Role> roleQueryWrapper = new QueryWrapper<>();
-        if(Strings.isNotBlank(name)) {
-            roleQueryWrapper.like("name", name);
+        if(Strings.isNotBlank(query)) {
+            roleQueryWrapper.like("name", query);
         }
-        if (StrUtil.isNotBlank(zhName)) {
-            roleQueryWrapper.like("zh_name", zhName);
+        if (StrUtil.isNotBlank(query)) {
+            roleQueryWrapper.or().like("zh_name", query);
         }
         return roleQueryWrapper;
     }

@@ -1,6 +1,7 @@
 package com.lucian.back.manager;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -140,5 +141,16 @@ public class UserManager {
         BeanUtils.copyProperties(userBOIPage, userIndexVOIPage);
         userIndexVOIPage.setRecords(userIndexVOS);
         return userIndexVOIPage;
+    }
+
+    /**
+     * 删除用户
+     * @param id 用户id
+     * @return 是否删除成功
+     */
+    public boolean removeById(String id){
+        User user = userService.getById(id);
+        if (ObjectUtil.isEmpty(user)) return false;
+        return userService.removeById(id);
     }
 }

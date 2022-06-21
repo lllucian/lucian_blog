@@ -4,10 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.lucian.back.bean.vo.UserIndexVO;
 import com.lucian.common.bean.bo.UserBO;
 import com.lucian.common.bean.entity.Role;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.Mappings;
+import org.mapstruct.*;
 
 import java.util.List;
 import java.util.Map;
@@ -28,13 +25,14 @@ public abstract class UserBO2IndexVO {
 
     public abstract List<UserIndexVO> translate(List<UserBO> userBOS);
 
+    @AfterMapping
     public void setRoles(List<UserBO> userBOS, @MappingTarget List<UserIndexVO> userIndexVOS){
         if (CollUtil.isEmpty(userBOS) || CollUtil.isEmpty(userIndexVOS)){
             return;
         }
         Map<String, List<String>> userRoles = userBOS.stream().filter(userBO -> CollUtil.isNotEmpty(userBO.getRoles())).collect(Collectors.toMap(UserBO::getId,
-                userBO -> userBO.getRoles().stream().map(Role::getName).collect(Collectors.toList())));
-        userIndexVOS.stream().peek(userIndexVO -> {
+                userBO -> userBO.getRoles().stream().map(Role::getZhName).collect(Collectors.toList())));
+        userIndexVOS.forEach(userIndexVO -> {
             List<String> roles = userRoles.get(userIndexVO.getId());
             userIndexVO.setRoles(roles);
         });
