@@ -255,6 +255,49 @@ export const AdminRoutes: AppRouteModule[] = [
         },
       },
     ]
+  },
+  {
+    name: 'AdminUsers',
+    path: "/admin/users",
+    component: ADMIN_LAYOUT,
+    meta: {
+      title: "用户管理",
+      hiddenMenu: false,
+      icon: 'fa6-solid:arrows-down-to-people'
+    },
+    children: [
+      {
+        name: 'AdminUsersIndex',
+        path: "/admin/users",
+        component: () => import("/@/views/admin/users/index/Index.vue"),
+        meta: {
+          title: '用户列表',
+          hiddenMenu: false,
+          icon: 'fa6-solid:arrows-down-to-people'
+        }
+      },
+      // {
+      //   name: 'AdminUserCreate',
+      //   path: "/admin/user/new",
+      //   component: () => import("/@/views/admin/roles/new/New.vue"),
+      //   meta: {
+      //     title: '用户创建',
+      //     hiddenMenu: false,
+      //     icon: 'fa6-solid:arrows-down-to-people'
+      //   }
+      // },
+      // {
+      //   name: "AdminUserEdit",
+      //   path: "/admin/user/:id",
+      //   component: () => import("/@/views/admin/users/edit/Edit.vue"),
+      //   meta: {
+      //     title: "用户编辑",
+      //     hiddenMenu: true,
+      //     icon: 'fa6-solid:arrows-down-to-people',
+      //     alias: "/admin/users"
+      //   },
+      // },
+    ]
   }
 ];
 // export const basicRoutes = [LoginRoute, ...FrontRoutes, ...AdminRoutes];
