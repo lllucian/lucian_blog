@@ -10,7 +10,7 @@
         action="api/admin/upload_file/upload"
         :data="{bucketName: 'pic'}"
         name="file"
-        :headers="{'Authorization': this.$store.getters.getToken}"
+        :headers="{'Authorization': `Bearer ${this.$store.getters.getToken}`}"
     >
       <Icon icon="bxs:cloud-upload" :size="60" :style="{display: 'inline-block', margin: '40px 0 16px'}" />
       <div class="el-upload__text">
