@@ -12,23 +12,23 @@ import {useRoute} from "vue-router";
 import {getRequest} from "/@/requests";
 
 interface blog {
-  title: string | undefined,
-  content: string | undefined,
-  description: string | undefined,
-  imageUrl: string | undefined,
-  createdAt: string | undefined,
-  updatedAt: string | undefined,
-  username: string | undefined
+  title: string,
+  content: string,
+  description: string,
+  imageUrl: string,
+  createdAt: string,
+  updatedAt: string,
+  username: string
 }
 
 const blog = ref<blog>({
-  title: undefined,
-  content: undefined,
-  description: undefined,
-  imageUrl: undefined,
-  createdAt: undefined,
-  updatedAt: undefined,
-  username: undefined
+  title: '',
+  content: '',
+  description: '',
+  imageUrl: '',
+  createdAt: '',
+  updatedAt: '',
+  username: ''
 });
 
 provide('blogData', blog);

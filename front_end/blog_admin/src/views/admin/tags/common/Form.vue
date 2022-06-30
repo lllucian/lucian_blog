@@ -111,7 +111,7 @@ const getInformation = async () => {
   try{
     const data = await getRequest(`api/admin/tag/${propData.tagId}`);
     if (data && data.data){
-      formData = data.data;
+      Object.assign(formData, data.data);
     } else {
       await router.push({name: 'AdminTagIndex'});
     }

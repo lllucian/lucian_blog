@@ -9,7 +9,7 @@
 import {inject, onMounted, ref} from "vue";
 import {Waypoint} from "vue-waypoint";
 
-const blogData = inject('blogData')
+const blogData = inject<{content: string}>('blogData')
 
 const pageHeight = ref(window.innerHeight + "px");
 const getPageRiseHeight = async () => {
