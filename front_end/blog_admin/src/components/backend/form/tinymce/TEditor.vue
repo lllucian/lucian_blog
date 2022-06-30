@@ -24,6 +24,7 @@ import 'tinymce/plugins/table'
 
 import {postRequest} from "/@/requests";
 import {onMounted, ref} from "vue";
+import {BuildPropType, PropWrapper} from "element-plus/es/utils";
 
 const {
   modelValue = '', toolbar = 'fullscreen undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | \
@@ -32,7 +33,7 @@ const {
   plugins = 'wordcount preview image fullscreen code table',
   disabled = true
 } = defineProps<{
-  modelValue: String,
+  modelValue: BuildPropType<PropWrapper<string | number>, unknown, unknown>,
   toolbar?: String | Array<String>,
   plugins?: String | Array<String>,
   disabled?: Boolean

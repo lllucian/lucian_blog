@@ -2,13 +2,13 @@
   <div class="form">
     <h2>Lucian Blog后台管理系统</h2>
     <el-form
-      label-position="top"
-      label-width="100px"
-      :model="loginFormData"
-      :rules="rules"
-      ref="loginForm"
-      @keyup.enter="submitForm"
-      v-loading="loading"
+        label-position="top"
+        label-width="100px"
+        :model="loginFormData"
+        :rules="rules"
+        ref="loginForm"
+        @keyup.enter="submitForm(loginForm)"
+        v-loading="loading"
     >
       <el-form-item label="用户名" prop="username">
         <el-input v-model="loginFormData.username"></el-input>
@@ -18,75 +18,131 @@
         <el-input v-model="loginFormData.password" show-password></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm">登陆</el-button>
+        <el-button type="primary" @click="submitForm(loginForm)">登陆</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, onBeforeMount } from "vue";
-import {authorizeRequests, postRequest} from "/@/requests";
-import { router } from "/@/router";
-import { stroage } from "/@/stroage";
+<script lang="ts" setup>
+import {onBeforeMount, reactive, ref} from "vue";
+import {stroage} from "/@/stroage";
+import {FormInstance} from "element-plus";
+import {authorizeRequests} from "/@/requests";
+import {useRouter} from "vue-router";
 
-export default defineComponent({
-  setup() {
-    onBeforeMount(() => {
-      stroage.commit({ type: "clearToken" });
-    });
+const router = useRouter();
 
-    const loading = ref(false);
+onBeforeMount(() => {
+  stroage.commit({type: "clearToken"});
+});
 
-    const loginForm = ref();
+const loading = ref<boolean>(false);
 
-    const loginFormData = ref({
-      username: "",
-      password: "",
-    });
+const loginForm = ref<FormInstance>();
 
-    const rules = ref({
-      username: [
-        { required: true, message: "请填写用户名", trigger: "blur" },
-        { min: 3, max: 20, message: "要在3到20个长度之间", trigger: "blur" },
-      ],
-      password: { required: true, message: "请填写密码", trigger: "blur" },
-    });
+const loginFormData = reactive<{ username: string, password: string }>({
+  username: '',
+  password: ''
+});
 
-    const restForm = () => {
-      loginForm.value.resetFields();
-    };
+const rules = reactive({
+  username: [
+    {required: true, message: "请填写用户名", trigger: "blur"},
+    {min: 3, max: 20, message: "要在3到20个长度之间", trigger: "blur"},
+  ],
+  password: {required: true, message: "请填写密码", trigger: "blur"},
+});
 
-    const submitForm = async () => {
-      const valid: any = await loginForm.value.validate();
-      if (valid) {
-        try {
-          loading.value = true;
-          const resp: any = await authorizeRequests(
-            "/api/admin/login",
-            loginFormData.value
-          );
-          if (resp) {
-            const jwtToken = resp.data;
-            if (jwtToken) {
-              stroage.commit({ type: "setToken", token: jwtToken });
-              const redirectTo = router.currentRoute.value.query["redirect_to"] as string || "/";
-              await router.push({path: redirectTo});
-            }
-          } else {
-            restForm();
-          }
-        } finally {
-          loading.value = false;
+const restForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) return formEl;
+  formEl.resetFields();
+};
+
+const submitForm = async (formEl: FormInstance | undefined) => {
+  if (!formEl) return formEl;
+  const valid: any = await formEl.validate();
+  if (valid) {
+    try {
+      loading.value = true;
+      const resp: any = await authorizeRequests(
+          "/api/admin/login",
+          loginFormData
+      );
+      if (resp) {
+        const jwtToken = resp.data;
+        if (jwtToken) {
+          stroage.commit({type: "setToken", token: jwtToken});
+          const redirectTo = router.currentRoute.value.query["redirect_to"] as string || "/";
+          await router.push({path: redirectTo});
         }
       } else {
-        return;
+        restForm(formEl);
       }
-    };
-
-    return { loginForm, loginFormData, rules, submitForm, restForm, loading };
-  },
-});
+    } finally {
+      loading.value = false;
+    }
+  } else {
+    return;
+  }
+};
+// export default defineComponent({
+//   setup() {
+//     onBeforeMount(() => {
+//       stroage.commit({ type: "clearToken" });
+//     });
+//
+//     const loading = ref(false);
+//
+//     const loginForm = ref();
+//
+//     const loginFormData = ref({
+//       username: "",
+//       password: "",
+//     });
+//
+//     const rules = ref({
+//       username: [
+//         { required: true, message: "请填写用户名", trigger: "blur" },
+//         { min: 3, max: 20, message: "要在3到20个长度之间", trigger: "blur" },
+//       ],
+//       password: { required: true, message: "请填写密码", trigger: "blur" },
+//     });
+//
+//     const restForm = () => {
+//       loginForm.value.resetFields();
+//     };
+//
+//     const submitForm = async () => {
+//       const valid: any = await loginForm.value.validate();
+//       if (valid) {
+//         try {
+//           loading.value = true;
+//           const resp: any = await authorizeRequests(
+//             "/api/admin/login",
+//             loginFormData.value
+//           );
+//           if (resp) {
+//             const jwtToken = resp.data;
+//             if (jwtToken) {
+//               stroage.commit({ type: "setToken", token: jwtToken });
+//               const redirectTo = router.currentRoute.value.query["redirect_to"] as string || "/";
+//               await router.push({path: redirectTo});
+//             }
+//           } else {
+//             restForm();
+//           }
+//         } finally {
+//           loading.value = false;
+//         }
+//       } else {
+//         return;
+//       }
+//     };
+//
+//     return { loginForm, loginFormData, rules, submitForm, restForm, loading };
+//   },
+// });
 </script>
 <style>
 body {
@@ -94,7 +150,7 @@ body {
   min-width: 0;
   color: #3c434a;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-size: 13px;
   line-height: 1.4;
   margin: 0;
