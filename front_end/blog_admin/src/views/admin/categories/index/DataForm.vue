@@ -134,7 +134,7 @@ export default defineComponent({
       }
     };
 
-    const deleteRow = async (index:number, rows:Array<Object>, id:number) => {
+    const deleteRow = async (index:number, rows:Array<any>, id:number) => {
       rows.splice(index, 1);
       emit("update:loadingTable", true);
       try{
