@@ -28,11 +28,11 @@
 import {onMounted, reactive, ref} from "vue";
 import {FormInstance, FormRules} from "element-plus";
 import {getRequest, postRequest, putRequest} from "/@/requests";
-import {useRouter} from "vue-router";
+import {RouteParamValue, useRouter} from "vue-router";
 
 const router = useRouter();
 
-const props = defineProps<{title :string, roleId? :string}>();
+const props = defineProps<{title :string, roleId? :string| RouteParamValue[]}>();
 
 const form = ref<FormInstance>();
 

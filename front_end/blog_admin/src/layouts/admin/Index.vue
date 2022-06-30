@@ -2,7 +2,7 @@
   <el-scrollbar>
     <el-container :style="{ height: pageHeight, border: '1px solid #eee' }">
       <el-scrollbar :style="{height: pageHeight}">
-        <el-aside style="background-color: rgb(238, 241, 246)" :width="menuWidth">
+        <el-aside style="background-color: rgb(238, 241, 246)" :style="{width: menuWidth}">
           <CustomMenu :pageHeight="pageHeight" v-model="collapseMenu"></CustomMenu>
         </el-aside>
       </el-scrollbar>
@@ -87,7 +87,7 @@ onMounted(() => {
 watch(collapseMenu, (newValue, oldValue) => {
   iconData.value = newValue ? 'ant-design:menu-unfold-outlined' : 'ant-design:menu-fold-outlined';
   document.getElementsByClassName('icon-menu')[0].getElementsByTagName("svg")[0].setAttribute("data-icon", iconData.value);
-  menuWidth.value = newValue ? '64px' : '200px';
+  menuWidth.value = newValue ? '64px' : 'auto';
 });
 
 const changeCollapse = () => collapseMenu.value = !collapseMenu.value;

@@ -1,6 +1,12 @@
 import { RouteRecordRaw, RouteMeta } from "vue-router";
 import { defineComponent } from 'vue';
 
+declare module 'vue-router' {
+  interface RouteMeta {
+    title: string
+  }
+}
+
 
 export type Component<T = any> =
   | ReturnType<typeof defineComponent>
