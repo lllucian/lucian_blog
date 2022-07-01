@@ -28,7 +28,7 @@ export default defineConfig(({mode, command}) => {
         server: {
             host: true,
             proxy: {
-                "/lucian_dev/login": {
+                "/lucian_dev/admin/login": {
                     target: "http://localhost:8888",
                     changeOrigin: true,
                     rewrite: (path) => path.replace(/^\/lucian_dev/, ""),
