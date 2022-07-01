@@ -137,7 +137,7 @@ export default defineComponent({
     const userRemoteMethod = async (query: string) => {
       if (query.trim() !== "") {
         userLoading.value = true;
-        const data = postRequest("api/admin/fetch/users", { name: query });
+        const data = postRequest("/admin/fetch/users", { name: query });
         if ((await data).data) userOptions.value = (await data).data;
         userLoading.value = false;
       } else {

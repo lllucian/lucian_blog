@@ -54,9 +54,9 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   await formEl.validate((valid, fields) => {
     if (valid) {
       if (props.roleId) {
-        putRequest(`/api/admin/role/${props.roleId}`, formData);
+        putRequest(`/admin/role/${props.roleId}`, formData);
       } else {
-        postRequest(`/api/admin/role`, formData);
+        postRequest(`/admin/role`, formData);
       }
       router.push({name: 'AdminRolesIndex'});
     } else {
@@ -75,7 +75,7 @@ const goBack = () => {
 }
 
 const editFormData = (async () => {
-  const data = await getRequest(`/api/admin/role/${props.roleId}`)
+  const data = await getRequest(`/admin/role/${props.roleId}`)
   if (data && data.data) {
     formData.name = data.data.name;
     formData.zhName = data.data.zhName;

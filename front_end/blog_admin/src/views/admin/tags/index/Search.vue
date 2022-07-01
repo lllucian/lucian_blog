@@ -125,7 +125,7 @@ export default defineComponent({
     const categoryRemoteMethod = async (query: string) => {
       if (query.trim() !== "") {
         categoryLoading.value = true;
-        const data = postRequest("api/admin/fetch/categories", { name: query });
+        const data = postRequest("/admin/fetch/categories", { name: query });
         if ((await data).data) categoryOptions.value = (await data).data;
         categoryLoading.value = false;
       } else {
@@ -136,7 +136,7 @@ export default defineComponent({
     const tagRemoteMethod = async (query: string) => {
       if (query.trim() !== "") {
         tagLoading.value = true;
-        const data = postRequest("api/admin/fetch/tags", { name: query });
+        const data = postRequest("/admin/fetch/tags", { name: query });
         if ((await data).data) tagOptions.value = (await data).data;
         tagLoading.value = false;
       } else {

@@ -1,7 +1,7 @@
 <template>
   <Waypoint @change="onChange" class="col-lg-8">
     <div class="ftco-animate" :class="animateClass">
-      <div v-html="blogData.content"></div>
+      <div v-html="blogData"></div>
     </div>
   </Waypoint>
 </template>
@@ -9,7 +9,11 @@
 import {inject, onMounted, ref} from "vue";
 import {Waypoint} from "vue-waypoint";
 
-const blogData = inject<{content: string}>('blogData')
+
+const blogData = () => {
+  let data = inject<{content: string}>('blogData');
+  return data ? data.content : '';
+}
 
 const pageHeight = ref(window.innerHeight + "px");
 const getPageRiseHeight = async () => {

@@ -62,7 +62,7 @@ export default defineComponent({
     };
 
     const loadData = async () => {
-      const data = await getRequest("/api/sliders");
+      const data = await getRequest("/sliders");
       if (data && data.data){
         sliders.value = data.data;
       }

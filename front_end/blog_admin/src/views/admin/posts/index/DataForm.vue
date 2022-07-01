@@ -147,7 +147,7 @@ export default defineComponent({
       data.splice(index, 1);
       emit("update:loadingTable", true);
       try{
-        await deleteRequest(`api/admin/post/${id}`);
+        await deleteRequest(`/admin/post/${id}`);
       } finally {
         pageInfo.value.current = 1;
         await getList();

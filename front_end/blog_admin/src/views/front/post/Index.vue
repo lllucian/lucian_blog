@@ -35,7 +35,7 @@ provide('blogData', blog);
 
 const loadData = (async () => {
   var route = useRoute();
-  const data = await getRequest(`/api/blog/${route.params.id}`);
+  const data = await getRequest(`/blog/${route.params.id}`);
   if (data && data.data){
     blog.value = data.data;
   }

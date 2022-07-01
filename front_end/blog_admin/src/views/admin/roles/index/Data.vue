@@ -86,7 +86,7 @@ const deleteRow = async (index: number, rows: Array<Object>, id: number) => {
   rows.splice(index, 1);
   emits("update:loadingTable", true);
   try {
-    await deleteRequest(`api/admin/role/${id}`);
+    await deleteRequest(`/admin/role/${id}`);
   } finally {
     pageInfo.value.current = 1;
     await getList();

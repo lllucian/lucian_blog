@@ -35,7 +35,7 @@ export const getPagesize = () => {
 
 
 export const apiFormData = async () => {
-    const data = await postRequest("api/admin/posts", queryConditionsByPage);
+    const data = await postRequest("/admin/posts", queryConditionsByPage);
 
     if(data.data && data.data.records){
         return {

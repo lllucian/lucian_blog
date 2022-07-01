@@ -7,10 +7,10 @@
         class="image-uploader"
         drag
         accept="image/*"
-        action="api/admin/upload_file/upload"
+        :action="`${env}/admin/upload_file/upload`"
         :data="{bucketName: 'pic'}"
         name="file"
-        :headers="{'Authorization': `Bearer ${this.$store.getters.getToken}`}"
+        :headers="{'Authorization': `Bearer ${accessToken}`}"
     >
       <Icon icon="bxs:cloud-upload" :size="60" :style="{display: 'inline-block', margin: '40px 0 16px'}" />
       <div class="el-upload__text">
@@ -19,10 +19,10 @@
     </el-upload>
     <div class="image-preview image-app-preview">
       <div
-          v-show="imageUrl.length>1"
+          v-show="props.imageUrl"
           class="image-preview-wrapper"
       >
-        <img :src="imageUrl">
+        <img :src="props.imageUrl">
         <div class="image-preview-action">
           <Icon icon="ep:delete" :size="60" @clickMethod="rmImage"/>
         </div>
@@ -30,10 +30,10 @@
     </div>
     <div class="image-preview">
       <div
-          v-show="imageUrl.length>1"
+          v-show="props.imageUrl"
           class="image-preview-wrapper"
       >
-        <img :src="imageUrl">
+        <img :src="props.imageUrl">
         <div class="image-preview-action">
           <Icon icon="ep:delete" :size="60" @clickMethod="rmImage"/>
         </div>
@@ -41,42 +41,73 @@
     </div>
   </div>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 import {defineComponent, onMounted, ref, toRefs, watch} from "vue";
 import Icon from "/@/components/common/basic/Icon.vue";
 import {getRequest} from "/@/requests";
+import {stroage} from "/@/stroage";
 
-export default defineComponent({
-  props: {
-    modelValue: {type: [String, Number]},
-    imageUrl: {type: String}
-  },
-  components: {
-    Icon
-  },
-  setup(props, context) {
-    const {modelValue, imageUrl} = toRefs(props);
-    const emitInput = (value: any, image: any) => {
-      context.emit('update:modelValue', value);
-      context.emit('update:imageUrl', image);
-    }
+const env = import.meta.env.VITE_BASE_API;
 
-    watch(modelValue, (newValue, oldValue) => {
-      if (!newValue){
-        imageUrl.value = '';
-      }
-    })
-    const handleImageSuccess = (res: any) => {
-      emitInput(res.data.id, res.data.fileUrl);
-    }
+const props = defineProps<{
+  modelValue: string,
+  imageUrl: string
+}>();
 
-    const rmImage = () => {
-      emitInput('', '');
-    }
+const emits = defineEmits<{(e: 'update:modelValue', value: string): void, (e: 'update:imageUrl', value: string): void}>();
 
-    return {handleImageSuccess, imageUrl, rmImage}
+const emitInput = (value: string, image: string) => {
+  emits('update:modelValue', value);
+  emits('update:imageUrl', image);
+}
+
+watch(() => props.modelValue, (newValue, oldValue) => {
+  if (!newValue) {
+    emits('update:imageUrl', '');
   }
 });
+
+const handleImageSuccess = (res: any) => {
+  emitInput(res.data.id, res.data.fileUrl);
+}
+
+const rmImage = () => {
+  emitInput('', '');
+}
+
+const accessToken = stroage.getters.getToken;
+
+// export default defineComponent({
+//   props: {
+//     modelValue: {type: [String, Number]},
+//     imageUrl: {type: String}
+//   },
+//   components: {
+//     Icon
+//   },
+//   setup(props, context) {
+//     const {modelValue, imageUrl} = toRefs(props);
+//     const emitInput = (value: any, image: any) => {
+//       context.emit('update:modelValue', value);
+//       context.emit('update:imageUrl', image);
+//     }
+//
+//     watch(modelValue, (newValue, oldValue) => {
+//       if (!newValue){
+//         imageUrl.value = '';
+//       }
+//     })
+//     const handleImageSuccess = (res: any) => {
+//       emitInput(res.data.id, res.data.fileUrl);
+//     }
+//
+//     const rmImage = () => {
+//       emitInput('', '');
+//     }
+//
+//     return {handleImageSuccess, imageUrl, rmImage}
+//   }
+// });
 
 </script>
 

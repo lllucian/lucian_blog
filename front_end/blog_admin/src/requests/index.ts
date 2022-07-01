@@ -1,9 +1,11 @@
 import axios, { AxiosInstance, AxiosRequestConfig  } from "axios";
 import { ElMessage } from "element-plus";
 import {stroage} from "/@/stroage"
-const instance: AxiosInstance = axios.create();
 
-// instance.defaults.headers.common['Authorization'] = stroage.getters.getToken;
+const instance = axios.create({
+    baseURL: <string | undefined>import.meta.env.VITE_BASE_API,
+    timeout: 1000,
+});
 
 
 // 请求拦截器

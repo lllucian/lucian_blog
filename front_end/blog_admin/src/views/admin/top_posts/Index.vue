@@ -121,7 +121,7 @@ const topPosts = ref<any[]>([]);
 
 const editMode = (async (row: any) => {
   row.edit = true;
-  const data = await getRequest(`/api/admin/top_post/post_selected/${row.tempObj.postId}`);
+  const data = await getRequest(`/admin/top_post/post_selected/${row.tempObj.postId}`);
   if (data.data) {
     row.postOptions.push(data.data);
   } else {
@@ -142,7 +142,7 @@ const cancelEdit = ((row: any) => {
 });
 
 const confirmEdit = (async (row: any) => {
-  await postRequest(`/api/admin/top_post/${row.id}`, row.tempObj);
+  await postRequest(`/admin/top_post/${row.id}`, row.tempObj);
   await loadData();
 });
 
@@ -156,7 +156,7 @@ nextTick(() => {
 const sortList = ref<any[]>([]);
 
 const loadData = async () => {
-  const data = await getRequest("/api/admin/top_posts");
+  const data = await getRequest("/admin/top_posts");
   if (data.data) {
     topPosts.value = data.data;
     topPosts.value.forEach((v: any) => {
@@ -190,9 +190,9 @@ const formRules = reactive({
 
 const postOptions = ref([]);
 
-const editPostRemoteOptions = async(query: string, row: any) => {
+const editPostRemoteOptions = async(query: any, row: any) => {
   if (query !== '') {
-    const data = await getRequest(`/api/admin/top_post/post_select/${row.id}`, {query: query});
+    const data = await getRequest(`/admin/top_post/post_select/${row.id}`, {query: query});
     if (data && data.data) {
       row.postOptions = data.data;
     } else {
@@ -205,7 +205,7 @@ const editPostRemoteOptions = async(query: string, row: any) => {
 
 const remoteMethod = async (query: string) => {
   if (query !== '') {
-    const data = await postRequest("/api/admin/fetch/top_posts/posts", {title: query});
+    const data = await postRequest("/admin/fetch/top_posts/posts", {title: query});
     if (data && data.data) {
       postOptions.value = data.data;
     } else {
@@ -220,7 +220,7 @@ const confirmMethod = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate(async (valid, field) => {
     if (valid) {
-      await postRequest("/api/admin/top_post", tempFormData);
+      await postRequest("/admin/top_post", tempFormData);
       dialogVisible.value = false;
       await loadData();
     }
@@ -241,7 +241,7 @@ const setSort = () => {
           if (typeof (evt.oldIndex) !== 'undefined' && typeof (evt.newIndex) !== 'undefined') {
             const targetRow = sortList.value.splice(evt.oldIndex, 1)[0];
             sortList.value.splice(evt.newIndex, 0, targetRow);
-            postRequest("/api/admin/top_posts/drag_sort", sortList.value);
+            postRequest("/admin/top_posts/drag_sort", sortList.value);
           }
         }
       }

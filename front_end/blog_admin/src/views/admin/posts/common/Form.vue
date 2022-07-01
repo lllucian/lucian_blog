@@ -124,7 +124,7 @@ const categoryRemoteMethod = async (query: string) => {
   if (query.trim() !== "") {
     categoryLoading.value = true;
     try {
-      const data = postRequest("api/admin/fetch/categories", {name: query});
+      const data = postRequest("/admin/fetch/categories", {name: query});
       if ((await data).data) categoryOptions.value = (await data).data;
     } finally {
       categoryLoading.value = false;
@@ -142,7 +142,7 @@ const tagRemoteMethod = async (query: string) => {
   if (query.trim() !== "") {
     tagLoading.value = true;
     try {
-      const data = postRequest("api/admin/fetch/tags", {name: query});
+      const data = postRequest("/admin/fetch/tags", {name: query});
       if ((await data).data) tagOptions.value = (await data).data;
     } finally {
       tagLoading.value = false;
@@ -165,9 +165,9 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       try {
         let data;
         if (props.postId) {
-          data = await putRequest(`api/admin/post/${props.postId}`, formData);
+          data = await putRequest(`/admin/post/${props.postId}`, formData);
         } else {
-          data = await postRequest("api/admin/post", formData);
+          data = await postRequest("/admin/post", formData);
         }
         if (await data) await router.push({name: 'AdminPostIndex'})
       } finally {
@@ -182,12 +182,12 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 const editFormData = async () => {
   formLoading.value = true;
   try {
-    const data = await getRequest(`api/admin/post/${props.postId}`);
+    const data = await getRequest(`/admin/post/${props.postId}`);
     if (data && data.data) {
        Object.assign(formData, data.data);
       formData.uploadFileId = data.data.fileUpload;
       if (data.data.fileUpload) {
-        getRequest(`api/admin/upload_file/get_file_url/${data.data.fileUpload}`).then((data) => {
+        getRequest(`/admin/upload_file/get_file_url/${data.data.fileUpload}`).then((data) => {
           if (data.data) imageUrl.value = data.data
         });
       }
@@ -200,7 +200,7 @@ const editFormData = async () => {
 const categoryRemoteOpts = async () => {
   categoryLoading.value = true;
   try {
-    const data = await postRequest(`api/admin/fetch/categories/selected`, {categories: formData.categories})
+    const data = await postRequest(`/admin/fetch/categories/selected`, {categories: formData.categories})
     if (data && data.data) categoryOptions.value = data.data;
   } finally {
     categoryLoading.value = false;
@@ -210,7 +210,7 @@ const categoryRemoteOpts = async () => {
 const tagRemoteOpts = async () => {
   tagLoading.value = true;
   try {
-    const data = await postRequest(`api/admin/fetch/tags/selected`, {tags: formData.tags})
+    const data = await postRequest(`/admin/fetch/tags/selected`, {tags: formData.tags})
     if (data && data.data) tagOptions.value = data.data;
   } finally {
     tagLoading.value = false;

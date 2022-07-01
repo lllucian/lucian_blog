@@ -69,7 +69,7 @@ const init = ref({
       let params = new FormData()
       params.append('file', blobInfo.blob())
       params.append('bucketName', 'pic')
-      const data = await postRequest("api/admin/upload_file/upload", params)
+      const data = await postRequest("/admin/upload_file/upload", params)
       if (data && data.data) return success(data.data.fileUrl);
       return failure("上传失败");
     }

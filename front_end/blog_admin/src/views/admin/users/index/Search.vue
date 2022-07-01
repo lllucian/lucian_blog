@@ -95,7 +95,7 @@ const roleOptions = ref([]);
 const roleRemoteMethod = async (query: string) => {
   if (query.trim() !== "") {
     roleLoading.value = true;
-    const data = postRequest("api/admin/fetch/roles", { query: query });
+    const data = postRequest("/admin/fetch/roles", { query: query });
     if ((await data).data) roleOptions.value = (await data).data;
     roleLoading.value = false;
   } else {

@@ -137,7 +137,7 @@ export default defineComponent({
       rows.splice(index, 1);
       emit("update:loadingTable", true);
       try{
-        await deleteRequest(`api/admin/tag/${id}`);
+        await deleteRequest(`/admin/tag/${id}`);
       } finally {
         pageInfo.value.current = 1;
         await getList();

@@ -5,6 +5,7 @@ declare module 'vue-router' {
   interface RouteMeta {
     title: string,
     alias?: string
+    menu?: string
   }
 }
 
@@ -13,6 +14,7 @@ export type Component<T = any> =
   | ReturnType<typeof defineComponent>
   | (() => Promise<typeof import('*.vue')>)
   | (() => Promise<T>);
+
 
 // @ts-ignore
 export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {

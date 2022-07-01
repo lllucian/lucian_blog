@@ -66,9 +66,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
       try {
         let data = undefined;
         if (props.categoryId) {
-          data = putRequest(`api/admin/category/${props.categoryId}`, formData);
+          data = putRequest(`/admin/category/${props.categoryId}`, formData);
         } else {
-          data = postRequest("api/admin/category", formData);
+          data = postRequest("/admin/category", formData);
         }
         if (await data) await router.push({name: 'AdminCategoryIndex'})
       } finally {
@@ -117,7 +117,7 @@ const parentOptions = ref<Array<{ label: string, value: string }>>([]);
 const parentRemoteMethod = async () => {
   parentLoading.value = true;
   try {
-    let fetchUri = "api/admin/fetch/getParentId";
+    let fetchUri = "/admin/fetch/getParentId";
     if (props.categoryId) fetchUri = `${fetchUri}/${props.categoryId}`;
     const data = postRequest(fetchUri);
     if ((await data).data) parentOptions.value = (await data).data;
@@ -129,7 +129,7 @@ const parentRemoteMethod = async () => {
 const getInformation = async () => {
   formLoading.value = true;
   try{
-    const data = await getRequest(`api/admin/category/${props.categoryId}`);
+    const data = await getRequest(`/admin/category/${props.categoryId}`);
     if (data && data.data){
       Object.assign(formData, data.data);
     } else {

@@ -3,7 +3,7 @@
     <div class="container">
       <router-link to="/" class="navbar-brand" :class="brandClass">Lucian</router-link>
       <b-button-group>
-        <b-button v-for="(route, index) in frontRoutes" :key="index" class="nav-link" @click="this.$router.push(route.path)" :class="this.$router.currentRoute.value.path === route.path ? 'active' : ''">{{route.meta.menu}}</b-button>
+        <b-button v-for="(route, index) in frontRoutes" :key="index" class="nav-link" @click="goTo(route.path)" :class="activeClass(route.path)">{{route.meta.menu}}</b-button>
       </b-button-group>
     </div>
   </nav>
@@ -12,8 +12,9 @@
 <script lang="ts">
 import {defineComponent, onMounted, ref} from "vue";
 import '/@/assets/style.css'
-import {onBeforeRouteUpdate, useRouter} from "vue-router";
+import {onBeforeRouteUpdate, RouteRecordRaw, useRouter} from "vue-router";
 import {FrontRoutes} from "/@/router/routes";
+import { router } from "/@/router";
 export default defineComponent({
   directives: {
       scroll: {
@@ -51,6 +52,10 @@ export default defineComponent({
       }
     }
 
+    const activeClass = (route_path: string) => {
+      return router.currentRoute.value.path === route_path ? 'active' : ''
+    }
+
     onMounted(() => {
       if (useRouter().currentRoute.value.path === '/home')
         brandClass.value = ['navbar-brand-black'];
@@ -58,7 +63,9 @@ export default defineComponent({
         brandClass.value = [];
     })
 
-    const frontRoutes = ref((FrontRoutes[0].children || []).filter(route => route.meta.hiddenMenu !== true))
+    const frontRoutes = ref((FrontRoutes[0].children || []).filter(route => route.meta.hiddenMenu !== true));
+
+    const goTo = (route_path: string) => router.push(route_path);
 
     return {
       menu,
@@ -66,6 +73,8 @@ export default defineComponent({
       menuClass,
       brandClass,
       frontRoutes,
+      activeClass,
+      goTo
     }
   }
 })

@@ -89,9 +89,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
   formEl.validate((valid, fields) => {
     if (valid) {
       if (propData.tagId) {
-        putRequest(`/api/admin/tag/${propData.tagId}`, formData);
+        putRequest(`/admin/tag/${propData.tagId}`, formData);
       } else {
-        postRequest(`/api/admin/tag`, formData);
+        postRequest(`/admin/tag`, formData);
       }
       router.push({name: 'AdminTagIndex'});
     } else {
@@ -109,7 +109,7 @@ const clearForm = (formEl: FormInstance | undefined) => {
 const getInformation = async () => {
   formLoading.value = true;
   try{
-    const data = await getRequest(`api/admin/tag/${propData.tagId}`);
+    const data = await getRequest(`/admin/tag/${propData.tagId}`);
     if (data && data.data){
       Object.assign(formData, data.data);
     } else {

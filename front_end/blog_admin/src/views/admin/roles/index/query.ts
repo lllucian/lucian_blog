@@ -27,13 +27,12 @@ export const setPageConditions = (pageInfo: pageInfo) => {
 }
 
 export const getPageSize = () => {
-    console.log(queryConditionsByPage)
     return queryConditionsByPage.size || 10;
 }
 
 
 export const apiFormData = async () => {
-    const data = await postRequest("api/admin/roles", queryConditionsByPage);
+    const data = await postRequest("/admin/roles", queryConditionsByPage);
 
     if(data.data && data.data.records){
         return {

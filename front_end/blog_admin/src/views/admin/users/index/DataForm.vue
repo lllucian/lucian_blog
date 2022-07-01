@@ -114,7 +114,7 @@ const deleteRow = async (index: number, rows: any[], id: number) => {
   rows.splice(index, 1);
   emits("update:loadingTable", true);
   try {
-    await deleteRequest(`api/admin/user/${id}`);
+    await deleteRequest(`/admin/user/${id}`);
   } finally {
     pageInfo.value.current = 1;
     await getList();

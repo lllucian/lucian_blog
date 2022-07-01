@@ -66,7 +66,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     try {
       loading.value = true;
       const resp: any = await authorizeRequests(
-          "/api/admin/login",
+          "/admin/login",
           loginFormData
       );
       if (resp) {
