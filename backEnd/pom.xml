@@ -165,6 +165,7 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
             <version>3.0.0</version>
+            <scope>dev</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-spring-boot-starter -->
         <dependency>
@@ -237,8 +238,8 @@
         <profile>
             <id>prod</id>
             <properties>
-                <profiles.active>test</profiles.active>
-                <logging.level>warn</logging.level>
+                <profiles.active>prod</profiles.active>
+                <logging.level>info</logging.level>
             </properties>
         </profile>
     </profiles>
