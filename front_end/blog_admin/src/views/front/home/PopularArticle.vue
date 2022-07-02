@@ -3,7 +3,7 @@
     <div class="sidebar-box ftco-animate" :class="animateClass">
       <h3>Popular Articles</h3>
       <div class="block-21 mb-4 d-flex">
-        <a class="blog-img mr-4" style="background-image: url(/src/assets/image_1.jpg);"></a>
+        <a class="blog-img mr-4" :style="{backgroundImage: defaultPicPath}"></a>
         <div class="text">
           <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a>
           </h3>
@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="block-21 mb-4 d-flex">
-        <a class="blog-img mr-4" style="background-image: url(/src/assets/image_1.jpg);"></a>
+        <a class="blog-img mr-4" :style="{backgroundImage: defaultPicPath}"></a>
         <div class="text">
           <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a>
           </h3>
@@ -27,7 +27,7 @@
         </div>
       </div>
       <div class="block-21 mb-4 d-flex">
-        <a class="blog-img mr-4" style="background-image: url(/src/assets/image_1.jpg);"></a>
+        <a class="blog-img mr-4" :style="{backgroundImage: defaultPicPath}"></a>
         <div class="text">
           <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a>
           </h3>
@@ -41,21 +41,18 @@
     </div>
   </Waypoint>
 </template>
-<script lang="ts">
-import {defineComponent, ref} from "vue";
+<script lang="ts" setup>
+import {ref} from "vue";
 import {Waypoint} from "vue-waypoint";
 
-export default defineComponent({
-  components: {
-    Waypoint
-  },
-  setup(){
-    const animateClass: any = ref([]);
-    const onChange = async (waypointState: any) => {
-      waypointState.going === "IN" ? animateClass.value = ['ftco-animated', 'fadeInUp'] : animateClass.value = [];
-    }
+import defaultPic from '/@/assets/image_1.jpg'
 
-    return {onChange, animateClass};
-  }
-})
+const defaultPicPath = `url(${defaultPic})`;
+
+const animateClass: any = ref<Array<string>>([]);
+const onChange = async (waypointState: any) => {
+  waypointState.going === "IN" ? animateClass.value = ['ftco-animated', 'fadeInUp'] : animateClass.value = [];
+}
+
+
 </script>
