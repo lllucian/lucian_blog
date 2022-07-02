@@ -1,5 +1,6 @@
 package com.lucian.common.utils;
 
+import cn.hutool.core.util.URLUtil;
 import com.lucian.common.config.MinioConfig;
 import io.minio.*;
 import io.minio.http.Method;
@@ -105,8 +106,10 @@ public class MinIoUtil {
      */
     @SneakyThrows(Exception.class)
     public static String findOne(String bucketName, String fileName){
-        return minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
+        String presignedObjectUrl = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
                 .method(Method.GET).bucket(bucketName).object(fileName).build());
+        return "/files" + URLUtil.toURI(presignedObjectUrl).getPath() + "?" + URLUtil.toURI(presignedObjectUrl).getQuery();
+        //return presignedObjectUrl;
     }
 
 }
