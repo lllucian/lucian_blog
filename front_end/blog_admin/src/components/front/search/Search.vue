@@ -27,7 +27,6 @@ watch(keyword, async (newValue: String, oldValue: String) => {
   if (newValue.trim() == "") searchResult.value = [];
   const data:any = await getRequest(`/blog/search/${newValue}`);
   if (data.data) {
-    console.log(data.data)
     searchResult.value = data.data;
   } else {
     searchResult.value = [];

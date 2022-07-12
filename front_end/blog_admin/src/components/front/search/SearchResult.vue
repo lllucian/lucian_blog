@@ -37,6 +37,8 @@ import {onKeyStroke} from '@vueuse/core'
 import {useRefs} from "/@/hook/core/useRefs";
 import {useRouter} from "vue-router";
 
+const router = useRouter();
+
 const [refs, setRefs] = useRefs();
 
 const activeIndex = ref(-1);
@@ -48,39 +50,40 @@ const setActiveIndex = ((e: any) => {
   activeIndex.value = Number(index);
 })
 
-const searchInfo = inject("searchResult", <Array<any>>[]);
+const searchInfo = inject("searchResult", ref<any>([]));
 const handleUp = (() => {
-  if (!searchInfo.length) {
+  if (!searchInfo.value.length) {
     return;
   }
   activeIndex.value--;
   if (activeIndex.value < 0) {
-    activeIndex.value = searchInfo.length - 1;
+    activeIndex.value = searchInfo.value.length - 1;
   }
 });
 
 // Arrow key down
 const handleDown = (() => {
-  if (!searchInfo.length) return;
+  if (!searchInfo.value.length) return;
   activeIndex.value++;
-  if (activeIndex.value > searchInfo.length - 1) {
+  if (activeIndex.value > searchInfo.value.length - 1) {
     activeIndex.value = 0;
   }
 });
 
 //Enter key
 const handleEnter = (async () => {
-  if (!searchInfo.length) {
+  if (!searchInfo.value.length) {
     return;
   }
   const result = unref(searchInfo);
+  console.log(result)
   const index = unref(activeIndex);
   if (result.length === 0 || index < 0) {
     return;
   }
   const to = result[index];
   await nextTick();
-  await useRouter().push(to.path);
+  await router.push(`/post/${to.id}`);
 })
 
 onKeyStroke('ArrowUp', handleUp);
