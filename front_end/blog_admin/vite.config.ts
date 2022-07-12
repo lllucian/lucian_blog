@@ -42,6 +42,11 @@ export default defineConfig(({mode, command}) => {
                     target: "http://localhost:8889",
                     changeOrigin: true,
                     rewrite: (path) => path.replace(/^\/lucian_dev/, ""),
+                },
+                "/files":{
+                    target: "http://localhost:9000",
+                    changeOrigin: true,
+                    rewrite: (path) => path.replace(/^\/files/, ""),
                 }
             },
         },
