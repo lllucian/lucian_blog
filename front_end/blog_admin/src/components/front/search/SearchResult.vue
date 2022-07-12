@@ -1,10 +1,10 @@
 <template>
-  <div class="DocSearch-Dropdown">
+  <div>
     <div class="DocSearch-StartScreen" v-if="searchInfo.length === 0">
       <p class="DocSearch-Help">无结果</p>
     </div>
-    <div class="DocSearch-Dropdown-Container" v-else>
-      <section class="DocSearch-Hits">
+    <div class="DocSearch-Dropdown" ref="scrollWrap" v-else>
+        <section class="DocSearch-Hits">
         <ul role="listbox" aria-labelledby="docsearch-label" id="docsearch-menu">
           <li class="DocSearch-Hit" :ref="setRefs(index)" :id="'docsearch-item-' + index" role="option"
               :aria-selected="index === activeIndex"
@@ -36,6 +36,7 @@ import {inject, nextTick, ref, unref} from "vue";
 import {onKeyStroke} from '@vueuse/core'
 import {useRefs} from "/@/hook/core/useRefs";
 import {useRouter} from "vue-router";
+import {useScrollTo} from "/@/hook/event/useScrollTo";
 
 const router = useRouter();
 
@@ -43,12 +44,13 @@ const [refs, setRefs] = useRefs();
 
 const activeIndex = ref(-1);
 
-const scrollWrap = ref(null);
+const scrollWrap = ref();
 
 const setActiveIndex = ((e: any) => {
   const index = e.target.dataset.index;
   activeIndex.value = Number(index);
 })
+
 
 const searchInfo = inject("searchResult", ref<any>([]));
 const handleUp = (() => {
@@ -59,6 +61,7 @@ const handleUp = (() => {
   if (activeIndex.value < 0) {
     activeIndex.value = searchInfo.value.length - 1;
   }
+  handleScroll();
 });
 
 // Arrow key down
@@ -68,6 +71,7 @@ const handleDown = (() => {
   if (activeIndex.value > searchInfo.value.length - 1) {
     activeIndex.value = 0;
   }
+  handleScroll();
 });
 
 //Enter key
@@ -85,6 +89,34 @@ const handleEnter = (async () => {
   await nextTick();
   await router.push(`/post/${to.id}`);
 })
+
+const handleScroll = () => {
+  const searchList = unref(refs);
+  if (!searchList || !Array.isArray(searchList) || searchList.length === 0 || !unref(scrollWrap)){
+    return;
+  }
+
+  const index = unref(activeIndex);
+  const currentRef = searchList[index];
+  if (!currentRef) {
+    return;
+  }
+
+  const wrapEl = unref(scrollWrap);
+  if (!wrapEl) {
+    return;
+  }
+
+  const scrollHeight = currentRef.offsetTop + currentRef.offsetHeight;
+  const wrapHeight = wrapEl.offsetHeight;
+  console.log(scrollHeight)
+  const { start } = useScrollTo({
+    el: wrapEl,
+    duration: 100,
+    to: scrollHeight - wrapHeight,
+  });
+  start();
+}
 
 onKeyStroke('ArrowUp', handleUp);
 onKeyStroke('ArrowDown', handleDown);
