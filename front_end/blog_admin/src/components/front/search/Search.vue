@@ -17,7 +17,7 @@ const isOpen = ref(false);
 
 const keyword = ref<String>('');
 
-const searchResult = ref([]);
+const searchResult = ref<any>([]);
 
 const openDialog = (() => {
   isOpen.value = true;
@@ -27,7 +27,7 @@ watch(keyword, async (newValue: String, oldValue: String) => {
   if (newValue.trim() == "") searchResult.value = [];
   const data:any = await getRequest(`/blog/search/${newValue}`);
   if (data.data) {
-    searchResult.value = data.data;
+    searchResult.value = [...data.data, ...data.data, ...data.data, ...data.data, ...data.data];
   } else {
     searchResult.value = [];
   }
