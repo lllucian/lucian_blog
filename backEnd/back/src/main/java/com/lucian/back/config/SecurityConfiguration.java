@@ -2,6 +2,7 @@ package com.lucian.back.config;
 
 import com.lucian.back.exception.JwtAccessDeniedHandler;
 import com.lucian.back.exception.JwtAuthenticationEntryPoint;
+import com.lucian.back.exception.JwtLoginFailedEntryPoint;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -58,7 +59,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers(SWAGGER_WHITELIST).permitAll()
                 .anyRequest().authenticated().and()
-                .httpBasic(Customizer.withDefaults())
+                .httpBasic().authenticationEntryPoint(new JwtLoginFailedEntryPoint()).and()
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
