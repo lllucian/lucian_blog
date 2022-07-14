@@ -95,7 +95,7 @@ public class RepeatValidateUtils {
      * @param message 错误信息
      */
     public void checkRepeat(String[] fields, Object o, String message, Class<? extends BaseMapper<?>> baseMapper) throws ValidationException, IllegalAccessException, InstantiationException {
-        BaseMapper<Object> bean = (BaseMapper) SpringUtil.getBean(baseMapper);
+        BaseMapper<Object> bean = (BaseMapper<Object>) SpringUtil.getBean(baseMapper);
         //Mybatis-plus 3.0以下用EntityWrapper
         QueryWrapper<Object> qw = new QueryWrapper<>();
         Map<String, Object> queryMap = getColumns(fields, o);
@@ -106,7 +106,9 @@ public class RepeatValidateUtils {
             //更新的话，那条件就要排除自身
             qw.ne(idColumnName, idColumnValue);
         }
-        List list = bean.selectList(qw);
+
+
+        List<?> list = bean.selectList(qw);
         if (list != null && list.size() > 0) {
             throw new ValidationException(message);
         }

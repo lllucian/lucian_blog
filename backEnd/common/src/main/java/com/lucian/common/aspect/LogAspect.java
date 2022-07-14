@@ -105,12 +105,12 @@ public class LogAspect {
         if (clazz.isArray()) {
             return clazz.getComponentType().isAssignableFrom(MultipartFile.class);
         } else if (Collection.class.isAssignableFrom(clazz)) {
-            Collection collection = (Collection) o;
+            Collection<?> collection = (Collection<?>) o;
             for (Object value : collection) {
                 return value instanceof MultipartFile;
             }
         } else if (Map.class.isAssignableFrom(clazz)) {
-            Map map = (Map) o;
+            Map<Object, Object> map = (Map) o;
             for (Object value : map.entrySet()) {
                 Map.Entry entry = (Map.Entry) value;
                 return entry.getValue() instanceof MultipartFile;

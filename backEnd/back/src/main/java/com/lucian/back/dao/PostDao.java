@@ -14,7 +14,7 @@ import org.apache.ibatis.annotations.Param;
  * @author lingxiangdeng
  */
 public interface PostDao extends BaseMapper<Post> {
-    IPage<PostBO> queryConditionsByPage(Page<PostBO> page, @Param(Constants.WRAPPER) Wrapper wrapper);
+    IPage<PostBO> queryConditionsByPage(Page<PostBO> page, @Param(Constants.WRAPPER) Wrapper<Post> wrapper);
 
     PostBO queryPostDetail(@Param("id") String id);
 }

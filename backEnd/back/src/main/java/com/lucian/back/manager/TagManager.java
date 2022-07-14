@@ -133,7 +133,7 @@ public class TagManager {
      * @return 被选中option
      */
     public List<TagSelectDataVO> getSelectData(List<String> ids){
-        if (ids == null && ids.size() != 0) {
+        if (ids == null || ids.size() != 0) {
             return null;
         }
         return tag2SelectVO.tranTag2SelectVOList(tagService.listByIds(ids));

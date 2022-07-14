@@ -14,5 +14,5 @@ import java.util.List;
  * @date 2022/05/13 16:42
  **/
 public interface SliderDao extends BaseMapper<TopPost> {
-    List<Post> list(@Param(Constants.WRAPPER) Wrapper wrapper);
+    List<Post> list(@Param(Constants.WRAPPER) Wrapper<TopPost> wrapper);
 }
