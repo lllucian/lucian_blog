@@ -21,7 +21,7 @@ import java.util.List;
 @Getter
 @Setter
 @Unique.List(value = {@Unique(baseMapper= UserDao.class, fields = {"username"}), @Unique(baseMapper= UserDao.class, fields = {"email"})})
-public class UserParam {
+public class UserEditParam {
 
     @TableId("id")
     private String id;
@@ -36,7 +36,6 @@ public class UserParam {
     /**
      * 密码
      */
-    @NotBlank
     @Size(min = 5, message = "最小长度为5")
     private String password;
 

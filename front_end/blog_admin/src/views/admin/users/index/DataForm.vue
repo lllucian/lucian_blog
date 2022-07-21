@@ -15,19 +15,6 @@
             align="center"
             header-align="center"
         />
-        <el-table-column prop="categories" label="分类" width="140">
-        </el-table-column>
-        <el-table-column label="标签" width="120">
-          <template #default="scope">
-            <el-tag
-                size="large"
-                v-for="(tag, index) in scope.row.tags"
-                :key="index"
-            >{{ tag }}
-            </el-tag
-            >
-          </template>
-        </el-table-column>
         <el-table-column prop="username" label="用户名"></el-table-column>
         <el-table-column prop="email" label="邮箱"></el-table-column>
         <el-table-column prop="signLastIp" label="上次登录IP"></el-table-column>
@@ -44,7 +31,7 @@
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="120" align="center">
           <template #default="scope">
-            <router-link :to="'/admin/post/'+scope.row.id">
+            <router-link :to="'/admin/user/'+scope.row.id">
               <el-button type="text">
                 <Icon icon="ant-design:edit-outlined" :size="18"></Icon>
               </el-button>

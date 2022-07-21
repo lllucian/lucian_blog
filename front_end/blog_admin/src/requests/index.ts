@@ -13,12 +13,12 @@ instance.interceptors.request.use((config: AxiosRequestConfig) => {
     config.headers['Authorization'] = `Bearer ${stroage.getters.getToken}`;
     return config;
 }, error => {
-    ElMessage.error({message: '请求错误！'});
+    ElMessage.error({message: '请求错误！', showClose: true});
 })
 // 响应拦截器
 instance.interceptors.response.use(response => {
     if (response.data.code !== 200) {
-        ElMessage.error({message: response.data.message});
+        ElMessage.error({message: response.data.message, showClose: true});
         return;
     }
 

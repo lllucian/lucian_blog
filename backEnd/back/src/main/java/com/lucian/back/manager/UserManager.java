@@ -2,14 +2,18 @@ package com.lucian.back.manager;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lucian.back.bean.translate.User2SelectVO;
+import com.lucian.back.bean.translate.User2UserFormVO;
 import com.lucian.back.bean.translate.UserBO2IndexVO;
+import com.lucian.back.bean.vo.UserFormVO;
 import com.lucian.back.bean.vo.UserIndexVO;
 import com.lucian.back.bean.vo.UserSelectDataVO;
+import com.lucian.back.form_parm.UserEditParam;
 import com.lucian.back.form_parm.UserParam;
 import com.lucian.back.query_wrapper.UserQuery;
 import com.lucian.back.query_wrapper.UserSelectQuery;
@@ -25,6 +29,7 @@ import com.lucian.common.utils.ServletUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -86,6 +91,7 @@ public class UserManager {
     @Transactional
     public boolean createUser(UserParam userParam) {
         User user = new User();
+        userParam.setPassword(new BCryptPasswordEncoder().encode(userParam.getPassword()));
         BeanUtils.copyProperties(userParam, user);
         boolean save = userService.save(user);
         if (!save) return false;
@@ -152,5 +158,27 @@ public class UserManager {
         User user = userService.getById(id);
         if (ObjectUtil.isEmpty(user)) return false;
         return userService.removeById(id);
+    }
+
+    /**
+     * 用户详情
+     * @param id 用户id
+     * @return 用户详情
+     */
+    public UserFormVO userDetails(String id) {
+        User user = userService.getById(id);
+        return ObjectUtil.isNull(user) ? null : SpringUtil.getBean(User2UserFormVO.class).user2UserFormVO(user);
+    }
+
+    public boolean updateUser(UserEditParam userEditParam) {
+        User user = userService.getById(userEditParam.getId());
+        if (ObjectUtil.isNull(user)) return false;
+        if (StrUtil.isNotBlank(userEditParam.getPassword())){
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String encodePass = passwordEncoder.encode(userEditParam.getPassword());
+            userEditParam.setPassword(encodePass);
+        }
+        BeanUtils.copyProperties(userEditParam, user);
+        return userService.updateById(user);
     }
 }

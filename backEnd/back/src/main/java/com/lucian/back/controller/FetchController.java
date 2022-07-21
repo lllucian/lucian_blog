@@ -107,4 +107,11 @@ public class FetchController {
         RoleManager roleManager = SpringUtil.getBean(RoleManager.class);
         return CommonResult.successNoMessage(roleManager.selectList(roleSelectQuery));
     }
+
+
+    @PostMapping("roles/selected")
+    public CommonResult<List<RoleSelectDataVO>> roleSelected(@RequestBody String[] roleIds) {
+        RoleManager roleManager = SpringUtil.getBean(RoleManager.class);
+        return CommonResult.successNoMessage(roleManager.selected(roleIds));
+    }
 }

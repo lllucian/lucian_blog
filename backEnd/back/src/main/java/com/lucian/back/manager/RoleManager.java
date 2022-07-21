@@ -1,6 +1,7 @@
 package com.lucian.back.manager;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
@@ -130,5 +131,17 @@ public class RoleManager {
         if (CollUtil.isEmpty(list)) return null;
         Role2SelectVO role2SelectVO = SpringUtil.getBean(Role2SelectVO.class);
         return role2SelectVO.translate(list);
+    }
+
+    /**
+     * 获取选择的roles的值
+     * @param roleIds role ids
+     * @return role信息
+     */
+    public List<RoleSelectDataVO> selected(String[] roleIds){
+        if (ObjectUtil.isNull(roleIds)) return null;
+        if (ArrayUtil.isEmpty(roleIds)) return null;
+        List<Role> roles = roleService.listByIds(CollUtil.toList(roleIds));
+        return SpringUtil.getBean(Role2SelectVO.class).translate(roles);
     }
 }
