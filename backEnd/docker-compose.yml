@@ -59,15 +59,16 @@ services:
       - "9000:9000"
     networks:
       - lucian_blog
-  canal-server:
-    image: canal/canal-server:v1.1.6
-    ports:
-      - "11111:11111"
+  logstash:
+    image: logstash:7.17.3
+    volumes:
+      - ./docker/logstash/mysql_lib/mysql-connector-java-8.0.29.jar:/usr/share/logstash/lib/mysql-connector-java-8.0.29.jar
+      - ./docker/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - ./docker/logstash/pipeline:/usr/share/logstash/pipeline
     networks:
       - lucian_blog
-    volumes:
-      - ./docker/canal-server/config/example/instance.properties:/home/admin/canal-server/conf/example/instance.properties
+
 networks:
-  lucian_blog: {}
+  lucian_blog: { }
 
 
