@@ -19,7 +19,7 @@ import 'tinymce/plugins/wordcount/index'
 import 'tinymce/plugins/preview'
 import 'tinymce/plugins/image'
 import 'tinymce/plugins/fullscreen'
-import  'tinymce/plugins/code'
+import 'tinymce/plugins/code'
 import 'tinymce/plugins/table'
 
 import {postRequest} from "/@/requests";
@@ -62,18 +62,23 @@ const init = ref({
 
   content_style: "img {max-width:100%;}",
   paste_data_images: true,
-  images_upload_handler: async (blobInfo:any, success:any, failure:any) => {
+  images_upload_handler: (blobInfo: any, progress: any) => new Promise(async (resolve, reject) => {
     if (blobInfo.blob().size / 1024 / 1024 > 2) {
-      failure("上传失败，图片大小请控制在 2M 以内")
+      reject("上传失败，图片大小请控制在 2M 以内");
+      return;
     } else {
       let params = new FormData()
       params.append('file', blobInfo.blob())
       params.append('bucketName', 'pic')
-      const data = await postRequest("/admin/upload_file/upload", params)
-      if (data && data.data) return success(data.data.fileUrl);
-      return failure("上传失败");
+      const data = await postRequest("admin/upload_file/upload", params)
+      if (data && data.data) {
+        resolve(data.data.fileUrl);
+        return;
+      }
+      reject("上传失败")
+      return;
     }
-  }
+  })
 })
 
 onMounted(() => tinymce.init({}));
@@ -84,6 +89,7 @@ onMounted(() => tinymce.init({}));
 .is-error .tox-tinymce {
   border-color: var(--el-color-danger);
 }
+
 .tox-toolbar {
   max-width: 100% !important;
 }
