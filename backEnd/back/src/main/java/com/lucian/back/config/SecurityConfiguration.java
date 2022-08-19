@@ -3,6 +3,7 @@ package com.lucian.back.config;
 import com.lucian.back.exception.JwtAccessDeniedHandler;
 import com.lucian.back.exception.JwtAuthenticationEntryPoint;
 import com.lucian.back.exception.JwtLoginFailedEntryPoint;
+import com.lucian.back.filter.CaptchaFilter;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -22,6 +23,7 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -44,7 +46,7 @@ public class SecurityConfiguration {
     RSAPrivateKey priv;
 
 
-    String[] SWAGGER_WHITELIST = {
+    String[] swaggerWhiteList = {
             "/swagger-ui.html",
             "/swagger-ui/*",
             "/swagger-resources/**",
@@ -55,9 +57,14 @@ public class SecurityConfiguration {
             "/doc.html"
     };
 
+    String[] captchaWhiteList = {
+            "/captcha/**"
+    };
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers(SWAGGER_WHITELIST).permitAll()
+        http.authorizeRequests().antMatchers(swaggerWhiteList).permitAll()
+                .antMatchers(captchaWhiteList).permitAll()
                 .anyRequest().authenticated().and()
                 .httpBasic().authenticationEntryPoint(new JwtLoginFailedEntryPoint()).and()
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
@@ -67,7 +74,7 @@ public class SecurityConfiguration {
                 .exceptionHandling((exceptions) -> exceptions
                         .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
                         .accessDeniedHandler(new JwtAccessDeniedHandler())
-                );
+                ).addFilterBefore(new CaptchaFilter(), BasicAuthenticationFilter.class);
         return http.build();
     }
 

@@ -67,6 +67,10 @@ services:
       - ./docker/logstash/pipeline:/usr/share/logstash/pipeline
     networks:
       - lucian_blog
+  redis:
+    image: redis:7.0.4-alpine3.16
+    networks:
+      - lucian_blog
 
 networks:
   lucian_blog: { }

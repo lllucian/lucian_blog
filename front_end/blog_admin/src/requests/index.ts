@@ -47,6 +47,8 @@ export const putRequest = (url: string, data?:object) => {
 }
 
 
-export const authorizeRequests = (url: string, auth: {username: string, password: string}) => {
-    return instance.post(url, {}, {auth: auth})
+export const authorizeRequests = (url: string, auth: {username: string, password: string, captcha: string, uuidToken: string}) => {
+    let {captcha, uuidToken} = auth
+    let {username, password} = auth
+    return instance.post(url, {captcha, uuidToken}, {auth: {username, password}})
 }
