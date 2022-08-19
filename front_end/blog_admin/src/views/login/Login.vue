@@ -24,7 +24,7 @@
           </el-col>
           <el-col :span="6">
             <el-input v-model="loginFormData.uuidToken" type="hidden" ></el-input>
-            <el-image :src="captcha" :style="{border: '1px solid'}"></el-image>
+            <el-image :src="captcha" :style="{border: '1px solid', cursor: 'pointer'}" @click="getCaptcha"></el-image>
           </el-col>
         </el-row>
       </el-form-item>
